@@ -1,8 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
+import colors from "./theme";
 import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
+
+    :root {
+    ${colors};
+  }
   
   * {
     box-sizing: border-box;
@@ -21,6 +26,11 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
   }
   body {
     font-family: 'Noto Sans KR', sans-serif;  
