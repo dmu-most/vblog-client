@@ -16,7 +16,7 @@ const FooterContainer = styled.footer`
 const TextContainer = styled.div`
   background-color: var(--white-dark);
   /* max-width: ${({ theme }) => theme.widthSize.contentMax}; */
-  max-width: 1500px;
+  max-width: 1350px;
   width: 100%;
   height: 100%;
   padding: 20px;
