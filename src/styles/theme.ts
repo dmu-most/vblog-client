@@ -13,7 +13,7 @@ const breakpoints = {
 };
 
 const widthSize = {
-  contentMax: '1024px',
+  contentMax: '1350px',
 };
 
 // 사용 예시 : background-color: var(--white-primary);
