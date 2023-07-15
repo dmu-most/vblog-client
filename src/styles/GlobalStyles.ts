@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import colors from "./theme";
+import colors from './theme';
 import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
@@ -8,7 +8,6 @@ const GlobalStyles = createGlobalStyle`
     :root {
     ${colors};
   }
-  
   * {
     box-sizing: border-box;
     font-size: 16px;
@@ -30,11 +29,11 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
+    flex-grow: 1;
   }
   body {
+    ${({ theme }) => theme.common.flexCol};
     font-family: 'Noto Sans KR', sans-serif;  
-    min-height: 100vh;
   }
   #root {
     display: flex;
@@ -55,8 +54,15 @@ const GlobalStyles = createGlobalStyle`
   }
 
   main {
-    ${({ theme }) => theme.common.flexCol};
+    ${({ theme }) => theme.common.flexCenterRow};
     width: 100%;
+    margin-top: 65px;
+    background: var(--white-primary);
+    flex-grow: 1; 
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      margin-top: 50px;
+    }
   }
 `;
 
