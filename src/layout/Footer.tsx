@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.div`
-  background-color: var(--gray-light);
+  background-color: var(--bg-white);
   width: 100%;
   height: 150px;
-  position: fixed;
+  /* position: fixed; */
+  margin-top: auto;
   bottom: 0;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
 `;
 
 const FooterText = styled.p`
@@ -26,7 +26,6 @@ const Footer: React.FC = () => {
         <FooterText>This is the footer.</FooterText>
       </FooterContainer>
     </footer>
- 
   );
 };
 
