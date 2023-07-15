@@ -66,7 +66,7 @@ const VblogChangeBtn = styled.button`
   border-radius: 3px;
   color: var(--white-hunt);
   letter-spacing: -0.16px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   text-align: center;
 
