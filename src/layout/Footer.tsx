@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const FooterContainer = styled.footer`
-  background-color: var(--gray-light);
+  background-color: var(--white-deepdark);
   width: 100%;
   height: 180px;
   bottom: 0;
@@ -31,7 +31,6 @@ const TextArea1 = styled.div`
 
 const TextArea2 = styled.div`
   display: flex;
-  /* flex-direction: column; */
   justify-content : flex-end;
   width: 50%;
   padding-top: 20px;
@@ -45,12 +44,10 @@ const FooterText = styled.p`
 const FooterText2 = styled.p`
   color: var(--gray-dark);
   font-size: 15px;
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding: 20px 0 10px;
 `;
 
 const ImgArea = styled.div`
-  /* background-color: red; */
   display: flex;
   flex-direction: row;
 `;
@@ -61,7 +58,6 @@ const UrlZone = styled.div`
 `;
 
 const UrlArea = styled.div`
-  /* background-color: red; */
   display: flex;
   justify-content : flex-end;
   align-items: center;
@@ -89,7 +85,7 @@ const Img = styled.img`
   height: 30px;
   margin-right: 5px;
 `;
-
+  // 이미지 크기 조정으로 인한 불필요한 코드 문제로 고칠 수 있는지 확인해보기
 const Img1 = styled.img`
   width: 90%;
   height: 90%;
@@ -144,7 +140,7 @@ const Footer: React.FC = () => {
                 </UrlArea>
               </Link>
                 <UrlArea>
-                  <FooterText>© [vblog] [2023.07.07]</FooterText>
+                  <FooterText>© [vblog] [2023.07.04]</FooterText>
                 </UrlArea>
             </UrlZone>
           </TextArea2>
