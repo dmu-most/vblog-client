@@ -12,6 +12,10 @@ const FooterContainer = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
+
+      @media ${props => props.theme.breakpoints.mobileSMax} {
+      display: none;
+    }
 `;
 
 const TextContainer = styled.div`
