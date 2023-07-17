@@ -1,13 +1,15 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
 const size = {
-  mobile: '768px',
+  mobileS: '475px',
+  mobileL: '768px',
   tablet: '1024px',
   desktop: '1025px',
 };
 
 const breakpoints = {
-  mobileMax: `screen and (max-width: ${size.mobile})`,
+  mobileSMax: `screen and (max-width: ${size.mobileS})`,
+  mobileLMax: `screen and (max-width: ${size.mobileL})`,
   tabletMax: `screen and (max-width: ${size.tablet})`,
   desktopMin: `screen and (max-width: ${size.desktop})`,
 };
@@ -20,27 +22,29 @@ const widthSize = {
 // 원하는 컬러가 있다면 여기서 추가하시고 사용해주시길 바랍니다(주석처리 필수)
 
 const colors = css`
-// tailwind-color
-  --white-primary: #FFFFFF;
-  --white-dark: #F8FAFC;
-  --white-deepdark: #F1F5F9;
-  --gray-light: #E5E7EB;
-  --gray-primary: #D1D5DB;
-  --gray-dark: #9CA3AF;
+  // tailwind-color
+  --white-primary: #ffffff;
+  --white-dark: #f8fafc;
+  --white-deepdark: #f1f5f9;
+  --gray-light: #e5e7eb;
+  --gray-primary: #d1d5db;
+  --gray-dark: #9ca3af;
   --black-primary: #020617;
-  --black-light: #0F172A;
-  --black-deeplight: #1E293B;
+  --black-light: #0f172a;
+  --black-deeplight: #1e293b;
   //hunt-color
   --black-hunt: #212121;
-  --green-hunt: #6D9886;
-  --brown-hunt: #D9CAB3;
-  --white-hunt: #F6F6F6;
+  --green-hunt: #6d9886;
+  --brown-hunt: #d9cab3;
+  --white-hunt: #f6f6f6;
   //adobe-color
-  --adobe-color1: #A5E5CB;
-  --adobe-color2: #47AA81;
-  --adobe-color3: #6D9886;
-  --adobe-color4: #60E5AE;
-  --adobe-color5: #49665A;
+  --adobe-color1: #a5e5cb;
+  --adobe-color2: #47aa81;
+  --adobe-color3: #6d9886;
+  --adobe-color4: #60e5ae;
+  --adobe-color5: #49665a;
+  //background
+  --bg-white: #f9f9f9;
 `;
 
 // 폰트 크기

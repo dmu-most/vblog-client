@@ -7,7 +7,6 @@ const FooterContainer = styled.footer`
   background-color: var(--gray-light);
   width: 100%;
   height: 180px;
-  position: fixed;
   bottom: 0;
   padding: 20px;
   display: flex;
@@ -36,7 +35,6 @@ const TextArea2 = styled.div`
   justify-content : flex-end;
   width: 50%;
   padding-top: 20px;
-
 `;
 
 const FooterText = styled.p`
