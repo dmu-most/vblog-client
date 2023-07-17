@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const FooterContainer = styled.div`
-  background-color: var(--bg-white);
+
+const FooterContainer = styled.footer`
+  background-color: var(--gray-light);
   width: 100%;
-  height: 150px;
-  /* position: fixed; */
-  margin-top: auto;
+  height: 180px;
   bottom: 0;
   padding: 20px;
   display: flex;
@@ -14,16 +14,141 @@ const FooterContainer = styled.div`
   justify-content: center;
 `;
 
-const FooterText = styled.p`
-  color: var(--black);
+const TextContainer = styled.div`
+  max-width: ${({ theme }) => theme.widthSize.contentMax};
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  display: flex;
 `;
 
-// Footer 컴포넌트를 정의합니다.
+const TextArea1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 90px;
+`;
+
+const TextArea2 = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  justify-content : flex-end;
+  width: 50%;
+  padding-top: 20px;
+`;
+
+const FooterText = styled.p`
+  color: var(--gray-dark);
+  font-size: 15px;
+`;
+
+const FooterText2 = styled.p`
+  color: var(--gray-dark);
+  font-size: 15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+`;
+
+const ImgArea = styled.div`
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+`;
+
+const UrlZone = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const UrlArea = styled.div`
+  /* background-color: red; */
+  display: flex;
+  justify-content : flex-end;
+  align-items: center;
+  flex-direction: row;
+  margin: 5px;
+`;
+
+
+
+const CircleContainer = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--white-hunt);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+`;
+
+const Img = styled.img`
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+`;
+
+const Img1 = styled.img`
+  width: 90%;
+  height: 90%;
+`;
+
+const Img2 = styled.img`
+  width: 80%;
+  height: 80%;
+`;
+
+const Img3 = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const Footer: React.FC = () => {
   return (
     <footer>
       <FooterContainer>
-        <FooterText>This is the footer.</FooterText>
+        <TextContainer>
+          <TextArea1>
+            <FooterText>동양미래대학교 컴퓨터소프트웨어공학과</FooterText>
+            <FooterText2>MOST</FooterText2>
+            <FooterText>김정환 김주영 김지현 임시은</FooterText>
+            <ImgArea>
+              <CircleContainer>
+                <Img1 src={"/Image/jeonghwan.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img2 src={"/Image/juyoong.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img3 src={"/Image/jihyun.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img1 src={"/Image/sieun.png"} />
+              </CircleContainer>
+            </ImgArea>
+          </TextArea1>
+          <TextArea2>
+            <UrlZone>
+              <Link to="https://github.com/dmu-most" target="_blank">
+                <UrlArea>
+                  <Img src={"/Image/github.png"} />
+                  <FooterText>Github</FooterText>
+                 </UrlArea>
+              </Link>
+              <Link to="https://glowing-square-e84.notion.site/MOST-a193863e0d48447eb852ca003fc71d46" target="_blank">
+                <UrlArea>
+                  <Img src={"/Image/notion.png"} />
+                  <FooterText>Notion</FooterText>
+                </UrlArea>
+              </Link>
+                <UrlArea>
+                  <FooterText>© [vblog] [2023.07.07]</FooterText>
+                </UrlArea>
+            </UrlZone>
+          </TextArea2>
+        </TextContainer>
       </FooterContainer>
     </footer>
   );
