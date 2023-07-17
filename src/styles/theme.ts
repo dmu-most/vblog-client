@@ -23,7 +23,7 @@ const widthSize = {
 
 const colors = css`
   // tailwind-color
-  --white-primary: #ffffff;
+  --white-primary: #FFFFFF;
   --white-dark: #f8fafc;
   --white-deepdark: #f1f5f9;
   --gray-light: #e5e7eb;

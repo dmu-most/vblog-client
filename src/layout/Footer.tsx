@@ -75,7 +75,7 @@ const CircleContainer = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: var(--white-hunt);
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
