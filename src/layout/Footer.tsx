@@ -116,16 +116,16 @@ const Footer: React.FC = () => {
             <FooterText>김정환 김주영 김지현 임시은</FooterText>
             <ImgArea>
               <CircleContainer>
-                <Img1 src={"/Image/jeonghwan.png"} />
+                <Img1 src={"/assets/images/jeonghwan.png"} />
               </CircleContainer>
               <CircleContainer>
-                <Img2 src={"/Image/juyoong.png"} />
+                <Img2 src={"/assets/images/juyoong.png"} />
               </CircleContainer>
               <CircleContainer>
-                <Img3 src={"/Image/jihyun.png"} />
+                <Img3 src={"/assets/images/jihyun.png"} />
               </CircleContainer>
               <CircleContainer>
-                <Img1 src={"/Image/sieun.png"} />
+                <Img1 src={"/assets/images/sieun.png"} />
               </CircleContainer>
             </ImgArea>
           </TextArea1>
@@ -133,13 +133,13 @@ const Footer: React.FC = () => {
             <UrlZone>
               <Link to="https://github.com/dmu-most" target="_blank">
                 <UrlArea>
-                  <Img src={"/Image/github.png"} />
+                  <Img src={"/assets/images/github.png"} />
                   <FooterText>Github</FooterText>
                  </UrlArea>
               </Link>
               <Link to="https://glowing-square-e84.notion.site/MOST-a193863e0d48447eb852ca003fc71d46" target="_blank">
                 <UrlArea>
-                  <Img src={"/Image/notion.png"} />
+                  <Img src={"/assets/images/notion.png"} />
                   <FooterText>Notion</FooterText>
                 </UrlArea>
               </Link>
