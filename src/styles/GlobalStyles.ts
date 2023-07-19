@@ -30,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: column;
     min-height: 100vh;
     flex-grow: 1;
+    background-color: var(--bg-green);
   }
   body {
     ${({ theme }) => theme.common.flexCol};
@@ -57,7 +58,6 @@ const GlobalStyles = createGlobalStyle`
     ${({ theme }) => theme.common.flexCenterRow};
     width: 100%;
     margin-top: 65px;
-    background: var(--white-primary);
     flex-grow: 1; 
 
     @media ${props => props.theme.breakpoints.mobileSMax} {

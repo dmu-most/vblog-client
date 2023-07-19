@@ -1,11 +1,14 @@
-import React from "react";
 import PostCard from "@components/common/PostCard";
+import { styled } from "styled-components";
+
+
+
 
 const MainPage = () => {
     return (
-        <div>
+        <>
             <PostCard/>
-        </div>
+        </>
   );
 };
 

@@ -23,7 +23,7 @@ const widthSize = {
 
 const colors = css`
   // tailwind-color
-  --white-primary: #FFFFFF;
+  --white: #ffffff;
   --white-dark: #f8fafc;
   --white-deepdark: #f1f5f9;
   --gray-light: #e5e7eb;
@@ -33,7 +33,7 @@ const colors = css`
   --black-light: #0f172a;
   --black-deeplight: #1e293b;
   //hunt-color
-  --black-hunt: #212121;
+  --black-hunt: #212121; // font-color
   --green-hunt: #6d9886;
   --brown-hunt: #d9cab3;
   --white-hunt: #f6f6f6;
@@ -45,6 +45,15 @@ const colors = css`
   --adobe-color5: #49665a;
   //background
   --bg-white: #f9f9f9;
+  --bg-green: #FAFAF7;
+  --bg-brown: #FAF4EB;
+  //tag-color
+  --tag-pink: #F2E1E9;
+  --tag-blue: #D6E4EE;
+  --tag-purple: #F2E1E9;
+  --tag-green: #DEECDD;
+  //icon-color
+  --icon-red: #FE0000;
 `;
 
 // 폰트 크기
@@ -71,6 +80,12 @@ const common = {
   flexCol: `
       display: flex;
       flex-direction: column;
+      align-items: center;
+    `,
+
+    flexRow: `
+      display: flex;
+      flex-direction: row;
       align-items: center;
     `,
 };

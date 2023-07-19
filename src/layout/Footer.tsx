@@ -2,7 +2,60 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+// Footer
+const Footer: React.FC = () => {
+  return (
+    <footer>
+      <FooterContainer>
+        <TextContainer>
+          <TextArea1>
+            <FooterText>동양미래대학교 컴퓨터소프트웨어공학과</FooterText>
+            <TeamName>MOST</TeamName>
+            <FooterText>김정환 김주영 김지현 임시은</FooterText>
+            <ImgArea>
+              <CircleContainer>
+                <Img1 src={"/assets/images/jeonghwan.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img2 src={"/assets/images/juyoong.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img3 src={"/assets/images/jihyun.png"} />
+              </CircleContainer>
+              <CircleContainer>
+                <Img1 src={"/assets/images/sieun.png"} />
+              </CircleContainer>
+            </ImgArea>
+          </TextArea1>
+          <TextArea2>
+            <UrlZone>
+              <Link to="https://github.com/dmu-most" target="_blank">
+                <UrlArea>
+                  <Img src={"/assets/images/github.png"} />
+                  <FooterText>Github</FooterText>
+                 </UrlArea>
+              </Link>
+              <Link to="https://glowing-square-e84.notion.site/MOST-a193863e0d48447eb852ca003fc71d46" target="_blank">
+                <UrlArea>
+                  <Img src={"/assets/images/notion.png"} />
+                  <FooterText>Notion</FooterText>
+                </UrlArea>
+              </Link>
+                <UrlArea>
+                  <FooterText>© [vblog] [2023.07.04]</FooterText>
+                </UrlArea>
+            </UrlZone>
+          </TextArea2>
+        </TextContainer>
+      </FooterContainer>
+    </footer>
+  );
+};
 
+export default Footer;
+
+
+//Footer 컨테이너
 const FooterContainer = styled.footer`
   background-color: var(--white-deepdark);
   width: 100%;
@@ -45,7 +98,7 @@ const FooterText = styled.p`
   font-size: 15px;
 `;
 
-const FooterText2 = styled.p`
+const TeamName = styled.p`
   color: var(--gray-dark);
   font-size: 15px;
   padding: 20px 0 10px;
@@ -104,54 +157,3 @@ const Img3 = styled.img`
   width: 100%;
   height: 100%;
 `;
-
-const Footer: React.FC = () => {
-  return (
-    <footer>
-      <FooterContainer>
-        <TextContainer>
-          <TextArea1>
-            <FooterText>동양미래대학교 컴퓨터소프트웨어공학과</FooterText>
-            <FooterText2>MOST</FooterText2>
-            <FooterText>김정환 김주영 김지현 임시은</FooterText>
-            <ImgArea>
-              <CircleContainer>
-                <Img1 src={"/assets/images/jeonghwan.png"} />
-              </CircleContainer>
-              <CircleContainer>
-                <Img2 src={"/assets/images/juyoong.png"} />
-              </CircleContainer>
-              <CircleContainer>
-                <Img3 src={"/assets/images/jihyun.png"} />
-              </CircleContainer>
-              <CircleContainer>
-                <Img1 src={"/assets/images/sieun.png"} />
-              </CircleContainer>
-            </ImgArea>
-          </TextArea1>
-          <TextArea2>
-            <UrlZone>
-              <Link to="https://github.com/dmu-most" target="_blank">
-                <UrlArea>
-                  <Img src={"/assets/images/github.png"} />
-                  <FooterText>Github</FooterText>
-                 </UrlArea>
-              </Link>
-              <Link to="https://glowing-square-e84.notion.site/MOST-a193863e0d48447eb852ca003fc71d46" target="_blank">
-                <UrlArea>
-                  <Img src={"/assets/images/notion.png"} />
-                  <FooterText>Notion</FooterText>
-                </UrlArea>
-              </Link>
-                <UrlArea>
-                  <FooterText>© [vblog] [2023.07.04]</FooterText>
-                </UrlArea>
-            </UrlZone>
-          </TextArea2>
-        </TextContainer>
-      </FooterContainer>
-    </footer>
-  );
-};
-
-export default Footer;
