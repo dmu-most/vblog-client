@@ -25,12 +25,12 @@ const colors = css`
   // tailwind-color
   --white-primary: #ffffff;
   --white-dark: #f8fafc;
-  --white-deepdark: #f1f5f9;
-  --gray-light: #e5e7eb;
-  --gray-primary: #d1d5db;
-  --gray-dark: #9ca3af;
+  --white-deepdark: #f9f9fa;
+  --gray-light: #ebebeb;
+  --gray-primary: #d8d9db;
+  --gray-dark: #adb0b6;
   --black-primary: #020617;
-  --black-light: #0f172a;
+  --black-light: #45474b;
   --black-deeplight: #1e293b;
   //hunt-color
   --black-hunt: #212121;
