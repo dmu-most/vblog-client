@@ -21,7 +21,7 @@ const PostCard = () => {
             <div className="Title">지구오락실</div>
             <div className="ContentDate"> 2023.07.19</div>
             </TitleContainer>
-            <div className="Content"> 네이버나 구글같은 검색 엔진을 이용하여, 우리가 원하는 결과를 얻은 적이 다들 한번쯤은 있을 거라고 생각한다.만약 사이트에서 우리가 원하는 내용을...</div>
+            <div className="Content"> 우리 지락이들 또 랜덤 플레이 댄스 찢었다💥 케이팝 기강 잡고 영석이 형도 비명 지르게 한 지락이들 표 칼군무💃 매주 금 오후 8시 40분 tvN에서! </div>
           </ContentContainer>
           <TagContainer>
             <Hashtag />
@@ -93,7 +93,7 @@ const ContentContainer = styled.div`
       ${({ theme }) => theme.common.flexRow};
       padding: 7px;
       color: var(--black-hunt);
-      font-weight: 300;
+      font-weight: 400;
       font-size: 17px;
     }
 `;
