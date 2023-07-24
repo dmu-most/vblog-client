@@ -56,9 +56,13 @@ const GlobalStyles = createGlobalStyle`
   main {
     ${({ theme }) => theme.common.flexCenterRow};
     width: 100%;
-    margin-top: 65px;
     background: var(--white-primary);
     flex-grow: 1; 
+    margin-top: 0;
+  }
+
+  .header_margin {
+    margin-top: 65px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin-top: 50px;
