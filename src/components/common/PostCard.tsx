@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Hashtag from "./Hashtag";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillEdit } from "react-icons/ai";
 
 //**2023/07/19 PostCard
 const PostCard = () => {
@@ -8,13 +8,25 @@ const PostCard = () => {
         <CardContainer>
           <IconContainer>
               <AiFillHeart width="10px" height= "10px" color="var(--icon-red)"/>
-              <div className="Label"> 55 </div>
+              <div className="Label"> 31 </div>
+              <AiFillEdit width="10px" height= "10px" color="var(--icon-navy)"/>
+              <div className="Label"> 100 </div>
+              <div className="UserName"> 싱니 </div>
           </IconContainer>
           <ImgContainer>
+            <img src="/assets/images/vlog_ex.png" />
           </ImgContainer>
           <ContentContainer>
+            <TitleContainer>
+            <div className="Title">지구오락실</div>
+            <div className="ContentDate"> 2023.07.19</div>
+            </TitleContainer>
+            <div className="Content"> 네이버나 구글같은 검색 엔진을 이용하여, 우리가 원하는 결과를 얻은 적이 다들 한번쯤은 있을 거라고 생각한다.만약 사이트에서 우리가 원하는 내용을...</div>
           </ContentContainer>
           <TagContainer>
+            <Hashtag />
+            <Hashtag />
+            <Hashtag />
             <Hashtag />
           </TagContainer>
         </CardContainer>
@@ -40,12 +52,22 @@ const CardContainer = styled.div`
 //IconContainer :  카드안에 들어갈 icon
 const IconContainer = styled.div`
     ${({ theme }) => theme.common.flexRow};
+    padding: 7px;
     width: 100%;
     height: 7%;
 
     > .Label {
-      margin-left: 3px;
-      font-size: 14px;
+      color: var(--black-hunt);
+      padding: 5px;
+      font-size: 15px;
+    }
+
+    > .UserName {
+        display: flex;
+        justify-content : flex-end;
+        color: var(--black-hunt);
+        font-size: 15px;
+        margin-left: auto;
     }
 
 `;
@@ -53,21 +75,61 @@ const IconContainer = styled.div`
 
 //ImgContainer :  카드 안에 들어갈 이미지
 const ImgContainer = styled.div`
-    background-color: green;
     width: 100%;
     height: 38%;
+
+    > img {
+      width: 100%;
+      height: 100%;
+    }
 `;
 
 //contentContainer :  카드 안에 들어갈 본문 내용
 const ContentContainer = styled.div`
-    background-color: white;
     width: 100%;
-    height: 40%;
+    height: 35%;
+
+    > .Content {
+      ${({ theme }) => theme.common.flexRow};
+      padding: 7px;
+      color: var(--black-hunt);
+      font-weight: 300;
+      font-size: 17px;
+    }
+`;
+
+//contentContainer :  카드 안에 들어갈 제목과 작성날짜
+const TitleContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    >.Title {
+    padding: 10px 7px 7px 7px;
+    color: var(--black-hunt);
+    font-weight: 600;
+    font-size: 20px;
+
+    }
+
+    >.ContentDate {
+        display: flex;
+        justify-content : flex-end;
+        padding: 14px 7px 7px 7px;
+        color: var(--black-hunt);
+        font-weight: 200;
+        font-size: 15px;
+        margin-left: auto;
+    }
+
 `;
 
 //TagContainer :  카드 안에 들어갈 태그들
 const TagContainer = styled.div`
-    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 7px;
+    flex-wrap : wrap;
     width: 100%;
     height: 20%;
 `;

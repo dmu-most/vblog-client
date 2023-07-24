@@ -54,6 +54,7 @@ const colors = css`
   --tag-green: #DEECDD;
   //icon-color
   --icon-red: #FE0000;
+  --icon-navy:#4A55A2;
 `;
 
 // 폰트 크기

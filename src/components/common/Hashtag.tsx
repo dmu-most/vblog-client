@@ -14,11 +14,12 @@ export default Hashtag;
 
 // hashtag 컨테이너
 const TagContainer = styled.div`
- ${({ theme }) => theme.common.flexCenter};
+    ${({ theme }) => theme.common.flexCenter};
     padding: 6px 12px;
+    margin: 0 5px 5px 0;
     gap: 8px;
-    height: 35px;
-    width: 100px;
+    height: 25px;
+    width: 80px;
     border: none;
     background-color: var(--tag-pink);
     border-radius: 20px;
@@ -26,7 +27,8 @@ const TagContainer = styled.div`
 
     > .Label{
         line-height: 20px;
-        font-size: 12px;
+        font-size: 11px;
+        font-weight: 500;
         color: var(--black-hunt);
         font-family: sans-serif;
         letter-spacing: 1px;
