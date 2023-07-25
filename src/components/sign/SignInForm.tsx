@@ -57,7 +57,7 @@ const SignInForm: React.FC = (): JSX.Element => {
 
 export default SignInForm;
 
-const SignInFormContainer = styled.form`
+const SignInFormContainer = styled.div`
   margin-top: 3rem;
   max-width: 450px;
   width: 100%;
