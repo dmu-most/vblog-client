@@ -1,7 +1,7 @@
 import PostCard from "@components/common/PostCard";
-import BannerComponent from "@components/common/Main/BannerComponent";
-import IntroComponent from "@components/common/Main/IntroComponent";
-import CardComponent from "@components/common/Main/CardComponent";
+import BannerComponent from "@components/Main/BannerComponent";
+import IntroComponent from "@components/Main/IntroComponent";
+import CardComponent from "@components/Main/CardComponent";
 import { styled } from "styled-components";
 
 
