@@ -47,6 +47,8 @@ const colors = css`
   --bg-white: #f9f9f9;
   --bg-green: #FAFAF7;
   --bg-brown: #FAF4EB;
+  // deep
+  --deep-green: #71877e;
   //tag-color
   --tag-pink: #F2E1E9;
   --tag-blue: #D6E4EE;

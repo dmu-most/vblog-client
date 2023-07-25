@@ -32,7 +32,16 @@ const GlobalStyles = createGlobalStyle`
     --bg-white: #f9f9f9;
     // deep
     --deep-green: #71877e;
+    //tag-color
+    --tag-pink: #F2E1E9;
+    --tag-blue: #D6E4EE;
+    --tag-purple: #F2E1E9;
+    --tag-green: #DEECDD;
+    //icon-color
+    --icon-red: #FE0000;
+    --icon-navy:#4A55A2;
   }
+  
   * {
     box-sizing: border-box;
     font-size: 16px;
