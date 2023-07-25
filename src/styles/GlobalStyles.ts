@@ -1,12 +1,37 @@
 import { createGlobalStyle } from 'styled-components';
-import colors from './theme';
 import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
 
-    :root {
-    ${colors};
+  // 사용 예시 : background-color: var(--white-primary);
+  // 원하는 컬러가 있다면 여기서 추가하시고 사용해주시길 바랍니다(주석처리 필수)
+  :root {
+  // tailwind-color
+    --white-primary: #ffffff;
+    --white-dark: #f8fafc;
+    --white-deepdark: #f9f9fa;
+    --gray-light: #ebebeb;
+    --gray-primary: #d8d9db;
+    --gray-dark: #adb0b6;
+    --black-primary: #020617;
+    --black-light: #45474b;
+    --black-deeplight: #1e293b;
+    //hunt-color
+    --black-hunt: #212121;
+    --green-hunt: #6d9886;
+    --brown-hunt: #d9cab3;
+    --white-hunt: #f6f6f6;
+    //adobe-color
+    --adobe-color1: #a5e5cb;
+    --adobe-color2: #47aa81;
+    --adobe-color3: #6d9886;
+    --adobe-color4: #60e5ae;
+    --adobe-color5: #49665a;
+    //background
+    --bg-white: #f9f9f9;
+    // deep
+    --deep-green: #71877e;
   }
   * {
     box-sizing: border-box;
@@ -58,7 +83,13 @@ const GlobalStyles = createGlobalStyle`
     ${({ theme }) => theme.common.flexCenterRow};
     width: 100%;
     margin-top: 65px;
+    background: var(--white-primary);
     flex-grow: 1; 
+    margin-top: 0;
+  }
+
+  .header_margin {
+    margin-top: 65px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin-top: 50px;

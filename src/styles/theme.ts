@@ -93,7 +93,6 @@ const common = {
 
 const theme = {
   breakpoints,
-  colors,
   fontSizes,
   widthSize,
   size,
