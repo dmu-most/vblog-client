@@ -84,7 +84,7 @@ const common = {
       align-items: center;
     `,
 
-    flexRow: `
+  flexRow: `
       display: flex;
       flex-direction: row;
       align-items: center;

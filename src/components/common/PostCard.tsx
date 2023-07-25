@@ -41,11 +41,14 @@ const CardContainer = styled.div`
   width: 300px;
   height: 350px;
   perspective: 1000px;
-  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s ease;
+  /* transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 
-  // 나중에 지우기
-  margin-top: 50px;
+  /* 확대효과 */
+  &:hover {
+    transform: scale(1.1); /* 마우스 오버 시 20% 확대 */
+  }
 
 `;
 
