@@ -30,6 +30,8 @@ const GlobalStyles = createGlobalStyle`
     --adobe-color5: #49665a;
     //background
     --bg-white: #f9f9f9;
+    // deep
+    --deep-green: #71877e;
   }
   * {
     box-sizing: border-box;
