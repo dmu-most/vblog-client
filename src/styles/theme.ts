@@ -18,47 +18,6 @@ const widthSize = {
   contentMax: '1350px',
 };
 
-// 사용 예시 : background-color: var(--white-primary);
-// 원하는 컬러가 있다면 여기서 추가하시고 사용해주시길 바랍니다(주석처리 필수)
-
-const colors = css`
-  // tailwind-color
-  --white: #ffffff;
-  --white-dark: #f8fafc;
-  --white-deepdark: #f1f5f9;
-  --gray-light: #e5e7eb;
-  --gray-primary: #d1d5db;
-  --gray-dark: #9ca3af;
-  --black-primary: #020617;
-  --black-light: #0f172a;
-  --black-deeplight: #1e293b;
-  //hunt-color
-  --black-hunt: #212121; // font-color
-  --green-hunt: #6d9886;
-  --brown-hunt: #d9cab3;
-  --white-hunt: #f6f6f6;
-  //adobe-color
-  --adobe-color1: #a5e5cb;
-  --adobe-color2: #47aa81;
-  --adobe-color3: #6d9886;
-  --adobe-color4: #60e5ae;
-  --adobe-color5: #49665a;
-  //background
-  --bg-white: #f9f9f9;
-  --bg-green: #FAFAF7;
-  --bg-brown: #FAF4EB;
-  // deep
-  --deep-green: #71877e;
-  //tag-color
-  --tag-pink: #F2E1E9;
-  --tag-blue: #D6E4EE;
-  --tag-purple: #F2E1E9;
-  --tag-green: #DEECDD;
-  //icon-color
-  --icon-red: #FE0000;
-  --icon-navy:#4A55A2;
-`;
-
 // 폰트 크기
 const fontSizes = {};
 
