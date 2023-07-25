@@ -1,9 +1,10 @@
+import React from "react";
+import { styled } from "styled-components";
+import { vblogData } from "../Data/DummyData";
 import PostCard from "@components/common/PostCard";
 import BannerComponent from "@components/Main/BannerComponent";
 import IntroComponent from "@components/Main/IntroComponent";
 import CardComponent from "@components/Main/CardComponent";
-import { styled } from "styled-components";
-import { vblogData } from "../Data/DummyData";
 
 
 
@@ -29,7 +30,7 @@ const MainPage = () => {
                 <PostCard key={item.ContentId} data={item} />
             ))}
             </CardComponent>
-            <IntroComponent intro="새롭게 뜨고 있는 브이로그 모음 " />
+            <IntroComponent intro="새롭게 뜨고 있는 컨텐츠 모음 " />
             <CardComponent>
             {vblogData.map((item) => (
                 <PostCard key={item.ContentId} data={item} />

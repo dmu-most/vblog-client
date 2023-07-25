@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const BannerComponent = () => {
   return (
     <BannerContainer>
-      <h2>banenrComponent</h2>
+      <h2>bannerComponent</h2>
     </BannerContainer>
   );
 };
