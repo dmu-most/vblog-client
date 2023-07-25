@@ -1,13 +1,13 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-type LayoutProps = {
-  children: ReactNode;
-};
+interface MainProps {
+  className?: string;
+  children: React.ReactNode;
+}
 
-const Main = ({ children }: LayoutProps) => {
+const Main: React.FC<MainProps> = ({ className, children }) => {
   return (
-    <main>
+    <main className={className}>
       <MainContainer>{children}</MainContainer>
     </main>
   );
