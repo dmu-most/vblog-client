@@ -1,29 +1,48 @@
+
 import styled from "styled-components";
 import Hashtag from "./Hashtag";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
 
+
+interface vblogType {
+  ContentId: number;
+  ContentDate: string;
+  ContentTitle: string;
+  Content: string;
+  Heart: number;
+  Review: number;
+  UserName: string;
+}
+
+interface PostCardProps {
+  data: vblogType;
+}
+
 //**2023/07/19 PostCard
-const PostCard = () => {
+const PostCard: React.FC<PostCardProps> = ({ data }) => {
+  // Rest of the component code
+
     return (
         <CardContainer>
           <IconContainer>
               <AiFillHeart width="10px" height= "10px" color="var(--icon-red)"/>
-              <div className="Label"> 31 </div>
+              <div className="Label"> {data.Heart} </div>
               <AiFillEdit width="10px" height= "10px" color="var(--icon-navy)"/>
-              <div className="Label"> 100 </div>
-              <div className="UserName"> 싱니 </div>
+              <div className="Label"> {data.Review} </div>
+              <div className="UserName"> {data.UserName} </div>
           </IconContainer>
           <ImgContainer>
             <img src="/assets/images/vlog_ex.png" />
           </ImgContainer>
           <ContentContainer>
             <TitleContainer>
-            <div className="Title">지구오락실</div>
-            <div className="ContentDate"> 2023.07.19</div>
+            <div className="Title"> {data.ContentTitle} </div>
+            <div className="ContentDate"> {data.ContentDate} </div>
             </TitleContainer>
-            <div className="Content"> 우리 지락이들 또 랜덤 플레이 댄스 찢었다💥 케이팝 기강 잡고 영석이 형도 비명 지르게 한 지락이들 표 칼군무💃 매주 금 오후 8시 40분 tvN에서! </div>
+            <div className="Content"> {data.Content} </div>
           </ContentContainer>
           <TagContainer>
+            {/* 수정해야 할 부분 */}
             <Hashtag />
             <Hashtag />
             <Hashtag />
@@ -33,6 +52,7 @@ const PostCard = () => {
   );
 };
 
+// eslint-disable-next-line react/prop-types
 export default PostCard;
 
 //PostCardContainer

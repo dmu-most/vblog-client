@@ -12,7 +12,7 @@ export default BannerComponent;
 
 const BannerContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
-    background-color: var(--icon-navy);
+    background-color: var(--green-hunt);
     width: 100%;
     height: 450px;
 
