@@ -34,7 +34,12 @@ export default Oauth;
 const OauthContainer = styled.div`
   margin-top: 2.8rem;
   ${({ theme }) => theme.common.flexCenterCol};
-  width: 450px;
+  max-width: 450px;
+  width: 100%;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    padding: 0 2rem;
+  }
 `;
 
 // ===================== 소셜 로그인 시작을 알리는 제목 =====================
@@ -50,6 +55,7 @@ const OauthTitle = styled.div`
   > p {
     color: var(--black-light);
     margin: 0 1rem;
+    font-size: 15px;
   }
 `;
 
@@ -69,6 +75,10 @@ const OauthItems = styled.div`
     margin: 0;
     padding: 0;
   }
+  > .oauth_item > img {
+    height: 60px;
+    width: 60px;
+  }
   > .gap_item {
     height: 100%;
     width: 1px;
@@ -79,5 +89,17 @@ const OauthItems = styled.div`
     font-size: 14px;
     font-weight: 600;
     color: var(--black-light);
+  }
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    gap: 1rem;
+
+    > .oauth_item > img {
+      height: 45px;
+      width: 45px;
+    }
+    > .oauth_item > .oauth_item_title {
+      font-size: 13px;
+    }
   }
 `;

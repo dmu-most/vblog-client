@@ -14,11 +14,22 @@ export default SignHeader;
 const SignHeaderContainer = styled.div`
   ${({ theme }) => theme.common.flexCenter};
   border-bottom: 2px solid var(--black-hunt);
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   height: 120px;
 
   > img {
     width: 275px;
-    height: 120px;
+    height: auto;
+  }
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    padding: 0 2rem;
+    border-bottom: none;
+
+    > img {
+      width: 235px;
+      height: auto;
+    }
   }
 `;
