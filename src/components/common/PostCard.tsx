@@ -57,7 +57,7 @@ export default PostCard;
 
 //PostCardContainer
 const CardContainer = styled.div`
-  background-color: white;
+  background-color: var(--white-primary);
   width: 300px;
   height: 350px;
   perspective: 1000px;
@@ -67,7 +67,7 @@ const CardContainer = styled.div`
 
   /* 확대효과 */
   &:hover {
-    transform: scale(1.1); /* 마우스 오버 시 20% 확대 */
+    transform: scale(1.1); /* 마우스 오버 시 10% 확대 */
   }
 
 `;
