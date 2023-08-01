@@ -47,6 +47,12 @@ const SignUpForm: React.FC = (): JSX.Element => {
           <input type="text" id="user_email" className="email" placeholder="이메일@example.com" />
         </div>
         <div className="form_item">
+          <label className="input_title" htmlFor="user_name">
+            별명
+          </label>
+          <input type="text" id="user_name" className="name" placeholder="별명을 입력하세요" />
+        </div>
+        <div className="form_item">
           <label className="input_title" htmlFor="user_password">
             비밀번호
           </label>
@@ -139,6 +145,7 @@ const FormWrap = styled.form`
   }
   > .form_item > .id_input_wrap > .id,
   > .form_item > .email,
+  > .form_item > .name,
   > .form_item > .password_icon_wrap > .password {
     height: 47px;
     width: 100%;
