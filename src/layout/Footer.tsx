@@ -61,7 +61,6 @@ const FooterContainer = styled.footer`
   width: 100%;
   height: 180px;
   bottom: 0;
-  margin-top: 50px;
   padding: 20px;
   display: flex;
   align-items: center;
