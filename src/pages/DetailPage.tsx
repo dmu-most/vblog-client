@@ -7,7 +7,7 @@ import ReviewComponent from "@components/detail/ReviewComponent";
 import CommandComponent from "@components/detail/CommandComponent";
 import PostCard from "@components/common/PostCard";
 
-
+/** 2023/07/29 - 디테일 페이지 */
 const DetailPage = () => {
     const firstThreePosts = vblogData.slice(0, 3);
 

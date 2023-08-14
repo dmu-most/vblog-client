@@ -6,7 +6,7 @@ import IntroComponent from "@components/main/IntroComponent";
 import CardComponent from "@components/main/CardComponent";
 
 
-
+/** 2023/07/25 - 메인 페이지 */
 const MainPage = () => {
     return (
         <MainPageContainer>

@@ -15,7 +15,7 @@ const BannerComponent = () => {
           <TagBannerForm>
             <div className="Label"> 현재 가장 인기 tag모음 </div>
             <div className="tags">
-              <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag />
+              {/* <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> */}
             </div>
           </TagBannerForm>
           <CallBannerForm>
@@ -38,7 +38,7 @@ const BannerContainer = styled.div`
 
     // 나중에 지우기
     margin-top: 100px;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
 
     // 태블릿 사이즈 부터는 bannercomponent는 숨김
     @media ${props => props.theme.breakpoints.tabletMax} {
