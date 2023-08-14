@@ -1,10 +1,9 @@
-import React from "react";
 import { styled } from "styled-components";
-import { vblogData } from "../Data/DummyData";
+import { vblogData } from "../data/DummyData";
 import PostCard from "@components/common/PostCard";
-import BannerComponent from "@components/Main/BannerComponent";
-import IntroComponent from "@components/Main/IntroComponent";
-import CardComponent from "@components/Main/CardComponent";
+import BannerComponent from "@components/main/BannerComponent";
+import IntroComponent from "@components/main/IntroComponent";
+import CardComponent from "@components/main/CardComponent";
 
 
 

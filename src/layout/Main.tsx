@@ -19,4 +19,5 @@ const MainContainer = styled.div`
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   width: 100%;
   height: 100%;
+  margin-bottom: 50px;
 `;

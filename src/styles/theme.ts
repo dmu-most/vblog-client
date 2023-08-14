@@ -1,10 +1,9 @@
-import { css } from 'styled-components';
 
 const size = {
   mobileS: '475px',
   mobileL: '768px',
   tablet: '1024px',
-  desktop: '1025px',
+  desktop: '1350px',
 };
 
 const breakpoints = {
