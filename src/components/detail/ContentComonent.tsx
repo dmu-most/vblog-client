@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 // Component
 import Hashtag from "@components/common/Hashtag";
 
+
+
 //**2023/07/29 CommandComponent
 const ContentComponent = () => {
   return (
@@ -15,7 +17,7 @@ const ContentComponent = () => {
         </TitleContainer>
       </ProfileContainer>
       <TagContainer>
-        <Hashtag /><Hashtag /><Hashtag /><Hashtag />
+        {/* <Hashtag /><Hashtag /><Hashtag /><Hashtag /> */}
       </TagContainer>
       <Line />
       <GradeContainer>

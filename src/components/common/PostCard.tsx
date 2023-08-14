@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
 
+
 //Component
 import Hashtag from "./Hashtag";
-
 
 interface vblogType {
   ContentId: number;
@@ -13,6 +13,7 @@ interface vblogType {
   Heart: number;
   Review: number;
   UserName: string;
+  Hashtags: string[];
 }
 
 interface PostCardProps {
@@ -43,11 +44,9 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
             <div className="Content"> {data.Content} </div>
           </ContentContainer>
           <TagContainer>
-            {/* 수정해야 할 부분 */}
-            <Hashtag />
-            <Hashtag />
-            <Hashtag />
-            <Hashtag />
+          {data.Hashtags.map(( hashtag ) => (
+            <Hashtag key={hashtag} hashtag={hashtag} />
+          ))}
           </TagContainer>
         </CardContainer>
   );
@@ -65,7 +64,8 @@ const CardContainer = styled.div`
   transition: transform 0.3s ease;
   /* transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-
+  cursor: pointer;
+  
   /* 확대효과 */
   &:hover {
     transform: scale(1.1); /* 마우스 오버 시 10% 확대 */
