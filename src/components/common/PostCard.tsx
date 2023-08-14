@@ -1,7 +1,8 @@
-
 import styled from "styled-components";
-import Hashtag from "./Hashtag";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
+
+//Component
+import Hashtag from "./Hashtag";
 
 
 interface vblogType {

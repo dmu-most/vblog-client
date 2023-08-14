@@ -30,6 +30,8 @@ const GlobalStyles = createGlobalStyle`
     --adobe-color5: #49665a;
     //background
     --bg-white: #f9f9f9;
+    --bg-green: #FAFAF7;
+    --bg-brown: #faf4eb;
     // deep
     --deep-green: #71877e;
     //tag-color
@@ -40,6 +42,7 @@ const GlobalStyles = createGlobalStyle`
     //icon-color
     --icon-red: #FE0000;
     --icon-navy:#4A55A2;
+    --icon-blue: #0002A1;
   }
   
   * {
