@@ -1,27 +1,27 @@
-import { styled } from "styled-components";
-import { vblogData } from "../data/DummyData";
+import { styled } from 'styled-components';
+import { vblogData } from '../data/dummyData';
 
 //component
-import ContentComponent from "@components/detail/ContentComonent";
-import ReviewComponent from "@components/detail/ReviewComponent";
-import CommandComponent from "@components/detail/CommandComponent";
-import PostCard from "@components/common/PostCard";
+import ContentComponent from '@components/detail/ContentComonent';
+import ReviewComponent from '@components/detail/ReviewComponent';
+import CommandComponent from '@components/detail/CommandComponent';
+import PostCard from '@components/common/PostCard';
 
 /** 2023/07/29 - 디테일 페이지 */
 const DetailPage = () => {
-    const firstThreePosts = vblogData.slice(0, 3);
+  const firstThreePosts = vblogData.slice(0, 3);
 
-    return(
+  return (
     <DetailContainer>
-        <ContentComponent />
-        <ReviewComponent />
-        <CommandComponent>
-        {firstThreePosts.map((item) => (
+      <ContentComponent />
+      <ReviewComponent />
+      <CommandComponent>
+        {firstThreePosts.map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
-        </CommandComponent>
+      </CommandComponent>
     </DetailContainer>
-    );
+  );
 };
 
 export default DetailPage;
@@ -29,5 +29,4 @@ export default DetailPage;
 const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
