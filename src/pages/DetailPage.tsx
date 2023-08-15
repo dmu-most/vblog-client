@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { vblogData } from '../data/dummyData';
+import { vblogData } from '../data/DummyData';
 
 //component
 import ContentComponent from '@components/detail/ContentComonent';
