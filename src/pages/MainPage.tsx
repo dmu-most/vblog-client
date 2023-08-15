@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
-import { vblogData } from '../data/DummyData';
+import { vblogData } from '../data/dummyData';
+
+// component
 import PostCard from '@components/common/PostCard';
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
