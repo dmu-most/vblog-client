@@ -1,14 +1,26 @@
 import React, { ReactNode } from 'react';
 import { styled } from "styled-components";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface CardProps {
   children: ReactNode;
+}
+
+interface ArrowIconProps {
+  left?: boolean;
+  right?: boolean;
 }
 
 const CardComponent: React.FC<CardProps> = ({ children }) => {
   return (
     <CardContainer>
       {children}
+      <ArrowIconWrapper left>
+        <IoIosArrowBack className='ArrowBack' />
+      </ArrowIconWrapper>
+      <ArrowIconWrapper right>
+        <IoIosArrowForward className='ArrowForward' />
+      </ArrowIconWrapper>
     </CardContainer>
   );
 };
@@ -19,7 +31,7 @@ export default CardComponent;
 const CardContainer = styled.div`
     ${({ theme }) => theme.common.flexRow};
     width: 100%;
-    height: 350px;
+    height: auto;
 
     // 모바일 쿼리 관련 코드
     display: grid;
@@ -41,5 +53,37 @@ const CardContainer = styled.div`
   }
   @media screen and (min-width: 1350px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+const ArrowIconWrapper = styled.div<ArrowIconProps>`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  ${({ left, right }) => (left ? 'left: 10px;' : right ? 'right: 10px;' : '')};
+  z-index: 1;
+
+  > .ArrowBack {
+  color: var(--gray-primary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 50px;
+
+  &:hover {
+    color: var(--black-hunt);
+    }
+  }
+
+  > .ArrowForward {
+  color: var(--gray-primary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 50px;
+
+  &:hover {
+    color: var(--black-hunt);
+    }
   }
 `;

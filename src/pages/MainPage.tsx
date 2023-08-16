@@ -14,11 +14,11 @@ const MainPage = () => {
       <BannerComponent />
       <IntroComponent intro="OO님을 위한 브블의 콘텐츠 💬" />
       <CardComponent>
-        {vblogData.map(item => (
+        {vblogData.slice(0, 4).map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
       </CardComponent>
-      <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
+      {/* <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent>
         {vblogData.map(item => (
           <PostCard key={item.ContentId} data={item} />
@@ -35,7 +35,7 @@ const MainPage = () => {
         {vblogData.map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
-      </CardComponent>
+      </CardComponent> */}
     </MainPageContainer>
   );
 };
