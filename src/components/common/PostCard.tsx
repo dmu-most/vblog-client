@@ -62,15 +62,13 @@ const CardContainer = styled.div`
   height: 350px;
   perspective: 1000px;
   transition: transform 0.3s ease;
-  /* transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
   
   /* 확대효과 */
   &:hover {
-    transform: scale(1.1); /* 마우스 오버 시 10% 확대 */
+    transform: scale(1.02); /* 마우스 오버 시 10% 확대 */
   }
-
 `;
 
 //IconContainer :  카드안에 들어갈 icon
@@ -93,9 +91,7 @@ const IconContainer = styled.div`
         font-size: 15px;
         margin-left: auto;
     }
-
 `;
-
 
 //ImgContainer :  카드 안에 들어갈 이미지
 const ImgContainer = styled.div`
@@ -132,7 +128,6 @@ const TitleContainer = styled.div`
     color: var(--black-hunt);
     font-weight: 600;
     font-size: 20px;
-
     }
 
     >.ContentDate {

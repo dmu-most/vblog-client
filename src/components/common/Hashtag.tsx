@@ -51,6 +51,10 @@ const TagContainer = styled.div<TagContainerProps>`
     border-radius: 20px;
     cursor: pointer;
 
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+    height: 15px;
+      }
+
     > .Label{
         line-height: 20px;
         font-size: 11px;
@@ -58,6 +62,10 @@ const TagContainer = styled.div<TagContainerProps>`
         color: var(--black-hunt);
         font-family: sans-serif;
         letter-spacing: 1px;
+
+        @media ${props => props.theme.breakpoints.mobileSMax} {
+        font-size: 3px;
+          }
         }
 
       &:hover {
