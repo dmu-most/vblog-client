@@ -4,17 +4,20 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface CardProps {
   children: ReactNode;
+  currentIndex: number;
+  onNextClick: () => void;
+  onPrevClick: () => void;
 }
 
 //**2023/07/07 CardComponent
-const CardComponent: React.FC<CardProps> = ({ children }) => {
+const CardComponent: React.FC<CardProps> = ({ children, currentIndex, onNextClick, onPrevClick }) => {
   return (
     <CardContainer>
       {children}
-      <ArrowIconWrapper className="left">
+      <ArrowIconWrapper className="left" onClick={() => onPrevClick()}>
         <IoIosArrowBack className='ArrowBack' />
       </ArrowIconWrapper>
-      <ArrowIconWrapper className="right">
+      <ArrowIconWrapper className="right" onClick={() => onNextClick()}>
         <IoIosArrowForward className='ArrowForward' />
       </ArrowIconWrapper>
     </CardContainer>
