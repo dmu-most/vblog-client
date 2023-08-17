@@ -19,15 +19,19 @@ export default IntroComponent;
 
 const IntroContainer = styled.div`
     ${({ theme }) => theme.common.flexRow};
-    /* background-color: var(--icon-red); */
     width: 100%;
-    height: 100px;
+    height: auto;
 
     >.Label {
     padding: 7px;
     color: var(--black-hunt);
     font-weight: 500;
     font-size: 25px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 15px;
+      padding: 30px 0 0 20px;
+      }
 
     }
 `;

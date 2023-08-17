@@ -31,7 +31,8 @@ const MainPage = () => {
       <CardComponent
         currentIndex={currentIndex}
         onNextClick={handleNextClick}
-        onPrevClick={handlePrevClick}>
+        onPrevClick={handlePrevClick}
+        >
         {vblogData.slice(currentIndex, currentIndex + 4).map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
@@ -72,4 +73,5 @@ export default MainPage;
 const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 20px;
 `;

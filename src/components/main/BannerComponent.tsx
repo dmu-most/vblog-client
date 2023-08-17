@@ -34,17 +34,17 @@ const BannerComponent = () => {
 export default BannerComponent;
 
 const BannerContainer = styled.div`
-    width: 100%;
+    width: auto;
     height: 450px;
 
     // 나중에 지우기
     margin-top: 100px;
     margin-bottom: 50px;
 
-    // 태블릿 사이즈 부터는 bannercomponent는 숨김
-    @media ${props => props.theme.breakpoints.tabletMax} {
-    display: none;
-  }
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      margin: 50px 20px 0 20px;
+      height: 250px;
+      }
 `;
 
 const RowBannerContainer = styled.div`
@@ -75,6 +75,11 @@ const BestBannerContainer = styled.div`
     padding: 20px;
     font-weight: 500;
     font-size: 30px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
+
     }
   
   > img {
@@ -82,6 +87,11 @@ const BestBannerContainer = styled.div`
     height: 100%;
     overflow: hidden; 
     border-radius: 0 0 10px 10px; 
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      /* padding: 20px;
+      font-size: 15px; */
+      }
   }
 `;
 
@@ -90,6 +100,11 @@ const PromoBannerContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
+
+        // 태블릿 사이즈 부터는 bannercomponent는 숨김
+    @media ${props => props.theme.breakpoints.tabletMax} {
+    display: none;
+  }
 `;
 
 const TagBannerForm = styled.div`

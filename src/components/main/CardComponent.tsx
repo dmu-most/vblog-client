@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { styled } from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useSwipeable } from 'react-swipeable';
 
 interface CardProps {
   children: ReactNode;
@@ -10,9 +11,17 @@ interface CardProps {
 }
 
 //**2023/07/07 CardComponent
-const CardComponent: React.FC<CardProps> = ({ children, currentIndex, onNextClick, onPrevClick }) => {
+const CardComponent: React.FC<CardProps> = ({ children, onNextClick, onPrevClick }) => {
+  // 스와이프 스크롤 함수
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: onNextClick,
+    onSwipedRight: onPrevClick,
+    trackMouse: true,
+  });
+
   return (
-    <CardContainer>
+    <ScrollableCardContainer>
+    <CardContainer {...swipeHandlers}>
       {children}
       <ArrowIconWrapper className="left" onClick={() => onPrevClick()}>
         <IoIosArrowBack className='ArrowBack' />
@@ -21,43 +30,39 @@ const CardComponent: React.FC<CardProps> = ({ children, currentIndex, onNextClic
         <IoIosArrowForward className='ArrowForward' />
       </ArrowIconWrapper>
     </CardContainer>
+    </ScrollableCardContainer>
   );
 };
 
 export default CardComponent;
 
+const ScrollableCardContainer = styled.div`
+  overflow-x: auto;
+  overflow-y: hidden; /* 스크롤바 없앰 */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+`;
 
 const CardContainer = styled.div`
     ${({ theme }) => theme.common.flexRow};
-    width: 100%;
-    height: auto;
+    width: fit-content;
+    height: 400px;
 
     // 모바일 쿼리 관련 코드
     display: grid;
     perspective: 1000px;
     transition: transform 0.3s ease;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    justify-items: center;
-
-  // breakpoint로는 코드가 먹지 않아 사이즈에 맞게 지정
-  @media screen and (min-width: 475px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  @media screen and (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media screen and (min-width: 1350px) {
     grid-template-columns: repeat(4, 1fr);
-  }
+    gap: 30px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      padding: 0 20px 0 20px;
+      }
 `;
 
 // 화살표
 const ArrowIconWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -72,25 +77,15 @@ const ArrowIconWrapper = styled.div`
     right: 10px;
   }
 
-  > .ArrowBack {
-  color: var(--gray-primary);
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-size: 50px;
-
-  &:hover {
-    color: var(--black-hunt);
-    }
-  }
-
+  > .ArrowBack,
   > .ArrowForward {
-  color: var(--gray-primary);
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-size: 50px;
+    color: var(--gray-primary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-size: 50px;
 
-  &:hover {
-    color: var(--black-hunt);
+    &:hover {
+      color: var(--black-hunt);
     }
   }
 `;
