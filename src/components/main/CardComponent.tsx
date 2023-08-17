@@ -79,7 +79,7 @@ const ArrowIconWrapper = styled.div`
 
   > .ArrowBack,
   > .ArrowForward {
-    color: var(--gray-primary);
+    color: var(--gray-dark);
     cursor: pointer;
     transition: color 0.3s ease;
     font-size: 50px;
