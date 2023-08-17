@@ -6,19 +6,15 @@ interface CardProps {
   children: ReactNode;
 }
 
-interface ArrowIconProps {
-  left?: boolean;
-  right?: boolean;
-}
-
+//**2023/07/07 CardComponent
 const CardComponent: React.FC<CardProps> = ({ children }) => {
   return (
     <CardContainer>
       {children}
-      <ArrowIconWrapper left>
+      <ArrowIconWrapper className="left">
         <IoIosArrowBack className='ArrowBack' />
       </ArrowIconWrapper>
-      <ArrowIconWrapper right>
+      <ArrowIconWrapper className="right">
         <IoIosArrowForward className='ArrowForward' />
       </ArrowIconWrapper>
     </CardContainer>
@@ -56,14 +52,22 @@ const CardContainer = styled.div`
   }
 `;
 
-const ArrowIconWrapper = styled.div<ArrowIconProps>`
+// 화살표
+const ArrowIconWrapper = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
-  ${({ left, right }) => (left ? 'left: 10px;' : right ? 'right: 10px;' : '')};
   z-index: 1;
+
+  &.left {
+    left: 10px;
+  }
+
+  &.right {
+    right: 10px;
+  }
 
   > .ArrowBack {
   color: var(--gray-primary);

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { vblogData } from '../data/dummyData';
 
@@ -9,12 +10,14 @@ import CardComponent from '@components/main/CardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
     <MainPageContainer>
       <BannerComponent />
       <IntroComponent intro="OO님을 위한 브블의 콘텐츠 💬" />
       <CardComponent>
-        {vblogData.slice(0, 4).map(item => (
+        {vblogData.slice(currentIndex, currentIndex + 4).map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
       </CardComponent>

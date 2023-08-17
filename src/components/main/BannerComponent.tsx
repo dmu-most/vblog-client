@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 // component
 import Hashtag from "@components/common/Hashtag";
 
+//**2023/07/07 BannerComponent
 const BannerComponent = () => {
   return (
     <BannerContainer>
