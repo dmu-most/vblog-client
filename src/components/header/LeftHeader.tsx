@@ -1,14 +1,25 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 // icon
 import { FiMenu } from 'react-icons/fi';
 
+/** 2023/08/18 - 헤더 왼쪽 컴포넌트 (메뉴바, 로고) - by sineTlsl */
 const LeftHeader = () => {
+  const navigate = useNavigate();
+
+  /** 2023/08/18 - 로고 클릭 시 메인페이지로 이동 - by sineTlsl */
+  const handlerGoMain = () => {
+    navigate('/');
+  };
+
   return (
     <LeftHeaderContainer>
       <StyledMenu color="var(--black-light)" />
       <div className="logo_wrap">
-        <img src="/assets/images/vblog_logo.png" />
+        <button onClick={handlerGoMain}>
+          <img src="/assets/images/vblog_logo.png" />
+        </button>
       </div>
     </LeftHeaderContainer>
   );
@@ -26,7 +37,15 @@ const LeftHeaderContainer = styled.div`
     position: relative;
     width: 170px;
     height: 65px;
-    > img {
+
+    > button {
+      border: none;
+      background: none;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    > button > img {
       object-fit: contain;
       width: 100%;
       height: 100%;
