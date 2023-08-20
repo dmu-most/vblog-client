@@ -7,35 +7,43 @@ import RightHeader from '@components/header/RightHeader';
 const Header = () => {
   return (
     <HeaderContainer>
-      <LeftHeader />
-      <RightHeader />
+      <HeaderSpaceBetween>
+        <LeftHeader />
+        <RightHeader />
+      </HeaderSpaceBetween>
     </HeaderContainer>
   );
 };
 
 export default Header;
 
-// Header 컨테이너
 const HeaderContainer = styled.header`
-  margin: 0 auto;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  background: var(--white-deepdark);
+  z-index: 100;
+  width: 100%;
+  height: 65px;
+  border-bottom: 1px solid var(--gray-light);
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    height: 50px;
+  }
+`;
+
+const HeaderSpaceBetween = styled.div`
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   width: 100%;
-  height: 65px;
-  background: var(--bg-white);
+  height: 100%;
   padding: 0 1.5rem;
-  border-bottom: 1px solid var(--gray-light);
-  z-index: 100;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 100%;
-    height: 50px;
     padding: 0 1rem;
   }
 `;

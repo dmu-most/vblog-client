@@ -1,15 +1,30 @@
 import styled from 'styled-components';
+import { useContentModeStore } from '@store/useConentModeStore';
 
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';
 import { BiSolidDownArrow } from 'react-icons/bi';
 
+type ContentMode = 'V' | 'B';
+
+/** 2023/08/18 - 헤더 오른쪽 컴포넌트 (비로그인 or 로그인) - by sineTlsl */
 const RightHeader = () => {
+  const { mode, setMode } = useContentModeStore();
+
+  /** 2023/08/18 - Vlog or Blog 전환하는 함수 - by sineTlsl */
+  const handleContentMode = () => {
+    const newMode = mode === 'V' ? 'B' : 'V';
+
+    setMode(newMode);
+  };
+
   return (
     <RightHeaderContainer>
       <div className="btn_wrap">
         <StyledSearch color="var(--gray-dark)" />
-        <VblogChangeBtn>V</VblogChangeBtn>
+        <VblogChangeBtn mode={mode} onClick={handleContentMode}>
+          {mode}
+        </VblogChangeBtn>
       </div>
       <div className="gap" />
       <div className="profile-wrap">
@@ -58,17 +73,18 @@ const StyledSearch = styled(HiOutlineSearch)`
 `;
 
 // Vlog or Blog 전환 버튼
-const VblogChangeBtn = styled.button`
+const VblogChangeBtn = styled.button<{ mode: ContentMode }>`
   width: 30px;
   height: 30px;
-  background: var(--green-hunt);
+  background: ${({ mode }) => (mode === 'V' ? 'var(--green-hunt)' : 'var(--brown-hunt)')};
   border: none;
   border-radius: 3px;
-  color: var(--white-hunt);
+  color: ${({ mode }) => (mode === 'V' ? 'var(--white-hunt)' : 'var(--black-hunt)')};
   letter-spacing: -0.16px;
   font-size: 20px;
   font-weight: 700;
-  text-align: center;
+  cursor: pointer;
+  ${({ theme }) => theme.common.flexCenterRow};
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     width: 27px;
