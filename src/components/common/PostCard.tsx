@@ -69,6 +69,11 @@ const CardContainer = styled.div`
   &:hover {
     transform: scale(1.02); /* 마우스 오버 시 10% 확대 */
   }
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 250px;
+    height: 300px;
+    }
 `;
 
 //IconContainer :  카드안에 들어갈 icon
@@ -82,6 +87,10 @@ const IconContainer = styled.div`
       color: var(--black-hunt);
       padding: 5px;
       font-size: 15px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
     }
 
     > .UserName {
@@ -90,6 +99,10 @@ const IconContainer = styled.div`
         color: var(--black-hunt);
         font-size: 15px;
         margin-left: auto;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
     }
 `;
 
@@ -110,11 +123,15 @@ const ContentContainer = styled.div`
     height: 35%;
 
     > .Content {
-      ${({ theme }) => theme.common.flexRow};
+      ${({ theme }) => theme.common.flexCenterRow};
       padding: 7px;
       color: var(--black-hunt);
       font-weight: 400;
       font-size: 17px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 14px;
+      }
     }
 `;
 
@@ -128,6 +145,10 @@ const TitleContainer = styled.div`
     color: var(--black-hunt);
     font-weight: 600;
     font-size: 20px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 17px;
+      }
     }
 
     >.ContentDate {
@@ -138,6 +159,10 @@ const TitleContainer = styled.div`
         font-weight: 200;
         font-size: 15px;
         margin-left: auto;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
     }
 
 `;
