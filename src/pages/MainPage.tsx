@@ -33,11 +33,11 @@ const MainPage = () => {
         onNextClick={handleNextClick}
         onPrevClick={handlePrevClick}
         >
-        {vblogData.slice(currentIndex, currentIndex + 4).map(item => (
+        {vblogData.map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
       </CardComponent>
-      <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
+      {/* <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent
         currentIndex={currentIndex}
         onNextClick={handleNextClick}
@@ -63,7 +63,7 @@ const MainPage = () => {
         {vblogData.slice(currentIndex, currentIndex + 4).map(item => (
           <PostCard key={item.ContentId} data={item} />
         ))}
-      </CardComponent>
+      </CardComponent> */}
     </MainPageContainer>
   );
 };

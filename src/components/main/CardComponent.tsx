@@ -37,22 +37,33 @@ const CardComponent: React.FC<CardProps> = ({ children, onNextClick, onPrevClick
 export default CardComponent;
 
 const ScrollableCardContainer = styled.div`
-  overflow-x: auto;
+  overflow-x: scroll; /* 세로 스크롤 가능하게 함 */
+  -ms-overflow-style: none;
   overflow-y: hidden; /* 스크롤바 없앰 */
   -ms-overflow-style: none; 
   scrollbar-width: none; 
+
+
+  /* Firefox 브라우저의 스크롤바 숨기기 */
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+
+  /* Webkit 브라우저의 스크롤바 숨기기 */
+  &::-webkit-scrollbar {
+    width: 0.5em;
+  }
 `;
 
 const CardContainer = styled.div`
-    ${({ theme }) => theme.common.flexRow};
+    ${({ theme }) => theme.common.flexCenterRow};
     width: fit-content;
     height: 400px;
 
     // 모바일 쿼리 관련 코드
-    display: grid;
+    /* display: grid;
     perspective: 1000px;
     transition: transform 0.3s ease;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); */
     gap: 30px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
