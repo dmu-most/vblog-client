@@ -1,35 +1,28 @@
 import React, { ReactNode } from 'react';
 import { styled } from "styled-components";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useSwipeable } from 'react-swipeable';
+import { FaHandPointRight } from "react-icons/fa6";
 
 interface CardProps {
   children: ReactNode;
-  currentIndex: number;
-  onNextClick: () => void;
-  onPrevClick: () => void;
 }
 
 //**2023/07/07 CardComponent
-const CardComponent: React.FC<CardProps> = ({ children, onNextClick, onPrevClick }) => {
+const CardComponent: React.FC<CardProps> = ({ children }) => {
   // 스와이프 스크롤 함수
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: onNextClick,
-    onSwipedRight: onPrevClick,
     trackMouse: true,
   });
 
   return (
     <ScrollableCardContainer>
-    <CardContainer {...swipeHandlers}>
-      {children}
-      <ArrowIconWrapper className="left" onClick={() => onPrevClick()}>
-        <IoIosArrowBack className='ArrowBack' />
-      </ArrowIconWrapper>
-      <ArrowIconWrapper className="right" onClick={() => onNextClick()}>
-        <IoIosArrowForward className='ArrowForward' />
-      </ArrowIconWrapper>
-    </CardContainer>
+      <CardContainer {...swipeHandlers}>
+        {children}
+        <ScrollIndicatorContainer>
+          <FaHandPointRight size={30} style={{ color: 'var(--gray-dark)' }} />
+         <ScrollIndicator>scroll</ScrollIndicator>
+       </ScrollIndicatorContainer>
+     </CardContainer>
     </ScrollableCardContainer>
   );
 };
@@ -58,45 +51,33 @@ const CardContainer = styled.div`
     ${({ theme }) => theme.common.flexCenterRow};
     width: fit-content;
     height: 400px;
-
-    // 모바일 쿼리 관련 코드
-    /* display: grid;
     perspective: 1000px;
     transition: transform 0.3s ease;
-    grid-template-columns: repeat(4, 1fr); */
     gap: 30px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       padding: 0 20px 0 20px;
+      height: 350px;
       }
 `;
 
-// 화살표
-const ArrowIconWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  z-index: 1;
+// scroll 방향을 알려주는 문구
+const ScrollIndicatorContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenterCol};
+  height: 90%;
+  width: 100px;
+  position: sticky;
+  background-color: rgba(128, 128, 128, 0.1);
+  top: 0;
+  right: 0;
 
-  &.left {
-    left: 10px;
-  }
-
-  &.right {
-    right: 10px;
-  }
-
-  > .ArrowBack,
-  > .ArrowForward {
-    color: var(--gray-dark);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    font-size: 50px;
-
-    &:hover {
-      color: var(--black-hunt);
+  // 모바일 화면에서는 안 보임
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    display: none;
     }
-  }
+`;
+
+const ScrollIndicator = styled.div`
+  color: var(--gray-dark);
+  font-size: 20px;
 `;
