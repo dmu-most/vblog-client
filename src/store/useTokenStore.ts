@@ -27,7 +27,7 @@ const clearTokens = (set: StateSetter) => () => {
 };
 
 /** 2023/08/21 - 토큰 저장소 - by sineTlsl */
-const useTokenStorage = create(
+const useTokenStore = create(
   persist<Token>(
     set => ({
       accessToken: '',
@@ -37,10 +37,10 @@ const useTokenStorage = create(
       clearTokens: clearTokens(set),
     }),
     {
-      name: 'tokenStorage',
+      name: 'token',
       getStorage: () => localStorage,
     },
   ),
 );
 
-export { useTokenStorage };
+export { useTokenStore };

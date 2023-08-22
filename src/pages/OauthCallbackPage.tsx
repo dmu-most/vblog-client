@@ -1,10 +1,10 @@
-import { useTokenStorage } from '@store/useTokenStore';
+import { useTokenStore } from '@store/useTokenStore';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 /** 2023/08/20 - OAuth 콜백 페이지 - by sineTlsl */
 const OauthCallbackPage: React.FC = (): JSX.Element => {
-  const { setAccessToken, setRefreshToken } = useTokenStorage();
+  const { setAccessToken, setRefreshToken } = useTokenStore();
   const navigate = useNavigate();
   const location = useLocation();
 
