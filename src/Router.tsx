@@ -6,6 +6,8 @@ import MainPage from '@pages/MainPage';
 import DetailPage from '@pages/DetailPage';
 import SignInPage from '@pages/SignInPage';
 import SignUpPage from '@pages/SignUpPage';
+import OauthCallbackPage from '@pages/OauthCallbackPage';
+import MyPage from '@pages/MyPage';
 
 const Router = () => {
   return (
@@ -15,6 +17,8 @@ const Router = () => {
         <Route path="/detail" element={<DetailPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/oauth/callback" element={<OauthCallbackPage />} />
+        <Route path="/myinfo" element={<MyPage />} />
       </Routes>
     </Layout>
   );

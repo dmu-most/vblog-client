@@ -92,9 +92,10 @@ const GlobalStyles = createGlobalStyle`
   }
 
   main {
-    ${({ theme }) => theme.common.flexCenterRow};
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 100%;
-    margin-top: 65px;
     background: var(--white-primary);
     flex-grow: 1; 
     margin-top: 0;

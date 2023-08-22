@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { SignUpFormType } from 'types/sign';
+import { SignUpFormType, SignUpRequest } from 'types/auth/signUp';
+
+// api
+import { postSignUp } from '@api/auth';
 
 // util
 import { isValidId, isValidName, isValidEmail, isValidPassword } from '@utils/formValidation';
@@ -10,8 +13,9 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 /** 2023/07/25 - 회원가입 폼 컴포넌트 - by sineTlsl */
 const SignUpForm: React.FC = (): JSX.Element => {
-  const [isPassword, setIsPassword] = useState<boolean>(false);
-  const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false);
+  const [isPassword, setIsPassword] = useState<boolean>(false); // 비밀번호 표시
+  const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false); // 재확인 비밀번호 표시
+  const [isValidForm, setIsValidForm] = useState(false);
 
   const [form, setForm] = useState<SignUpFormType>({
     id: '',
@@ -21,6 +25,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
     passwordConfirm: '',
   });
 
+  // 유효성 메시지 선언 및 초기화
   const [validationMessage, setValidationMessage] = useState({
     id: '',
     email: '',
@@ -29,100 +34,99 @@ const SignUpForm: React.FC = (): JSX.Element => {
     passwordConfirm: '',
   });
 
-  /** 2023/08/15 - 아이디 입력 이벤트 함수 - by sineTlsl */
-  const handleOnChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    setForm({ ...form, id: value });
-
-    if (isValidId(value)) {
-      setValidationMessage({ ...validationMessage, id: '사용할 수 있는 아이디입니다.' });
-    } else {
-      setValidationMessage({ ...validationMessage, id: '4~12자 사이의 알파벳 대소문자와 숫자로만 입력해주세요.' });
-    }
+  // 유효성 함수
+  const validationFunctions = {
+    id: (id: string) => isValidId(id),
+    email: (email: string) => isValidEmail(email),
+    name: (name: string) => isValidName(name),
+    password: (password: string) => isValidPassword(password),
   };
 
-  /** 2023/08/15 - 이메일 입력 이벤트 함수 - by sineTlsl */
-  const handleOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    setForm({ ...form, email: value });
-
-    if (isValidEmail(value)) {
-      setValidationMessage({ ...validationMessage, email: '올바른 이메일 형식입니다.' });
-    } else {
-      setValidationMessage({ ...validationMessage, email: '올바르지 않는 이메일 형식입니다. 다시 한번 확인해주세요.' });
-    }
+  // 유효성 메시지
+  const validationMessages = {
+    id: ['사용할 수 있는 아이디입니다.', '4~12자 사이의 알파벳 대소문자와 숫자로만 입력해주세요.'],
+    email: ['올바른 이메일 형식입니다.', '올바르지 않는 이메일 형식입니다. 다시 한번 확인해주세요.'],
+    name: ['올바른 형식의 별명입니다.', '2~8자 사이의 한글과 알파벳 대소문자, 숫자로만 입력해주세요.'],
+    password: [
+      '올바른 비밀번호 형식입니다.',
+      '8~16자 사이의 최소한 한 개의 알파벳 대소문자, 특수기호, 숫자가 포함되어야 합니다.',
+    ],
   };
 
-  /** 2023/08/15 - 닉네임 입력 이벤트 함수 - by sineTlsl */
-  const handleOnChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    setForm({ ...form, name: value });
-
-    if (isValidName(value)) {
-      setValidationMessage({ ...validationMessage, name: '올바른 형식의 별명입니다.' });
+  useEffect(() => {
+    // 입력 값의 유효성을 검사하여 모든 입력이 유효한 경우 회원가입 버튼을 활성화
+    if (
+      isValidId(form.id) &&
+      isValidEmail(form.email) &&
+      isValidName(form.name) &&
+      isValidPassword(form.password) &&
+      form.password === form.passwordConfirm
+    ) {
+      setIsValidForm(true);
     } else {
-      setValidationMessage({
-        ...validationMessage,
-        name: '2~8자 사이의 한글과 알파벳 대소문자, 숫자로만 입력해주세요.',
-      });
+      setIsValidForm(false);
     }
-  };
+  }, [form]);
 
-  /** 2023/08/15 - 비밀번호 입력 이벤트 함수 - by sineTlsl */
-  const handleOnChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /** 2023/08/21 - 폼 유효성 검사 함수 - by sineTlsl */
+  const handlerInputChange = (key: keyof SignUpFormType) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    setForm({ ...form, password: value });
+    setForm({ ...form, [key]: value });
 
-    if (isValidPassword(value)) {
-      setValidationMessage({ ...validationMessage, password: '올바른 비밀번호 형식입니다.' });
-    } else {
-      setValidationMessage({
-        ...validationMessage,
-        password: '8~16자 사이의 최소한 한 개의 알파벳 대소문자, 특수기호, 숫자가 포함되어야 합니다.',
-      });
+    if (key !== 'passwordConfirm') {
+      if (validationFunctions[key](value)) {
+        setValidationMessage({ ...validationMessage, [key]: validationMessages[key][0] });
+      } else {
+        setValidationMessage({ ...validationMessage, [key]: validationMessages[key][1] });
+      }
     }
   };
 
   /** 2023/08/15 - 비밀번호 재확인 입력 이벤트 함수 - by sineTlsl */
-  const handleOnChangePasswordConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handlerOnChangePasswordConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordConfirm = e.target.value;
+    const isMatch = passwordConfirm === form.password;
+    const message = isMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다. 다시 확인해주세요.';
 
-    setForm({ ...form, passwordConfirm: value });
-
-    if (value === form.password) {
-      setValidationMessage({ ...validationMessage, passwordConfirm: '비밀번호가 일치합니다.' });
-    } else {
-      setValidationMessage({
-        ...validationMessage,
-        passwordConfirm: '비밀번호가 일치하지 않습니다. 다시 확인해주세요.',
-      });
-    }
+    setForm({ ...form, passwordConfirm });
+    setValidationMessage({ ...validationMessage, passwordConfirm: message });
   };
 
-  /** 2023/07/25 - submit 이벤트 발생을 막는 함수 - by sineTlsl */
-  const handlePreventFormSubmit = (e: React.MouseEvent) => {
+  /** 2023/08/21 - 회원가입 버튼 함수 - by sineTlsl */
+  const handlersignUpFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const SignUpFormData: SignUpRequest = {
+      email: form.email,
+      loginId: form.id,
+      password: form.password,
+      username: form.name,
+    };
+
+    postSignUp(SignUpFormData);
+  };
+
+  /** 2023/08/21 - 아이디 중복 확인 함수 - by sineTlsl */
+  const handlerIsIdCheck = (e: React.MouseEvent) => {
     e.preventDefault();
   };
 
   /** 2023/07/25 - 비밀번호 보기/숨기기 함수 - by sineTlsl */
-  const handlePasswordVisibility = (e: React.MouseEvent) => {
+  const handlerPasswordVisibility = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsPassword(!isPassword);
   };
 
   /** 2023/07/25 - 비밀번호 확인 보기/숨기기 함수 - by sineTlsl */
-  const handelConfirmPasswordVisibility = (e: React.MouseEvent) => {
+  const handlerConfirmPasswordVisibility = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsConfirmPassword(!isConfirmPassword);
   };
 
   return (
     <SignUpFormContainer>
-      <FormWrap>
+      <FormContainer onSubmit={handlersignUpFormSubmit}>
         <div className="form_item">
           <label className="input_title" htmlFor="user_id">
             아이디
@@ -134,9 +138,9 @@ const SignUpForm: React.FC = (): JSX.Element => {
               className="id"
               value={form.id}
               placeholder="아이디 입력(4~12자)"
-              onChange={handleOnChangeId}
+              onChange={handlerInputChange('id')}
             />
-            <button className="id_btn" onClick={handlePreventFormSubmit}>
+            <button className="id_btn" onClick={handlerIsIdCheck}>
               중복 확인
             </button>
           </div>
@@ -152,7 +156,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
             className="email"
             value={form.email}
             placeholder="이메일@example.com"
-            onChange={handleOnChangeEmail}
+            onChange={handlerInputChange('email')}
           />
           <ValidationMessage isValid={isValidEmail(form.email)}>{validationMessage.email}</ValidationMessage>
         </div>
@@ -166,7 +170,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
             className="name"
             value={form.name}
             placeholder="별명 입력(2~8자)"
-            onChange={handleOnChangeName}
+            onChange={handlerInputChange('name')}
           />
           <ValidationMessage isValid={isValidName(form.name)}>{validationMessage.name}</ValidationMessage>
         </div>
@@ -181,9 +185,9 @@ const SignUpForm: React.FC = (): JSX.Element => {
               value={form.password}
               className="password"
               placeholder="비밀번호 입력(알파벳 대소문자, 숫자, 특수문자 포함 8~16자)"
-              onChange={handleOnChangePassword}
+              onChange={handlerInputChange('password')}
             />
-            <button onClick={handlePasswordVisibility}>
+            <button onClick={handlerPasswordVisibility}>
               <p className="password_icon">
                 {!isPassword ? (
                   <AiFillEyeInvisible size="25px" color="var(--gray-dark)" />
@@ -206,9 +210,9 @@ const SignUpForm: React.FC = (): JSX.Element => {
               className="password"
               value={form.passwordConfirm}
               placeholder="비밀번호 재입력"
-              onChange={handleOnChangePasswordConfirm}
+              onChange={handlerOnChangePasswordConfirm}
             />
-            <button onClick={handelConfirmPasswordVisibility}>
+            <button onClick={handlerConfirmPasswordVisibility}>
               <p className="password_icon">
                 {!isConfirmPassword ? (
                   <AiFillEyeInvisible size="25px" color="var(--gray-dark)" />
@@ -223,11 +227,11 @@ const SignUpForm: React.FC = (): JSX.Element => {
           </ValidationMessage>
         </div>
         <ButtonWrap>
-          <button type="submit" className="signup_btn">
+          <button type="submit" className="signup_btn" disabled={!isValidForm}>
             회원가입
           </button>
         </ButtonWrap>
-      </FormWrap>
+      </FormContainer>
     </SignUpFormContainer>
   );
 };
@@ -246,7 +250,7 @@ const SignUpFormContainer = styled.div`
 `;
 
 // ===================== 회원가입 폼 =====================
-const FormWrap = styled.form`
+const FormContainer = styled.form`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 1.6rem;
 

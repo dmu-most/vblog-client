@@ -2,6 +2,20 @@ import styled from 'styled-components';
 
 /** 2023/07/25 - 소셜 로그인 컴포넌트 - by sineTlsl */
 const Oauth: React.FC = (): JSX.Element => {
+  /** 2023/08/20 - OAuth 요청 함수 - by sineTlsl */
+  // 네이버
+  const handlerNaverClick = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/naver`;
+  };
+  // 카카오
+  const handlerKakaoClick = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/kakao`;
+  };
+  // 구글
+  const handlerGoogleClick = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+  };
+
   return (
     <OauthContainer>
       <OauthTitle>
@@ -9,22 +23,22 @@ const Oauth: React.FC = (): JSX.Element => {
         <p>SNS 계정으로 간편하게 로그인하세요.</p>
         <div className="dashed_border" />
       </OauthTitle>
-      <OauthItems>
-        <button className="oauth_item">
+      <OauthSignUpWrap>
+        <OauthButton onClick={handlerNaverClick}>
           <img src="/assets/images/naver_logo.png" />
           <p className="oauth_item_title">네이버로 로그인</p>
-        </button>
+        </OauthButton>
         <div className="gap_item" />
-        <button className="oauth_item">
+        <OauthButton onClick={handlerKakaoClick}>
           <img src="/assets/images/kakao_logo.png" />
           <p className="oauth_item_title">카카오로 로그인</p>
-        </button>
+        </OauthButton>
         <div className="gap_item" />
-        <button className="oauth_item">
+        <OauthButton onClick={handlerGoogleClick}>
           <img src="/assets/images/google_logo.png" />
           <p className="oauth_item_title">구글로 로그인</p>
-        </button>
-      </OauthItems>
+        </OauthButton>
+      </OauthSignUpWrap>
     </OauthContainer>
   );
 };
@@ -59,23 +73,24 @@ const OauthTitle = styled.div`
   }
 `;
 
-// ===================== OAuth 아이템  =====================
-const OauthItems = styled.div`
+// ===================== OAuth 박스  =====================
+const OauthSignUpWrap = styled.div`
   margin-top: 2rem;
   width: 100%;
   height: 100%;
   ${({ theme }) => theme.common.flexCenter};
   gap: 2rem;
+`;
 
-  > .oauth_item {
-    ${({ theme }) => theme.common.flexCenterCol};
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin: 0;
-    padding: 0;
-  }
-  > .oauth_item > img {
+// ===================== OAuth 버튼  =====================
+const OauthButton = styled.button`
+  ${({ theme }) => theme.common.flexCenterCol};
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  > img {
     height: 60px;
     width: 60px;
   }
@@ -84,7 +99,7 @@ const OauthItems = styled.div`
     width: 1px;
     border-right: 1px dashed var(--gray-primary);
   }
-  > .oauth_item > .oauth_item_title {
+  > .oauth_item_title {
     padding-top: 1rem;
     font-size: 14px;
     font-weight: 600;
@@ -94,11 +109,11 @@ const OauthItems = styled.div`
   @media ${props => props.theme.breakpoints.mobileSMax} {
     gap: 1rem;
 
-    > .oauth_item > img {
+    > img {
       height: 45px;
       width: 45px;
     }
-    > .oauth_item > .oauth_item_title {
+    > .oauth_item_title {
       font-size: 13px;
     }
   }

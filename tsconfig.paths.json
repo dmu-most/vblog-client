@@ -6,7 +6,7 @@
       "@hooks/*": ["hooks/*"],
       "@layout/*": ["layout/*"],
       "@pages/*": ["pages/*"],
-      "@services/*": ["services/*"],
+      "@api/*": ["api/*"],
       "@styles/*": ["styles/*"],
       "@store/*": ["store/*"],
       "@types/*": ["types/*"],
