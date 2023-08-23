@@ -1,6 +1,10 @@
 import React, { ReactNode } from 'react';
 import { styled } from "styled-components";
+
+// 스와이프 라이브러리
 import { useSwipeable } from 'react-swipeable';
+
+// icon 라이브러리
 import { FaHandPointRight } from "react-icons/fa6";
 
 interface CardProps {
@@ -79,5 +83,6 @@ const ScrollIndicatorContainer = styled.div`
 
 const ScrollIndicator = styled.div`
   color: var(--gray-dark);
+  font-weight: 300;
   font-size: 20px;
 `;

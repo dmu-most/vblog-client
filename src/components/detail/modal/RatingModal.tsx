@@ -25,16 +25,14 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
 
   
   // 좋아요 클릭 함수
-  const handleLikeClick = () => {
-    // 좋아요 클릭 상태를 true로 설정
-    setIsLikeClicked(true);
-  };
+const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsLikeClicked(true);
+};
 
   // 싫어요 클릭 함수
-  const handleDislikeClick = () => {
-    // 싫어요 클릭 상태를 true로 설정
-    setIsDislikeClicked(true);
-  };
+const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsDislikeClicked(true);
+};
 
   // 평점 , 좋아요/싫어요 등록 함수
   const handleRegisterClick = () => {

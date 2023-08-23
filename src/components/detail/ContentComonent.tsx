@@ -34,9 +34,9 @@ const ContentComponent = () => {
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
-      <VideoContainer>
+      <ThumbnailContainer>
         <img src="/assets/images/vlog_ex.png" />
-      </VideoContainer>
+      </ThumbnailContainer>
     </ContentContainer>
   );
 };
@@ -50,6 +50,13 @@ const ContentContainer = styled.div`
   margin: 100px 20px 20px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 90%;
+      }
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+    width: 90%;
+      }
 `;
 
 const ProfileContainer = styled.div`
@@ -63,6 +70,11 @@ const ProfileContainer = styled.div`
     height: 50px;
     margin: 20px;
     border-radius: 50%;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 30px;
+    height: 30px;
+      }
     }
 `;
 
@@ -78,12 +90,20 @@ const TitleContainer = styled.div`
     color: var(--black-hunt);
     font-weight: 600;
     font-size: 20px;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    font-size: 15px;
+    }
   }
 
   >.title {
     padding: 7px;
     color: var(--black-hunt);
     font-size: 15px;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    font-size: 13px;
+    }
   }
 `;
 
@@ -109,6 +129,14 @@ const GradeContainer = styled.div`
     height: auto;
     padding: 30px;
     gap: 200px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+          gap: 50px;
+    }
+
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+          gap: 50px;
+    }
 `;
 
 const Grade = styled.div`
@@ -118,20 +146,36 @@ const Grade = styled.div`
     color: var(--gray-dark);
     font-size: 15px;
     padding: 15px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 5px;
+     }
     }
 
     > .value {
     color: var(--black-hunt);
     font-weight: 500;
-    font-size: 30px
+    font-size: 30px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 17px;
+     }
     }  
 `;
 
-const VideoContainer = styled.div`
+const ThumbnailContainer = styled.div`
     width: 100%;
     height: 600px;
     position: relative;
     overflow: hidden;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      height: 300px;
+     }
+
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      height: 400px;
+    }
 
     > img {
       width: 100%;

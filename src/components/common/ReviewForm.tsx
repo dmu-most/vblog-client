@@ -33,6 +33,10 @@ const ReviewFormContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 90%;
+    }
 `;
 
 const ReviewTitleContainer = styled.div`
@@ -50,6 +54,10 @@ gap: 20px;
 > .ReviewDate{
     font-size: 16px;
     color: var(--gray-primary);
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
     }
 `;
 
@@ -60,6 +68,10 @@ const ReviewContentContainer = styled.div`
   > .ReviewContent {
     font-size: 16px;
     color: var(--black-hunt);
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 12px;
+      }
   }
 `;
 
@@ -71,5 +83,9 @@ const ReviewWriterContainer = styled.div`
   > .ReviewWriter {
     font-size: 14px;
     color: var(--gray-primary);
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 10px;
+      }
   }
 `;
