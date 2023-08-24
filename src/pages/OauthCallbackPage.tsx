@@ -11,7 +11,7 @@ const OauthCallbackPage: React.FC = (): JSX.Element => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    const accessToken = queryParams.get('acces');
+    const accessToken = queryParams.get('access');
     const refreshToken = queryParams.get('refresh');
 
     if (accessToken && refreshToken) {
