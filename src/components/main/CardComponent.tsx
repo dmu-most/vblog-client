@@ -64,18 +64,18 @@ const CardComponent = () => {
         <ScrollContainer>
           {scrollPosition > 0 && (
             <ScrollBtn onClick={HandlerScrollLeft}>
-              <FaArrowAltCircleLeft size={45} color="lightgray" />
+              <FaArrowAltCircleLeft className='FaArrowAltCircleLeft'/>
             </ScrollBtn>
           )}
           <CardContainer ref={scrollRef}>
             {vblogData.map(item => (
               <li key={item.ContentId}>
-                <PostCard key={item.ContentId} data={item} />
+                <PostCard data={item} />
               </li>
             ))}
           </CardContainer>
           <ScrollBtn onClick={HandlerScrollRight}>
-            {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight size={45} color="lightgray" />}
+            {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight className='FaArrowAltCircleRight'/>}
           </ScrollBtn>
         </ScrollContainer>
       </ScrollableCardContainer>
@@ -124,6 +124,18 @@ const ScrollBtn = styled.button`
   font-size: 2rem;
   cursor: pointer;
   width: 55px;
+
+  > .FaArrowAltCircleLeft,
+  > .FaArrowAltCircleRight {
+    color: var(--gray-light);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-size: 40px;
+    
+    &:hover {
+      color: var(--gray-dark);
+    }
+  }
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
     display: none;
