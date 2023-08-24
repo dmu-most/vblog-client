@@ -5,7 +5,7 @@ interface IntroProps {
   intro: string;
 }
 
-//**2023/07/07 IntroComponent
+//**2023/07/07 IntroComponent - by jh
 const IntroComponent: React.FC<IntroProps> = ({ intro }) => {
   return (
     <IntroContainer>

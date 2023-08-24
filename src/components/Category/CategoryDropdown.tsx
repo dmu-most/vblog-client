@@ -7,7 +7,7 @@ import { FaAngleDown } from "react-icons/fa";
 type ContentMode = 'V' | 'B';
 
 // 무한스크롤 사용 예정
-/** 2023/08/23 - 카테고리 드롭다운 컴포넌트 */
+/** 2023/08/23 - category dropdown - by jh */
 const CategoryDropdown = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const { mode } = useContentModeStore();

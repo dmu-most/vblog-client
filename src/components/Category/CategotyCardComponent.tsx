@@ -5,7 +5,7 @@ import { vblogData } from '../../data/dummyData';
 import PostCard from '@components/common/PostCard';
 
 
-/** 2023/08/23 - 카테고리 카드 컴포넌트 */
+/** 2023/08/23 - category card - by jh */
 const CategoryCardComponent = () => {
 
   return (

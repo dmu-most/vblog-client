@@ -12,7 +12,7 @@ interface RatingModalProps {
   closeModal: () => void;
 }
 
-//**2023/08/07 평점 클릭 시 평점과 좋아요/싫어요를 등록할 수 있는 모달
+//**2023/08/07 평점 클릭 시 평점과 좋아요/싫어요를 등록할 수 있는 모달 - by jh
 const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
   const [ratingValue, setRatingValue] = useState<number | null>(4.5);
   const [isLikeClicked, setIsLikeClicked] = useState(false);

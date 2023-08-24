@@ -1,27 +1,42 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+
+// react icon
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
+
+// 실제 데이터가 들어올 시 제거
 import { vblogData } from '../../data/dummyData';
+
+// Component
 import PostCard from '@components/common/PostCard';
 
-// ... (scroll and container styles)
 
+//**2023/07/07 CardComponent - by jh
 const CardComponent = () => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
-  const scrollAmount = 200; // 한 번에 스크롤할 양
+  const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
   const [maxScrollLeft, setMaxScrollLeft] = useState(0); // 가능한 최대 위치
 
   /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
   const HandlerScrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft -= scrollAmount;
+      const newPosition = scrollRef.current.scrollLeft - scrollAmount;
+      scrollRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth', // 스무스 하게 이동하기 위해 추가 - by jh
+      });
     }
   };
+
   /** 2023/08/24 - right 화살표 클릭 시 오른쪽 스크롤 함수 - by sineTlsl */
   const HandlerScrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft += scrollAmount;
+      const newPosition = scrollRef.current.scrollLeft + scrollAmount;
+      scrollRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth', // 스무스 하게 이동하기 위해 추가 - by jh
+      });
     }
   };
 
@@ -42,19 +57,6 @@ const CardComponent = () => {
 
     return () => scrollRef.current?.removeEventListener('scroll', onScroll);
   }, []);
-
-  // const handleScroll = (direction: 'left' | 'right') => {
-  //   console.log(direction);
-  //   if (scrollRef.current) {
-  //     console.log(scrollRef.current);
-  //     scrollRef.current.scrollBy({
-  //       left: direction === 'left' ? -200 : 200,
-  //       behavior: 'smooth',
-  //     });
-  //   }
-  // };
-
-  console.log(vblogData.length);
 
   return (
     <div>
@@ -117,8 +119,8 @@ const ScrollContainer = styled.div`
 
 const ScrollBtn = styled.button`
   border: none;
-  background-color: red;
   background: transparent;
+  transition: color 0.3s ease;
   font-size: 2rem;
   cursor: pointer;
   width: 55px;
@@ -127,39 +129,3 @@ const ScrollBtn = styled.button`
     display: none;
   }
 `;
-
-// scroll 방향을 알려주는 문구
-// const ScrollIndicatorContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   flex-direction: column;
-//   position: fixed;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   z-index: 1;
-
-//   &.left {
-//     left: 10px;
-//   }
-
-//   &.right {
-//     right: 10px;
-//   }
-
-//   > .FaHandPointLeft,
-//   > .FaHandPointRight {
-//     color: var(--gray-dark);
-//     cursor: pointer;
-//     transition: color 0.3s ease;
-//     font-size: 30px;
-
-//     &:hover {
-//       color: var(--black-hunt);
-//     }
-//   }
-
-//   // 모바일 화면에서는 안 보임
-//   @media ${props => props.theme.breakpoints.tabletMax} {
-//     display: none;
-//     }
-// `

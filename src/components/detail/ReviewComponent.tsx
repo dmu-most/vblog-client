@@ -6,7 +6,7 @@ import { FaUserPen } from "react-icons/fa6";
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
 
-//**2023/07/29 ReviewComponent
+//**2023/07/29 ReviewComponent- by jh
 const ReviewComponent: React.FC = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
 

@@ -11,7 +11,7 @@ interface CardProps {
   children: ReactNode;
 }
 
-//**2023/07/29 CommandComponent
+//**2023/07/29 CommandComponent- by jh
 const CommandComponent: React.FC<CardProps> = ({ children }) => {
   // 스와이프 스크롤 함수
   const swipeHandlers = useSwipeable({
