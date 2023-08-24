@@ -1,35 +1,52 @@
-import React, { ReactNode } from 'react';
-import { styled } from "styled-components";
+import React, { useRef } from 'react';
+import { styled } from 'styled-components';
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import { vblogData } from '../../data/dummyData';
+import PostCard from '@components/common/PostCard';
 
-// 스와이프 라이브러리
-import { useSwipeable } from 'react-swipeable';
+// ... (scroll and container styles)
 
-// icon 라이브러리
-import { FaHandPointRight } from "react-icons/fa6";
+const CardComponent = () => {
+    const scrollRef = useRef<HTMLDivElement | null>(null); // Updated type here
 
-interface CardProps {
-  children: ReactNode;
-}
+    const handleScroll = (direction: "left" | "right") => {
+          console.log(direction)
+      if (scrollRef.current) {
+        console.log(scrollRef.current)
+        scrollRef.current.scrollBy({
+          left: direction === "left" ? -200 : 200,
+          behavior: "smooth",
+        });
+      }
+    };
 
-//**2023/07/07 CardComponent
-const CardComponent: React.FC<CardProps> = ({ children }) => {
-  // 스와이프 스크롤 함수
-  const swipeHandlers = useSwipeable({
-    trackMouse: true,
-  });
-
-  return (
-    <ScrollableCardContainer>
-      <CardContainer {...swipeHandlers}>
-        {children}
-        <ScrollIndicatorContainer>
-          <FaHandPointRight size={30} style={{ color: 'var(--gray-dark)' }} />
-         <ScrollIndicator>scroll</ScrollIndicator>
-       </ScrollIndicatorContainer>
-     </CardContainer>
-    </ScrollableCardContainer>
-  );
+    console.log(vblogData.length)
+  
+    return (
+        <div>
+            <ScrollableCardContainer>
+                {vblogData.length >= 5 && (
+                    <ScrollContainer>
+                        <ScrollBtn onClick={() => handleScroll("left")}>
+                            <FaArrowAltCircleLeft size={45} color="lightgray" />
+                        </ScrollBtn>
+                        <CardContainer ref={scrollRef}>
+                            {vblogData.map((item) => (
+                                <PostCard key={item.ContentId} data={item} />
+                            ))}
+                        </CardContainer>
+                        {vblogData.length >= 4 && (
+                            <ScrollBtn onClick={() => handleScroll("right")}>
+                                <FaArrowAltCircleRight size={45} color="lightgray" />
+                            </ScrollBtn>
+                        )}
+                    </ScrollContainer>
+                )}
+            </ScrollableCardContainer>
+        </div>
+    );
 };
+
 
 export default CardComponent;
 
@@ -38,16 +55,9 @@ const ScrollableCardContainer = styled.div`
   -ms-overflow-style: none;
   overflow-y: hidden; /* 스크롤바 없앰 */
   -ms-overflow-style: none; 
-  scrollbar-width: none; 
 
-
-  /* Firefox 브라우저의 스크롤바 숨기기 */
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-
-  /* Webkit 브라우저의 스크롤바 숨기기 */
   &::-webkit-scrollbar {
-    width: 0.5em;
+    display: none; /* Hide scrollbar in Webkit browsers */
   }
 `;
 
@@ -65,24 +75,56 @@ const CardContainer = styled.div`
       }
 `;
 
-// scroll 방향을 알려주는 문구
-const ScrollIndicatorContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenterCol};
-  height: 90%;
-  width: 100px;
-  position: sticky;
-  background-color: rgba(128, 128, 128, 0.1);
-  top: 0;
-  right: 0;
+const ScrollContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-  // 모바일 화면에서는 안 보임
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+const ScrollBtn = styled.button`
+  border: none;
+  background-color: red;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+
+  @media ${(props) => props.theme.breakpoints.mobileLMax} {
     display: none;
-    }
+  }
 `;
 
-const ScrollIndicator = styled.div`
-  color: var(--gray-dark);
-  font-weight: 300;
-  font-size: 20px;
-`;
+// scroll 방향을 알려주는 문구
+// const ScrollIndicatorContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+//   position: fixed;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   z-index: 1;
+
+//   &.left {
+//     left: 10px;
+//   }
+
+//   &.right {
+//     right: 10px;
+//   }
+
+//   > .FaHandPointLeft,
+//   > .FaHandPointRight {
+//     color: var(--gray-dark);
+//     cursor: pointer;
+//     transition: color 0.3s ease;
+//     font-size: 30px;
+
+//     &:hover {
+//       color: var(--black-hunt);
+//     }
+//   }
+
+//   // 모바일 화면에서는 안 보임
+//   @media ${props => props.theme.breakpoints.tabletMax} {
+//     display: none;
+//     }
+// `
+

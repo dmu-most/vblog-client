@@ -4,6 +4,7 @@ import Layout from '@layout/index';
 // pages
 import MainPage from '@pages/MainPage';
 import DetailPage from '@pages/DetailPage';
+import CategoryPage from '@pages/CategoryPage';
 import SignInPage from '@pages/SignInPage';
 import SignUpPage from '@pages/SignUpPage';
 import OauthCallbackPage from '@pages/OauthCallbackPage';
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/oauth/callback" element={<OauthCallbackPage />} />
         <Route path="/myinfo" element={<MyPage />} />
+        <Route path="/category" element={<CategoryPage />} />
       </Routes>
     </Layout>
   );

@@ -160,9 +160,7 @@ const TitleContainer = styled.div`
         font-size: 15px;
         margin-left: auto;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 13px;
-      }
+
     }
 
 `;

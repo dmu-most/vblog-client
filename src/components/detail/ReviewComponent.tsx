@@ -150,7 +150,7 @@ const AllReviewContainer = styled.div`
     font-size: 25px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 19px;
+      font-size: 18px;
       }
     }
 `;

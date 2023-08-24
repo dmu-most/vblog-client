@@ -36,7 +36,7 @@ export default BannerComponent;
 const BannerContainer = styled.div`
     width: auto;
     height: 450px;
-    margin-top: 100px;
+    margin-top: 6rem;
     margin-bottom: 100px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
