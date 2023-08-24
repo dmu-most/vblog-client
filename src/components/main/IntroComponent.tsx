@@ -32,6 +32,5 @@ const IntroContainer = styled.div`
       font-size: 15px;
       padding: 30px 0 0 20px;
       }
-
     }
 `;

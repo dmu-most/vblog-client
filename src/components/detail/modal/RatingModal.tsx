@@ -25,16 +25,14 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
 
   
   // 좋아요 클릭 함수
-  const handleLikeClick = () => {
-    // 좋아요 클릭 상태를 true로 설정
-    setIsLikeClicked(true);
-  };
+const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsLikeClicked(true);
+};
 
   // 싫어요 클릭 함수
-  const handleDislikeClick = () => {
-    // 싫어요 클릭 상태를 true로 설정
-    setIsDislikeClicked(true);
-  };
+const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsDislikeClicked(true);
+};
 
   // 평점 , 좋아요/싫어요 등록 함수
   const handleRegisterClick = () => {
@@ -60,12 +58,12 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
         </StarRatingContainer>
         </RatingContainer>
         <LikeDislikeContainer>
-            <LikeContainer onClick={handleLikeClick} isLikeClicked={isLikeClicked}>
+            <LikeContainer onClick={handleLikeClick}>
                 <SentimentSatisfiedAltIcon fontSize="large" color="inherit" />
                 <div className="Label"> 좋아요 </div>
             </LikeContainer>
             <div className="Label"> / </div>
-            <DislikeContainer onClick={handleDislikeClick} isDislikeClicked={isDislikeClicked}>
+            <DislikeContainer onClick={handleDislikeClick}>
                 <SentimentVeryDissatisfiedOutlinedIcon fontSize="large" color="inherit" />
                 <div className="Label"> 싫어요 </div>
             </DislikeContainer>
@@ -152,14 +150,12 @@ const LikeDislikeContainer = styled.div`
   }
 `;
 
-const LikeContainer = styled.div<{ isLikeClicked: boolean }>`
+const LikeContainer = styled.div`
   ${({ theme }) => theme.common.flexCenter};
   flex-direction: column;  
   padding: 10px;
   cursor: pointer;
   color: var(--icon-red);
-  // 좋아요 클릭 시 확대 상태에서 멈춤
-  ${({ isLikeClicked }) => isLikeClicked && "transform: scale(1.2);"}
 
     > .Label {
     color: var(--black-hunt);
@@ -173,14 +169,12 @@ const LikeContainer = styled.div<{ isLikeClicked: boolean }>`
   }
 `;
 
-const DislikeContainer = styled.div<{ isDislikeClicked: boolean }>`
+const DislikeContainer = styled.div`
   ${({ theme }) => theme.common.flexCenter};
   flex-direction: column;  
   padding: 10px;
   cursor: pointer;
   color: var(--icon-blue);
-  // 싫어요 클릭 시 확대 상태에서 멈춤
-  ${({ isDislikeClicked }) => isDislikeClicked && "transform: scale(1.2);"}
 
     > .Label {
     color: var(--black-hunt);

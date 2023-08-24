@@ -64,6 +64,10 @@ const ReviewContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 90%;
+      }
 `;
 
 // 리뷰 작성하는 컨테이너
@@ -73,6 +77,18 @@ const WriteContainer = styled.div`
   height: auto;
   padding: 20px;
   gap: 20px;
+
+  // For mobile screens
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    > svg {
+      font-size: 20px; 
+    }
+
+    > input::placeholder {
+      font-size: 12px;
+    }
+  }
+  
 
   // 리뷰 작성 input
   > input {
@@ -97,6 +113,10 @@ const ButtonContainer = styled.div`
   cursor: pointer;
   color: var(--black-light);
   font-size: 16px;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+  font-size: 13px;
+      }
   }
 
   // 작성 버튼
@@ -111,6 +131,12 @@ const ButtonContainer = styled.div`
   margin-right: 15px;
   color: var(--white-primary);
   font-size: 16px;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    width: 50px;
+    height: 30px;
+    font-size: 13px;
+      }
   }
 `;
 
@@ -122,6 +148,10 @@ const AllReviewContainer = styled.div`
     color: var(--black-hunt);
     font-weight: 500;
     font-size: 25px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 18px;
+      }
     }
 `;
 
@@ -133,10 +163,18 @@ const RatingContainer = styled.div`
     /* padding: 15px; */
     color: var(--gray-dark);
     font-size: 15px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 12px;
+    }
     }
     > .text {
     color: var(--black-hunt);
     font-size: 15px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 13px;
+      }
     }
 `;
 
@@ -145,4 +183,8 @@ const ReviewFormContainer = styled.div`
   flex-direction: column;
   max-height: 400px;
   overflow-y: auto;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    max-height: 200px;
+    }
 `;

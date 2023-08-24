@@ -64,7 +64,7 @@ const TagContainer = styled.div<TagContainerProps>`
         letter-spacing: 1px;
 
         @media ${props => props.theme.breakpoints.mobileSMax} {
-        font-size: 3px;
+        font-size: 9px;
           }
         }
 

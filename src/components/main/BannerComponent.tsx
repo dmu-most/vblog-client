@@ -36,14 +36,16 @@ export default BannerComponent;
 const BannerContainer = styled.div`
     width: auto;
     height: 450px;
-
-    // 나중에 지우기
-    margin-top: 100px;
-    margin-bottom: 50px;
+    margin-top: 6rem;
+    margin-bottom: 100px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      margin: 50px 20px 0 20px;
+      margin: 50px 20px 20px 20px;
       height: 250px;
+      }
+
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      margin: 50px 20px 20px 20px;
       }
 `;
 
