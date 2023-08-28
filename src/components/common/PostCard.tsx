@@ -1,23 +1,13 @@
 import styled from "styled-components";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
+import { vblogListType } from "types/main/list";
 
 
 //Component
 import Hashtag from "./Hashtag";
 
-interface vblogType {
-  ContentId: number;
-  ContentDate: string;
-  ContentTitle: string;
-  Content: string;
-  Heart: number;
-  Review: number;
-  UserName: string;
-  Hashtags: string[];
-}
-
 interface PostCardProps {
-  data: vblogType;
+  data: vblogListType;
 }
 
 //**2023/07/19 PostCard
