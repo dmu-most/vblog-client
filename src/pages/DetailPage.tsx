@@ -12,24 +12,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
+interface DetailPageProps {
+  contentId: number;
+}
 
-/** 2023/07/29 - 디테일 페이지 */
-const DetailPage: React.FC = (): JSX.Element => {
-  const [contentData, setContentData] = useState(null); // State to store fetched data
+
+/** 2023/07/29 - deatailpage - by jh*/
+const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
+  const [contentData, setContentData] = useState<any>(null); // State to store fetched data
+
+    const fetchContentData = async () => {
+    try {
+      const response = await axios.get(`http://ec2-3-39-126-215.ap-northeast-2.compute.amazonaws.com:8080/board/${contentId}`);
+      setContentData(response.data);
+      console.log('Fetched data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchContentData = async () => {
-      try {
-        const response = await axios.get('http://ec2-3-39-126-215.ap-northeast-2.compute.amazonaws.com:8080/board/1');
-        setContentData(response.data); // Update the state with fetched data
-        console.log('data:', response.data);
-      } catch (error) {
-        console.error('Error fetching content data:', error);
-      }
-    };
-
     fetchContentData();
-  }, []);
+  }, [contentId]);
 
   return (
     <DetailContainer>

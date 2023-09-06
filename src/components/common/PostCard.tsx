@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
 //Type
 import { vblogListType } from "types/main/list";
@@ -13,10 +14,15 @@ interface PostCardProps {
 
 //**2023/07/19 PostCard
 const PostCard: React.FC<PostCardProps> = ({ data }) => {
-  // Rest of the component code
+  const navigate = useNavigate();
+
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handlePostClick = () => {
+    navigate(`/board/${data.contentId}`);
+  };
 
     return (
-        <CardContainer>
+        <CardContainer onClick={handlePostClick}>
           <IconContainer>
               <AiFillHeart width="10px" height= "10px" color="var(--icon-red)"/>
               <div className="Label"> {data.heart} </div>
@@ -105,8 +111,8 @@ const ImgContainer = styled.div<{ imgurl: string }>`
     width: 100%;
     height: 38%;
     background-image: ${({ imgurl }) => `url(${imgurl})`};
-      background-size: cover;
-  background-position: center;
+    background-size: cover;
+    background-position: center;
 
     > img {
       width: 100%;

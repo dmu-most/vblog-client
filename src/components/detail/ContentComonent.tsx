@@ -5,6 +5,9 @@ import { vblogType } from "types/detail/vblog";
 // Component
 import Hashtag from "@components/common/Hashtag";
 
+// icon
+import { BsBoxArrowUpRight } from 'react-icons/bs';
+
 
 interface DetailProps {
   data: vblogType;
@@ -12,12 +15,17 @@ interface DetailProps {
 
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+
+  /** 2023/09/06 - 해당 URL 클릭 시 넘어가게 하는 함수 - by jh */
+  const handleIconClick = () => {
+    window.location.href = data.link;
+  };
   
 
   return (
     <ContentContainer>
       <ProfileContainer>
-        <img src="/assets/images/vlog_ex.png" />
+        <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
           <div className="content"> {data.content} </div>
           <div className="title"> {data.contentTitle} </div>
@@ -43,8 +51,8 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
-      <ThumbnailContainer>
-        <img src="/assets/images/vlog_ex.png" />
+      <ThumbnailContainer imgurl={data.imgurl}>
+        <BsBoxArrowUpRight className="icon" onClick={handleIconClick} />
       </ThumbnailContainer>
     </ContentContainer>
   );
@@ -172,9 +180,13 @@ const Grade = styled.div`
     }  
 `;
 
-const ThumbnailContainer = styled.div`
+const ThumbnailContainer = styled.div<{ imgurl: string }>`
     width: 100%;
     height: 600px;
+    background-image: ${({ imgurl }) => `url(${imgurl})`};
+    background-size: cover; // This will ensure the background image covers the entire container
+    background-repeat: no-repeat;
+    background-position: center center;
     position: relative;
     overflow: hidden;
 
@@ -191,6 +203,15 @@ const ThumbnailContainer = styled.div`
       height: 100%;
       filter: blur(7px);
       object-fit: cover;
+    }
+
+    > .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 6rem;
+    color: var(--white-primary);
     }
 `;
 

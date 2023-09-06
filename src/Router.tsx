@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import Layout from '@layout/index';
 
 // pages
@@ -15,7 +15,7 @@ const Router = () => {
     <Layout>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/detail" element={<DetailPage />} />
+        <Route path="/board/:id" element={<DetailPageRoute />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/oauth/callback" element={<OauthCallbackPage />} />
@@ -23,6 +23,14 @@ const Router = () => {
         <Route path="/category" element={<CategoryPage />} />
       </Routes>
     </Layout>
+  );
+};
+
+const DetailPageRoute: React.FC = () => {
+  const { id } = useParams();
+
+  return (
+    <DetailPage contentId={Number(id)} />
   );
 };
 

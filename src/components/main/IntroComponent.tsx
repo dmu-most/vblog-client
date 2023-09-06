@@ -23,7 +23,7 @@ const IntroContainer = styled.div`
     height: auto;
 
     >.Label {
-    padding: 7px;
+    padding: 1.5rem 7px;
     color: var(--black-hunt);
     font-weight: 500;
     font-size: 25px;

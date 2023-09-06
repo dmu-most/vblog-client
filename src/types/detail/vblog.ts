@@ -9,5 +9,7 @@ export interface vblogType {
   rank: number;
   hate: number;
   grade: number;
+  imgurl: string;
+  link: string;
   hashtags: string[];
 }
