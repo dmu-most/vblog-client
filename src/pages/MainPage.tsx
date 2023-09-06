@@ -29,5 +29,5 @@ export default MainPage;
 const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 1.5rem;
 `;
