@@ -1,36 +1,45 @@
 import { styled } from "styled-components";
+// Type
+import { vblogType } from "types/detail/vblog";
 
 // Component
 import Hashtag from "@components/common/Hashtag";
 
 
+interface DetailProps {
+  data: vblogType;
+}
 
 //**2023/07/29 CommandComponent- by jh
-const ContentComponent = () => {
+const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+  
+
   return (
     <ContentContainer>
       <ProfileContainer>
         <img src="/assets/images/vlog_ex.png" />
         <TitleContainer>
-          <div className="content"> 우리 지락이들 또 랜덤 플레이 댄스 찢었다💥 케이팝 기강 잡고 영석이 형도 비명 지르게 한 지락이들 표 칼군무💃 매주 금 오후 8시 40분 tvN에서!</div>
-          <div className="title"> 지구오락실 </div>
+          <div className="content"> {data.content} </div>
+          <div className="title"> {data.contentTitle} </div>
         </TitleContainer>
       </ProfileContainer>
       <TagContainer>
-        {/* <Hashtag /><Hashtag /><Hashtag /><Hashtag /> */}
+        {data.hashtags && data.hashtags.map((hashtag) => (
+          <Hashtag key={hashtag} hashtag={hashtag} />
+        ))}
       </TagContainer>
       <Line />
       <GradeContainer>
         <Grade>
-          <div className="value"> 1위</div>
+          <div className="value"> {data.rank} </div>
           <div className="key"> 브블 순위 </div>
         </Grade>
         <Grade>
-          <div className="value"> 4.5 </div>
+          <div className="value"> {data.grade} </div>
           <div className="key"> 브블 평점 </div>
         </Grade>
         <Grade>
-          <div className="value"> 100/10 </div>
+          <div className="value"> {data.heart}/{data.hate} </div>
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
