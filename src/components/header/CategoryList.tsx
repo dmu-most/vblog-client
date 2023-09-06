@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
+
+//icon
+import { MdTravelExplore, MdOutlineHealthAndSafety, MdOutlineFoodBank, MdFace4 } from 'react-icons/md';
+import { FaGamepad } from 'react-icons/fa';
+import { BiBroadcast } from 'react-icons/bi';
 
 /** 2023/09/06 - 헤더 왼쪽 컴포넌트 메뉴바 - 카테고리 작업 by jh */
 const CategoryList: React.FC = (): JSX.Element => {
@@ -19,8 +24,7 @@ const CategoryList: React.FC = (): JSX.Element => {
 
   /** 2023/09/06 - 메뉴 hover가 없을 시 true -> false로 반환하는 함수 by jh */
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setIsMenuOpen(false);
+    // setIsHovered(false);
   };
 
   return (
@@ -30,16 +34,35 @@ const CategoryList: React.FC = (): JSX.Element => {
       onMouseLeave={handleMouseLeave}
     >
       <MenuIconContainer data-ismenuopen={isMenuOpen}>
-        <MenuIcon color="var(--black-light)" />
+        {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
       </MenuIconContainer>
       {isHovered && isMenuOpen && (
             <CategoryDropdown>
+              <h2> Category </h2>
+              <CategoryItems>
+                <MdTravelExplore color="var(--gray-dark)" size="20px" />
                 <CategoryItem>여행</CategoryItem>
+              </CategoryItems>
+              <CategoryItems>
+                <FaGamepad color="var(--gray-dark)" size="20px" />
                 <CategoryItem>게임</CategoryItem>
+              </CategoryItems>
+              <CategoryItems>
+                <MdOutlineHealthAndSafety color="var(--gray-dark)" size="20px" />
                 <CategoryItem>건강</CategoryItem>
+              </CategoryItems>
+              <CategoryItems>
+                <MdOutlineFoodBank color="var(--gray-dark)" size="20px" />
                 <CategoryItem>맛집</CategoryItem>
+              </CategoryItems>
+              <CategoryItems>
+                <BiBroadcast color="var(--gray-dark)" size="20px" />
                 <CategoryItem>방송</CategoryItem>
+              </CategoryItems>
+              <CategoryItems>
+                <MdFace4 color="var(--gray-dark)" size="20px" />
                 <CategoryItem>뷰티</CategoryItem>
+              </CategoryItems>
             </CategoryDropdown>
       )}
     </CategoryListContainer>
@@ -75,31 +98,50 @@ const MenuIconContainer = styled.div<MenuIconContainerProps>`
 
 const MenuIcon = styled(FiMenu)`
   font-size: 30px;
+  color: var(--black-hunt);
+`;
+
+const CloseIcon = styled(FiX)`
+   font-size :30px ;
+   color: var(--black-hunt);
 `;
 
 const CategoryDropdown = styled.div`
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
+  flex-direction: column;
   position: fixed;
-  width: 100%;
-  height: 10%;
+  width: 15%;
+  height: 100%;
   top: 0;
   margin-top: 65px;
-  padding: 0 10rem 0 6rem;
   z-index: 1;
   background-color: var(--white-primary);
+
+  > h2{
+    font-size: 25px;
+    margin-top: 4rem;
+    padding: 1.5rem;
+    color: var(--black-deeplight);
+  }
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
     margin-top: 50px;
   }
 `;
 
+const CategoryItems = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+`;
+
 const CategoryItem = styled.div`
   font-size: 20px;
-  color: var(--black-hunt);
+  padding: 1.5rem 0.5rem;
+  color: var(--gray-dark);
 
  @media ${props => props.theme.breakpoints.mobileLMax} {
     font-size: 15px;
