@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import CategoryList from './CategoryList';
 
-// icon
-import { FiMenu } from 'react-icons/fi';
 
 /** 2023/08/18 - 헤더 왼쪽 컴포넌트 (메뉴바, 로고) - by sineTlsl */
 const LeftHeader = () => {
@@ -15,7 +14,7 @@ const LeftHeader = () => {
 
   return (
     <LeftHeaderContainer>
-      <StyledMenu color="var(--black-light)" />
+      <CategoryList />
       <div className="logo_wrap">
         <button onClick={handlerGoMain}>
           <img src="/assets/images/vblog_logo.png" />
@@ -55,14 +54,5 @@ const LeftHeaderContainer = styled.div`
       width: 120px;
       height: 50px;
     }
-  }
-`;
-
-// Menu bar 아이콘
-const StyledMenu = styled(FiMenu)`
-  font-size: 30px;
-
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    font-size: 24px;
   }
 `;
