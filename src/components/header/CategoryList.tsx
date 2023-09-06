@@ -89,6 +89,8 @@ const CategoryDropdown = styled.div`
   top: 0;
   margin-top: 65px;
   padding: 0 10rem 0 6rem;
+  z-index: 1;
+  background-color: var(--white-primary);
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
     margin-top: 50px;
