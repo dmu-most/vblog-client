@@ -40,12 +40,12 @@ const BannerContainer = styled.div`
     margin-bottom: 100px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      margin: 50px 20px 20px 20px;
+      margin: 40px 20px 20px 20px;
       height: 250px;
       }
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
-      margin: 50px 20px 20px 20px;
+      margin: 40px 20px 20px 20px;
       }
 `;
 

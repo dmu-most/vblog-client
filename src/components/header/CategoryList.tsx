@@ -22,16 +22,10 @@ const CategoryList: React.FC = (): JSX.Element => {
     setIsHovered(true);
   };
 
-  /** 2023/09/06 - 메뉴 hover가 없을 시 true -> false로 반환하는 함수 by jh */
-  const handleMouseLeave = () => {
-    // setIsHovered(false);
-  };
-
   return (
     <CategoryListContainer
       onClick={toggleMenu}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <MenuIconContainer data-ismenuopen={isMenuOpen}>
         {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -73,7 +67,6 @@ export default CategoryList;
 
 const CategoryListContainer = styled.div`
   display: flex;
-  cursor: pointer;
 `;
 
 // warning으로 인한 수정 작업
@@ -84,6 +77,7 @@ interface MenuIconContainerProps {
 const MenuIconContainer = styled.div<MenuIconContainerProps>`
   font-size: 30px;
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     font-size: 24px;
@@ -126,8 +120,12 @@ const CategoryDropdown = styled.div`
     color: var(--black-deeplight);
   }
 
+  @media ${props => props.theme.breakpoints.tabletMax} {
+    width: 30%;
+  }
+
   @media ${props => props.theme.breakpoints.mobileLMax} {
-    margin-top: 50px;
+    width: 100%;
   }
 `;
 
@@ -135,15 +133,11 @@ const CategoryItems = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
-
+  cursor: pointer;
 `;
 
 const CategoryItem = styled.div`
   font-size: 20px;
   padding: 1.5rem 0.5rem;
   color: var(--gray-dark);
-
- @media ${props => props.theme.breakpoints.mobileLMax} {
-    font-size: 15px;
-  }
 `;
