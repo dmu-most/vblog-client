@@ -1,50 +1,46 @@
 import styled from "styled-components";
 import { AiFillHeart, AiFillEdit } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
+//Type
+import { vblogListType } from "types/main/list";
 
 //Component
 import Hashtag from "./Hashtag";
 
-interface vblogType {
-  ContentId: number;
-  ContentDate: string;
-  ContentTitle: string;
-  Content: string;
-  Heart: number;
-  Review: number;
-  UserName: string;
-  Hashtags: string[];
-}
-
 interface PostCardProps {
-  data: vblogType;
+  data: vblogListType;
 }
 
 //**2023/07/19 PostCard
 const PostCard: React.FC<PostCardProps> = ({ data }) => {
-  // Rest of the component code
+  const navigate = useNavigate();
+
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handlePostClick = () => {
+    navigate(`/board/${data.contentId}`);
+  };
 
     return (
-        <CardContainer>
+        <CardContainer onClick={handlePostClick}>
           <IconContainer>
               <AiFillHeart width="10px" height= "10px" color="var(--icon-red)"/>
-              <div className="Label"> {data.Heart} </div>
+              <div className="Label"> {data.heart} </div>
               <AiFillEdit width="10px" height= "10px" color="var(--icon-navy)"/>
-              <div className="Label"> {data.Review} </div>
-              <div className="UserName"> {data.UserName} </div>
+              <div className="Label"> {data.review} </div>
+              <div className="UserName"> {data.userName} </div>
           </IconContainer>
-          <ImgContainer>
-            <img src="/assets/images/vlog_ex.png" />
+          <ImgContainer imgurl={data.imgurl}>
           </ImgContainer>
           <ContentContainer>
             <TitleContainer>
-            <div className="Title"> {data.ContentTitle} </div>
-            <div className="ContentDate"> {data.ContentDate} </div>
+            <div className="Title"> {data.contentTitle} </div>
+            <div className="ContentDate"> {data.contentDate} </div>
             </TitleContainer>
-            <div className="Content"> {data.Content} </div>
+            <div className="Content"> {data.content} </div>
           </ContentContainer>
           <TagContainer>
-          {data.Hashtags.map(( hashtag ) => (
+          {data.hashtags.slice(0, 6).map(( hashtag ) => (
             <Hashtag key={hashtag} hashtag={hashtag} />
           ))}
           </TagContainer>
@@ -99,6 +95,10 @@ const IconContainer = styled.div`
         color: var(--black-hunt);
         font-size: 15px;
         margin-left: auto;
+        white-space: nowrap;
+        max-width: calc(100% - 150px);  
+        overflow: hidden; 
+        text-overflow: ellipsis;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 13px;
@@ -107,9 +107,12 @@ const IconContainer = styled.div`
 `;
 
 //ImgContainer :  카드 안에 들어갈 이미지
-const ImgContainer = styled.div`
+const ImgContainer = styled.div<{ imgurl: string }>`
     width: 100%;
     height: 38%;
+    background-image: ${({ imgurl }) => `url(${imgurl})`};
+    background-size: cover;
+    background-position: center;
 
     > img {
       width: 100%;
@@ -123,11 +126,13 @@ const ContentContainer = styled.div`
     height: 35%;
 
     > .Content {
-      ${({ theme }) => theme.common.flexCenterRow};
+      ${({ theme }) => theme.common.flexRow};
       padding: 7px;
       color: var(--black-hunt);
       font-weight: 400;
-      font-size: 17px;
+      font-size: 14px;
+      overflow: hidden;           // Hide overflowing content
+      text-overflow: ellipsis;    // Display ellipsis (...) for overflowed text
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 14px;
@@ -135,16 +140,20 @@ const ContentContainer = styled.div`
     }
 `;
 
-//contentContainer :  카드 안에 들어갈 제목과 작성날짜
+//TitleContainer :  카드 안에 들어갈 제목과 작성날짜
 const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
-
+ 
     >.Title {
     padding: 10px 7px 7px 7px;
     color: var(--black-hunt);
     font-weight: 600;
     font-size: 20px;
+    white-space: nowrap;  
+    overflow: hidden;    
+    text-overflow: ellipsis;    // ...으로 바꿔주는 css
+    max-width: calc(100% - 100px); 
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 17px;
@@ -160,6 +169,9 @@ const TitleContainer = styled.div`
         font-size: 15px;
         margin-left: auto;
 
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 14px;
+      }
 
     }
 

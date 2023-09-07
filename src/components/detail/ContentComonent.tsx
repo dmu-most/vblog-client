@@ -1,41 +1,58 @@
 import { styled } from "styled-components";
+// Type
+import { vblogType } from "types/detail/vblog";
 
 // Component
 import Hashtag from "@components/common/Hashtag";
 
+// icon
+import { BsBoxArrowUpRight } from 'react-icons/bs';
 
+
+interface DetailProps {
+  data: vblogType;
+}
 
 //**2023/07/29 CommandComponent- by jh
-const ContentComponent = () => {
+const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+
+  /** 2023/09/06 - 해당 URL 클릭 시 넘어가게 하는 함수 - by jh */
+  const handleIconClick = () => {
+    window.location.href = data.link;
+  };
+  
+
   return (
     <ContentContainer>
       <ProfileContainer>
-        <img src="/assets/images/vlog_ex.png" />
+        <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
-          <div className="content"> 우리 지락이들 또 랜덤 플레이 댄스 찢었다💥 케이팝 기강 잡고 영석이 형도 비명 지르게 한 지락이들 표 칼군무💃 매주 금 오후 8시 40분 tvN에서!</div>
-          <div className="title"> 지구오락실 </div>
+          <div className="content"> {data.content} </div>
+          <div className="title"> {data.contentTitle} </div>
         </TitleContainer>
       </ProfileContainer>
       <TagContainer>
-        {/* <Hashtag /><Hashtag /><Hashtag /><Hashtag /> */}
+        {data.hashtags && data.hashtags.map((hashtag) => (
+          <Hashtag key={hashtag} hashtag={hashtag} />
+        ))}
       </TagContainer>
       <Line />
       <GradeContainer>
         <Grade>
-          <div className="value"> 1위</div>
+          <div className="value"> {data.rank} </div>
           <div className="key"> 브블 순위 </div>
         </Grade>
         <Grade>
-          <div className="value"> 4.5 </div>
+          <div className="value"> {data.grade} </div>
           <div className="key"> 브블 평점 </div>
         </Grade>
         <Grade>
-          <div className="value"> 100/10 </div>
+          <div className="value"> {data.heart}/{data.hate} </div>
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
-      <ThumbnailContainer>
-        <img src="/assets/images/vlog_ex.png" />
+      <ThumbnailContainer imgurl={data.imgurl}>
+        <BsBoxArrowUpRight className="icon" onClick={handleIconClick} />
       </ThumbnailContainer>
     </ContentContainer>
   );
@@ -163,9 +180,13 @@ const Grade = styled.div`
     }  
 `;
 
-const ThumbnailContainer = styled.div`
+const ThumbnailContainer = styled.div<{ imgurl: string }>`
     width: 100%;
     height: 600px;
+    background-image: ${({ imgurl }) => `url(${imgurl})`};
+    background-size: cover; // This will ensure the background image covers the entire container
+    background-repeat: no-repeat;
+    background-position: center center;
     position: relative;
     overflow: hidden;
 
@@ -182,6 +203,15 @@ const ThumbnailContainer = styled.div`
       height: 100%;
       filter: blur(7px);
       object-fit: cover;
+    }
+
+    > .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 6rem;
+    color: var(--white-primary);
     }
 `;
 

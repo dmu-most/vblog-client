@@ -1,22 +1,45 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import axios from 'axios';
+import { vblogListType } from "types/main/list";
 
 // react icon
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 
 // 실제 데이터가 들어올 시 제거
-import { vblogData } from '../../data/dummyData';
+// import { vblogData } from '../../data/dummyData';
+
+//api
+// import { vblogList } from '@api/main/vblogList';
 
 // Component
 import PostCard from '@components/common/PostCard';
 
 
 //**2023/07/07 CardComponent - by jh
-const CardComponent = () => {
+const CardComponent: React.FC = (): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
   const [maxScrollLeft, setMaxScrollLeft] = useState(0); // 가능한 최대 위치
+
+  // 데이터 셋업
+  const [vblogData, setVblogData] = useState<vblogListType[]>([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/list`);
+      setVblogData(response.data);
+      console.log('Fetched data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
   const HandlerScrollLeft = () => {
@@ -33,6 +56,7 @@ const CardComponent = () => {
   const HandlerScrollRight = () => {
     if (scrollRef.current) {
       const newPosition = scrollRef.current.scrollLeft + scrollAmount;
+      console.log('New Position:', newPosition);
       scrollRef.current.scrollTo({
         left: newPosition,
         behavior: 'smooth', // 스무스 하게 이동하기 위해 추가 - by jh
@@ -61,18 +85,20 @@ const CardComponent = () => {
   return (
     <div>
       <ScrollableCardContainer>
-        <ScrollContainer>
+        <ScrollContainer> 
           {scrollPosition > 0 && (
             <ScrollBtn onClick={HandlerScrollLeft}>
               <FaArrowAltCircleLeft className='FaArrowAltCircleLeft'/>
             </ScrollBtn>
           )}
           <CardContainer ref={scrollRef}>
-            {vblogData.map(item => (
-              <li key={item.ContentId}>
-                <PostCard data={item} />
-              </li>
-            ))}
+            {vblogData.length > 0 ? (
+              vblogData.map((item) => (
+                <PostCard key={item.contentId} data={item} />
+             ))
+            ) : (
+            <p>Loading...</p>
+            )}
           </CardContainer>
           <ScrollBtn onClick={HandlerScrollRight}>
             {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight className='FaArrowAltCircleRight'/>}

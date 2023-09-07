@@ -11,9 +11,9 @@ const CategoryCardComponent = () => {
   return (
     <CategoryCardContainer>
       <CardContainer>
-        {vblogData.map((item) => (
+        {/* {vblogData.map((item) => (
           <PostCard key={item.ContentId} data={item} />
-        ))}
+        ))} */}
       </CardContainer>
     </CategoryCardContainer>
   );
