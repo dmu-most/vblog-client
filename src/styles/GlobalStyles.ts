@@ -96,7 +96,7 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    background: var(--white-primary);
+    background: var(--bg-green);
     flex-grow: 1; 
     margin-top: 0;
   }

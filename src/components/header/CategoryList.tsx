@@ -107,7 +107,7 @@ const CategoryDropdown = styled.div`
   flex-direction: column;
   position: fixed;
   width: 15%;
-  height: 100%;
+  height: 60%;
   top: 0;
   margin-top: 65px;
   z-index: 1;
@@ -126,6 +126,7 @@ const CategoryDropdown = styled.div`
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
     width: 100%;
+    height: 100%;
   }
 `;
 
