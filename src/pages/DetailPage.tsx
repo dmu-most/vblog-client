@@ -23,7 +23,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
 
     const fetchContentData = async () => {
     try {
-      const response = await axios.get(`http://ec2-3-39-126-215.ap-northeast-2.compute.amazonaws.com:8080/board/${contentId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/board/${contentId}`);
       setContentData(response.data);
       console.log('Fetched data:', response.data);
     } catch (error) {

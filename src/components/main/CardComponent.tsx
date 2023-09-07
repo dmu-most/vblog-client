@@ -28,7 +28,7 @@ const CardComponent: React.FC = (): JSX.Element => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://ec2-3-39-126-215.ap-northeast-2.compute.amazonaws.com:8080/vlog/list');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/list`);
       setVblogData(response.data);
       console.log('Fetched data:', response.data);
     } catch (error) {
