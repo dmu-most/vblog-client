@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // store
-import { useTokenStore } from '@store/useTokenStore';
+import { getTokenState } from '@store/useTokenStore';
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
@@ -17,7 +17,7 @@ instance.interceptors.request.use(
     // 요청 하기 전 작업 수행
     // No-Auth 헤더가 없는 경우에만 토큰을 추가
     if (!config.headers['No-Auth']) {
-      const { accessToken, refreshToken } = useTokenStore();
+      const { accessToken, refreshToken } = getTokenState();
 
       if (accessToken && refreshToken) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;

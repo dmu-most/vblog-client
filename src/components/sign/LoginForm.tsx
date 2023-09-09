@@ -1,15 +1,41 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { postLogin } from '@api/auth/login';
+
+// type
+import { LoginFormType } from 'types/auth/login';
+
+// util
+import { isValidId, isValidPassword } from '@utils/formValidation';
 
 // icons
-import { AiOutlineCheckSquare } from 'react-icons/ai';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 /** 2023/07/25 - 로그인 폼 컴포넌트 - by sineTlsl */
-const SignInForm: React.FC = (): JSX.Element => {
+const LoginForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [rememberId, setRememberId] = useState<boolean>(false);
 
+  const [form, setForm] = useState<LoginFormType>({
+    loginId: '',
+    password: '',
+  });
+
+  /** 2023/09/09 - 로그인 버튼 함수 - by sineTlsl */
+  const handlerLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValidId(form.loginId) || !isValidPassword(form.password)) return;
+
+    await postLogin(form);
+    try {
+      navigate('/');
+      console.log('로그인이 되었습니다');
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /** 2023/07/25 - submit 이벤트 발생을 막는 함수 - by sineTlsl */
   const handlerPreventFormSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -27,37 +53,48 @@ const SignInForm: React.FC = (): JSX.Element => {
   };
 
   return (
-    <SignInFormContainer>
-      <FormWrap method="post">
-        <input className="form_id" type="text" placeholder="아이디" />
-        <input className="form_password" type="password" placeholder="비밀번호" autoComplete="off" />
+    <LoginFormContainer>
+      <FormWrap onSubmit={handlerLoginFormSubmit}>
+        <input
+          className="form_id"
+          type="text"
+          placeholder="아이디"
+          value={form.loginId}
+          onChange={e => setForm({ ...form, loginId: e.target.value })}
+        />
+        <input
+          className="form_password"
+          type="password"
+          placeholder="비밀번호"
+          autoComplete="off"
+          value={form.password}
+          onChange={e => setForm({ ...form, password: e.target.value })}
+        />
         <LoginMore>
-          <button className="id_remember" onClick={handlerIdRemember}>
-            <AiOutlineCheckSquare size="25" color={!rememberId ? 'var(--gray-primary)' : 'var(--gray-dark)'} />
+          <button type="button" className="id_remember" onClick={handlerIdRemember}>
+            <AiOutlineCheckCircle size="25" color={!rememberId ? 'var(--gray-primary)' : 'var(--gray-dark)'} />
             아이디 저장
           </button>
-          <div className="search_user_info">
-            <button onClick={handlerPreventFormSubmit}>아이디 찾기</button>
-            <p className="gap">|</p>
-            <button onClick={handlerPreventFormSubmit}>비밀번호 찾기</button>
-          </div>
+          <button type="button" className="find_password" onClick={handlerPreventFormSubmit}>
+            비밀번호 찾기
+          </button>
         </LoginMore>
         <ButtonWrap>
-          <button type="submit" className="common_btn signin_btn">
+          <button type="submit" className="common_btn login_btn">
             로그인
           </button>
-          <button className="common_btn signup_btn" onClick={redirectToSignUp}>
+          <button type="button" className="common_btn signup_btn" onClick={redirectToSignUp}>
             회원가입
           </button>
         </ButtonWrap>
       </FormWrap>
-    </SignInFormContainer>
+    </LoginFormContainer>
   );
 };
 
-export default SignInForm;
+export default LoginForm;
 
-const SignInFormContainer = styled.div`
+const LoginFormContainer = styled.div`
   margin-top: 3rem;
   max-width: 450px;
   width: 100%;
@@ -107,31 +144,20 @@ const LoginMore = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  > .id_remember,
-  > .search_user_info {
+  > .id_remember {
     ${({ theme }) => theme.common.flexCenter};
     gap: 0.3rem;
     color: var(--black-hunt);
     font-size: 15px;
   }
-  > .search_user_info > button {
+  > .find_password {
     color: var(--black-hunt);
     font-size: 15px;
-  }
-  > .search_user_info > .gap {
-    display: inline-block;
-    font-size: 0;
-    width: 1px;
-    height: 10px;
-    background: var(--gray-primary);
-    margin: 4px 5px 4px 5px;
-    vertical-align: top;
-    box-sizing: border-box;
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     > .id_remember,
-    > .search_user_info > button {
+    > .find_password {
       font-size: 14px;
     }
   }
@@ -156,7 +182,7 @@ const ButtonWrap = styled.div`
       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
   }
-  > .signin_btn {
+  > .login_btn {
     color: var(--white-primary);
     background: var(--green-hunt);
 

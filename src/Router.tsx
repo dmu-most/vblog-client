@@ -5,7 +5,7 @@ import Layout from '@layout/index';
 import MainPage from '@pages/MainPage';
 import DetailPage from '@pages/DetailPage';
 import CategoryPage from '@pages/CategoryPage';
-import SignInPage from '@pages/SignInPage';
+import LoginPage from '@pages/LoginPage';
 import SignUpPage from '@pages/SignUpPage';
 import OauthCallbackPage from '@pages/OauthCallbackPage';
 import MyPage from '@pages/MyPage';
@@ -16,7 +16,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/board/:id" element={<DetailPageRoute />} />
-        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/oauth/callback" element={<OauthCallbackPage />} />
         <Route path="/myinfo" element={<MyPage />} />
@@ -29,9 +29,7 @@ const Router = () => {
 const DetailPageRoute: React.FC = () => {
   const { id } = useParams();
 
-  return (
-    <DetailPage contentId={Number(id)} />
-  );
+  return <DetailPage contentId={Number(id)} />;
 };
 
 export default Router;

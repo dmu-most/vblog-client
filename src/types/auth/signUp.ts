@@ -2,7 +2,6 @@
 /** 2023/08/15 - 회원가입 폼 양식 Type - sineTlsl */
 export interface SignUpFormType {
   id: string;
-  email: string;
   name: string;
   password: string;
   passwordConfirm?: string;
@@ -10,7 +9,6 @@ export interface SignUpFormType {
 
 /** 2023/08/21 - 회원가입 폼 (Request) - by sineTlsl */
 export interface SignUpRequest {
-  email: string;
   loginId: string;
   password: string;
   username: string;
@@ -19,4 +17,16 @@ export interface SignUpRequest {
 /** 2023/08/21 - 회원가입 폼 (Response) - by sineTlsl */
 export interface SignUpResponse {
   data: SignUpRequest[];
+}
+
+// ============================ 아이디 중복 확인 ============================
+/** 2023/09/08 - 아이디 중복 확인 (Request) - by sineTlsl */
+export interface CheckIdRequest {
+  loginId: string;
+}
+
+/** 2023/09/08 - 아이디 중복 확인 (Response) - by sineTlsl */
+export interface CheckIdResponse {
+  result: boolean;
+  message: string;
 }
