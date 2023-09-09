@@ -14,21 +14,6 @@ export const isValidId = (id: string) => {
 };
 
 /**
- * 2023/08/15 - 이메일 유효성 검사 - by sineTlsl
- * '알파벳+숫자@알파벳+숫자.알파벳+숫자'로만 이루어져야 함
- * */
-export const isValidEmail = (email: string) => {
-  const parts = email.split('@');
-  if (parts.length !== 2) return false;
-
-  const [username, domain] = parts;
-  if (username.length === 0 || domain.length === 0) return false;
-  if (domain.indexOf('.') === -1) return false;
-
-  return true;
-};
-
-/**
  * 2023/08/15 - 닉네임 유효성 검사 - by sineTlsl
  * 별명의 길이가 2~8자 사이어야 하며, 한글과 알파벳, 숫자로만 이루어져야 함
  * */
