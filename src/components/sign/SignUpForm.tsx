@@ -1,25 +1,29 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { SignUpFormType, SignUpRequest } from 'types/auth/signUp';
+import { useNavigate } from 'react-router-dom';
+
+// type
+import { SignUpFormType, SignUpRequest, CheckIdRequest } from 'types/auth/signUp';
 
 // api
-import { postSignUp } from '@api/auth';
+import { postSignUp, getCheckId } from '@api/auth';
 
 // util
-import { isValidId, isValidName, isValidEmail, isValidPassword } from '@utils/formValidation';
+import { isValidId, isValidName, isValidPassword } from '@utils/formValidation';
 
 // icons
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 /** 2023/07/25 - 회원가입 폼 컴포넌트 - by sineTlsl */
 const SignUpForm: React.FC = (): JSX.Element => {
+  const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState<boolean>(false); // 비밀번호 표시
   const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false); // 재확인 비밀번호 표시
   const [isValidForm, setIsValidForm] = useState(false);
+  const [isIdCheck, setIsIdCheck] = useState<boolean | null>(null);
 
   const [form, setForm] = useState<SignUpFormType>({
     id: '',
-    email: '',
     name: '',
     password: '',
     passwordConfirm: '',
@@ -28,7 +32,6 @@ const SignUpForm: React.FC = (): JSX.Element => {
   // 유효성 메시지 선언 및 초기화
   const [validationMessage, setValidationMessage] = useState({
     id: '',
-    email: '',
     name: '',
     password: '',
     passwordConfirm: '',
@@ -37,15 +40,13 @@ const SignUpForm: React.FC = (): JSX.Element => {
   // 유효성 함수
   const validationFunctions = {
     id: (id: string) => isValidId(id),
-    email: (email: string) => isValidEmail(email),
     name: (name: string) => isValidName(name),
     password: (password: string) => isValidPassword(password),
   };
 
   // 유효성 메시지
   const validationMessages = {
-    id: ['사용할 수 있는 아이디입니다.', '4~12자 사이의 알파벳 대소문자와 숫자로만 입력해주세요.'],
-    email: ['올바른 이메일 형식입니다.', '올바르지 않는 이메일 형식입니다. 다시 한번 확인해주세요.'],
+    id: ['', '4~12자 사이의 알파벳 대소문자와 숫자로만 입력해주세요.'],
     name: ['올바른 형식의 별명입니다.', '2~8자 사이의 한글과 알파벳 대소문자, 숫자로만 입력해주세요.'],
     password: [
       '올바른 비밀번호 형식입니다.',
@@ -57,7 +58,6 @@ const SignUpForm: React.FC = (): JSX.Element => {
     // 입력 값의 유효성을 검사하여 모든 입력이 유효한 경우 회원가입 버튼을 활성화
     if (
       isValidId(form.id) &&
-      isValidEmail(form.email) &&
       isValidName(form.name) &&
       isValidPassword(form.password) &&
       form.password === form.passwordConfirm
@@ -98,18 +98,39 @@ const SignUpForm: React.FC = (): JSX.Element => {
     e.preventDefault();
 
     const SignUpFormData: SignUpRequest = {
-      email: form.email,
       loginId: form.id,
       password: form.password,
       username: form.name,
     };
 
-    postSignUp(SignUpFormData);
+    await postSignUp(SignUpFormData);
+
+    try {
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   /** 2023/08/21 - 아이디 중복 확인 함수 - by sineTlsl */
-  const handlerIsIdCheck = (e: React.MouseEvent) => {
+  const handlerIsIdCheck = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    const params: CheckIdRequest = {
+      loginId: form.id,
+    };
+
+    const res = await getCheckId(params);
+
+    try {
+      if (isValidId(form.id)) {
+        setIsIdCheck(res.result);
+        setValidationMessage({ ...validationMessage, id: res.message });
+      }
+      // setValidationMessage({ ...validationMessage, id: res.message });
+    } catch (err) {
+      setValidationMessage({ ...validationMessage, id: res.message });
+    }
   };
 
   /** 2023/07/25 - 비밀번호 보기/숨기기 함수 - by sineTlsl */
@@ -140,25 +161,13 @@ const SignUpForm: React.FC = (): JSX.Element => {
               placeholder="아이디 입력(4~12자)"
               onChange={handlerInputChange('id')}
             />
-            <button className="id_btn" onClick={handlerIsIdCheck}>
+            <button type="button" className="id_btn" onClick={handlerIsIdCheck}>
               중복 확인
             </button>
           </div>
-          <ValidationMessage isValid={isValidId(form.id)}>{validationMessage.id}</ValidationMessage>
-        </div>
-        <div className="form_item">
-          <label className="input_title" htmlFor="user_email">
-            이메일
-          </label>
-          <input
-            type="email"
-            id="user_email"
-            className="email"
-            value={form.email}
-            placeholder="이메일@example.com"
-            onChange={handlerInputChange('email')}
-          />
-          <ValidationMessage isValid={isValidEmail(form.email)}>{validationMessage.email}</ValidationMessage>
+          <ValidationMessage isValid={Boolean(isValidId(form.id) && !isIdCheck)}>
+            {validationMessage.id}
+          </ValidationMessage>
         </div>
         <div className="form_item">
           <label className="input_title" htmlFor="user_name">
@@ -184,10 +193,10 @@ const SignUpForm: React.FC = (): JSX.Element => {
               id="user_password"
               value={form.password}
               className="password"
-              placeholder="비밀번호 입력(알파벳 대소문자, 숫자, 특수문자 포함 8~16자)"
+              placeholder="알파벳 대소문자, 숫자, 특수문자 포함 8~16자"
               onChange={handlerInputChange('password')}
             />
-            <button onClick={handlerPasswordVisibility}>
+            <button type="button" onClick={handlerPasswordVisibility}>
               <p className="password_icon">
                 {!isPassword ? (
                   <AiFillEyeInvisible size="25px" color="var(--gray-dark)" />
@@ -212,7 +221,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
               placeholder="비밀번호 재입력"
               onChange={handlerOnChangePasswordConfirm}
             />
-            <button onClick={handlerConfirmPasswordVisibility}>
+            <button type="button" onClick={handlerConfirmPasswordVisibility}>
               <p className="password_icon">
                 {!isConfirmPassword ? (
                   <AiFillEyeInvisible size="25px" color="var(--gray-dark)" />
@@ -273,7 +282,6 @@ const FormContainer = styled.form`
     gap: 0.5rem;
   }
   > .form_item > .id_input_wrap > .id,
-  > .form_item > .email,
   > .form_item > .name,
   > .form_item > .password_icon_wrap > .password {
     height: 47px;
