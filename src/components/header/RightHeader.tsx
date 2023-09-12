@@ -1,5 +1,11 @@
 import styled from 'styled-components';
+
+// store
 import { useContentModeStore } from '@store/useConentModeStore';
+import { useTokenStore } from '@store/useTokenStore';
+
+// component
+import UserLoginBtn from '@components/header/UserLoginBtn';
 
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';
@@ -9,6 +15,7 @@ type ContentMode = 'V' | 'B';
 
 /** 2023/08/18 - 헤더 오른쪽 컴포넌트 (비로그인 or 로그인) - by sineTlsl */
 const RightHeader = () => {
+  const { accessToken, refreshToken } = useTokenStore();
   const { mode, setMode } = useContentModeStore();
 
   /** 2023/08/18 - Vlog or Blog 전환하는 함수 - by sineTlsl */
@@ -27,10 +34,16 @@ const RightHeader = () => {
         </VblogChangeBtn>
       </div>
       <div className="gap" />
-      <div className="profile-wrap">
-        <ProfileImg />
-        <BiSolidDownArrow size="10px" color="var(--gray-dark)" />
-      </div>
+      {accessToken ? (
+        <div className="profile_wrap">
+          <ProfileImgWrap>
+            <img src="/assets/images/avator_default.png" />
+          </ProfileImgWrap>
+          <BiSolidDownArrow size="10px" color="var(--gray-dark)" />
+        </div>
+      ) : (
+        <UserLoginBtn />
+      )}
     </RightHeaderContainer>
   );
 };
@@ -57,7 +70,7 @@ const RightHeaderContainer = styled.div`
       height: 25px;
     }
   }
-  > .profile-wrap {
+  > .profile_wrap {
     ${({ theme }) => theme.common.flexCenter};
     gap: 0.3rem;
   }
@@ -94,11 +107,17 @@ const VblogChangeBtn = styled.button<{ mode: ContentMode }>`
 `;
 
 // Profile 유저 이미지
-const ProfileImg = styled.div`
+const ProfileImgWrap = styled.div`
   width: 35px;
   height: 35px;
-  border-radius: 50%;
-  background: var(--gray-primary);
+  ${({ theme }) => theme.common.flexCenter};
+
+  > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     width: 30px;
