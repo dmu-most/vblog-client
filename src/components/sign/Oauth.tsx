@@ -75,11 +75,15 @@ const OauthTitle = styled.div`
 
 // ===================== OAuth 박스  =====================
 const OauthSignUpWrap = styled.div`
-  margin-top: 2rem;
+  margin-top: 32px;
   width: 100%;
   height: 100%;
   ${({ theme }) => theme.common.flexCenter};
-  gap: 2rem;
+  gap: 32px;
+
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    gap: 14px;
+  }
 `;
 
 // ===================== OAuth 버튼  =====================
