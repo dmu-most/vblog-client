@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,9 @@ import { SignUpFormType, SignUpRequest, CheckIdRequest } from 'types/auth/signUp
 
 // api
 import { postSignUp, getCheckId } from '@api/auth';
+
+// components
+import AlertModal from '@components/common/AlertModal';
 
 // util
 import { isValidId, isValidName, isValidPassword } from '@utils/formValidation';
@@ -17,10 +20,14 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 /** 2023/07/25 - 회원가입 폼 컴포넌트 - by sineTlsl */
 const SignUpForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
+
   const [isPassword, setIsPassword] = useState<boolean>(false); // 비밀번호 표시
   const [isConfirmPassword, setIsConfirmPassword] = useState<boolean>(false); // 재확인 비밀번호 표시
-  const [isValidForm, setIsValidForm] = useState(false);
   const [isIdCheck, setIsIdCheck] = useState<boolean | null>(null);
+
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
 
   const [form, setForm] = useState<SignUpFormType>({
     id: '',
@@ -54,20 +61,6 @@ const SignUpForm: React.FC = (): JSX.Element => {
     ],
   };
 
-  useEffect(() => {
-    // 입력 값의 유효성을 검사하여 모든 입력이 유효한 경우 회원가입 버튼을 활성화
-    if (
-      isValidId(form.id) &&
-      isValidName(form.name) &&
-      isValidPassword(form.password) &&
-      form.password === form.passwordConfirm
-    ) {
-      setIsValidForm(true);
-    } else {
-      setIsValidForm(false);
-    }
-  }, [form]);
-
   /** 2023/08/21 - 폼 유효성 검사 함수 - by sineTlsl */
   const handlerInputChange = (key: keyof SignUpFormType) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -97,6 +90,22 @@ const SignUpForm: React.FC = (): JSX.Element => {
   const handlersignUpFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (
+      !isValidId(form.id) ||
+      !isValidName(form.name) ||
+      !isValidPassword(form.password) ||
+      form.password !== form.passwordConfirm ||
+      !isIdCheck
+    ) {
+      setModalErrorText(['회원가입 폼을 정확하게 입력해주세요.']);
+      if (!isIdCheck) {
+        setModalErrorText([validationMessage.id, '다른 아이디를 사용해주세요.']);
+      }
+      setIsModalOpen(true);
+
+      return;
+    }
+
     const SignUpFormData: SignUpRequest = {
       loginId: form.id,
       password: form.password,
@@ -122,15 +131,15 @@ const SignUpForm: React.FC = (): JSX.Element => {
 
     const res = await getCheckId(params);
 
+    console.log(res.result);
     try {
       if (isValidId(form.id)) {
         setIsIdCheck(res.result);
-        setValidationMessage({ ...validationMessage, id: res.message });
       }
-      // setValidationMessage({ ...validationMessage, id: res.message });
     } catch (err) {
-      setValidationMessage({ ...validationMessage, id: res.message });
+      setIsIdCheck(false);
     }
+    setValidationMessage({ ...validationMessage, id: res.message });
   };
 
   /** 2023/07/25 - 비밀번호 보기/숨기기 함수 - by sineTlsl */
@@ -165,7 +174,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
               중복 확인
             </button>
           </div>
-          <ValidationMessage isValid={Boolean(isValidId(form.id) && !isIdCheck)}>
+          <ValidationMessage $isValid={Boolean(isValidId(form.id) && isIdCheck)}>
             {validationMessage.id}
           </ValidationMessage>
         </div>
@@ -181,7 +190,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
             placeholder="별명 입력(2~8자)"
             onChange={handlerInputChange('name')}
           />
-          <ValidationMessage isValid={isValidName(form.name)}>{validationMessage.name}</ValidationMessage>
+          <ValidationMessage $isValid={isValidName(form.name)}>{validationMessage.name}</ValidationMessage>
         </div>
         <div className="form_item">
           <label className="input_title" htmlFor="user_password">
@@ -206,7 +215,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
               </p>
             </button>
           </div>
-          <ValidationMessage isValid={isValidPassword(form.password)}>{validationMessage.password}</ValidationMessage>
+          <ValidationMessage $isValid={isValidPassword(form.password)}>{validationMessage.password}</ValidationMessage>
         </div>
         <div className="form_item">
           <label className="input_title" htmlFor="user_password_confirm">
@@ -231,15 +240,22 @@ const SignUpForm: React.FC = (): JSX.Element => {
               </p>
             </button>
           </div>
-          <ValidationMessage isValid={form.password === form.passwordConfirm}>
+          <ValidationMessage $isValid={form.password === form.passwordConfirm}>
             {validationMessage.passwordConfirm}
           </ValidationMessage>
         </div>
         <ButtonWrap>
-          <button type="submit" className="signup_btn" disabled={!isValidForm}>
+          <button type="submit" className="signup_btn">
             회원가입
           </button>
         </ButtonWrap>
+        <div>
+          <AlertModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            {modalErrorText.map((text, idx) => (
+              <p key={idx}>{text}</p>
+            ))}
+          </AlertModal>
+        </div>
       </FormContainer>
     </SignUpFormContainer>
   );
@@ -327,10 +343,10 @@ const FormContainer = styled.form`
 `;
 
 // ===================== 유효성 검사 텍스트 메시지 =====================
-const ValidationMessage = styled.div<{ isValid: boolean }>`
-  color: ${({ isValid }) => (isValid ? 'var(--adobe-color2)' : '#D7202E')};
+const ValidationMessage = styled.div<{ $isValid: boolean }>`
+  color: ${({ $isValid }) => ($isValid ? 'var(--adobe-color2)' : '#D7202E')};
   font-size: 15px;
-  line-height: 18 px;
+  line-height: 18px;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     font-size: 14px;
