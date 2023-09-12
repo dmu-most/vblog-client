@@ -3,8 +3,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postLogin } from '@api/auth/login';
 
-// type
-import { LoginFormType } from 'types/auth/login';
+// types
+import { LoginFormType } from 'types/auth';
+
+// component
+import AlertModal from '@components/common/AlertModal';
+
+// store
+import { useTokenStore } from '@store/useTokenStore';
 
 // util
 import { isValidId, isValidPassword } from '@utils/formValidation';
@@ -16,6 +22,9 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 const LoginForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [rememberId, setRememberId] = useState<boolean>(false);
+  const { setAccessToken, setRefreshToken } = useTokenStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
 
   const [form, setForm] = useState<LoginFormType>({
     loginId: '',
@@ -26,16 +35,32 @@ const LoginForm: React.FC = (): JSX.Element => {
   const handlerLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isValidId(form.loginId) || !isValidPassword(form.password)) return;
+    if (!isValidId(form.loginId) || !isValidPassword(form.password)) {
+      setModalErrorText(['아이디 또는 비밀번호를 다시 확인해주세요.']);
+      setIsModalOpen(true);
 
-    await postLogin(form);
+      return;
+    }
+
     try {
+      const res = await postLogin(form);
+
+      setAccessToken(res.accessToken);
+      setRefreshToken(res.refreshToken);
       navigate('/');
-      console.log('로그인이 되었습니다');
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      // 아이디와 비밀번호가 일치하지 않을 때, 모달창 추가
+      if (err.response) {
+        console.log('로그인 실패');
+
+        const { data } = err.response;
+
+        setModalErrorText(data.message.split('. '));
+        setIsModalOpen(true);
+      }
     }
   };
+
   /** 2023/07/25 - submit 이벤트 발생을 막는 함수 - by sineTlsl */
   const handlerPreventFormSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -87,6 +112,13 @@ const LoginForm: React.FC = (): JSX.Element => {
             회원가입
           </button>
         </ButtonWrap>
+        <div>
+          <AlertModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            {modalErrorText.map((text, idx) => (
+              <p key={idx}>{text}</p>
+            ))}
+          </AlertModal>
+        </div>
       </FormWrap>
     </LoginFormContainer>
   );
