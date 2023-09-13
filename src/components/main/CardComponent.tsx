@@ -17,7 +17,7 @@ import PostCard from '@components/common/PostCard';
 
 
 //**2023/07/07 CardComponent - by jh
-const CardComponent: React.FC = (): JSX.Element => {
+const CardComponent: React.FC<{ sortBy: string }> = ({ sortBy }): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
@@ -25,6 +25,13 @@ const CardComponent: React.FC = (): JSX.Element => {
 
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
+
+  const sortedVblogData = [...vblogData];
+
+  if (sortBy === "heart") {
+    sortedVblogData.sort((a, b) => b.heart - a.heart);
+    console.log("sortedVblogData:", sortedVblogData);
+  }
 
   const fetchData = async () => {
     try {
@@ -92,8 +99,8 @@ const CardComponent: React.FC = (): JSX.Element => {
             </ScrollBtn>
           )}
           <CardContainer ref={scrollRef}>
-            {vblogData.length > 0 ? (
-              vblogData.map((item) => (
+            {sortedVblogData.length > 0 ? (
+              sortedVblogData.map((item) => (
                 <PostCard key={item.contentId} data={item} />
              ))
             ) : (

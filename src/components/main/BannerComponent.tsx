@@ -1,11 +1,11 @@
 import { styled } from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 //Type
 import { BannerType } from "types/main/list";
 
 // component
-import Hashtag from "@components/common/Hashtag";
-
+import BannerTag from "@components/common/BannerTag";
 
 interface BannerProps {
   data: BannerType;
@@ -13,11 +13,17 @@ interface BannerProps {
 
 //**2023/07/07 BannerComponent - by jh
 const BannerComponent: React.FC<BannerProps> = ({ data }) => {
+  const navigate = useNavigate();
+
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handlePostClick = () => {
+    navigate(`/board/${data.contentId}`);
+  };
 
   return (
     <BannerContainer>
       <RowBannerContainer>
-        <BestBannerContainer>
+        <BestBannerContainer onClick={handlePostClick}>
           <div className="Label"> 브블 1위🥇 컨텐츠 </div>
           <img src={data.imgUrl} alt="banner Image" />
         </BestBannerContainer>
@@ -25,7 +31,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
           <TagBannerForm>
             <div className="Label"> 현재 가장 인기 tag모음 </div>
             <div className="tags">
-              {/* <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> */}
+              <BannerTag />
             </div>
           </TagBannerForm>
           <CallBannerForm>
@@ -45,8 +51,8 @@ export default BannerComponent;
 const BannerContainer = styled.div`
     width: auto;
     height: 450px;
-    margin-top: 6rem;
-    margin-bottom: 100px;
+    margin-top: 3rem;
+    margin-bottom:3rem;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin: 40px 20px 20px 20px;
@@ -112,7 +118,7 @@ const PromoBannerContainer = styled.div`
     flex-direction: column;
     flex: 1;
 
-        // 태블릿 사이즈 부터는 bannercomponent는 숨김
+    // 태블릿 사이즈 부터는 bannercomponent는 숨김
     @media ${props => props.theme.breakpoints.tabletMax} {
     display: none;
   }
@@ -171,22 +177,14 @@ const CallBannerForm = styled.div`
     font-weight: 500;
     font-size: 25px;
     }
-  /* > img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
-    overflow: contain; 
-  } */
 `;
 
 const ImgContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
 
     > img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 250px;
+    max-height: 170px;
     object-fit: fill;
   }
 `;

@@ -16,9 +16,9 @@ interface DetailProps {
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
 
-  /** 2023/09/06 - 해당 URL 클릭 시 넘어가게 하는 함수 - by jh */
+  /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
-    window.location.href = data.link;
+    window.open(data.link, "_blank");
   };
   
 
@@ -51,8 +51,8 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
-      <ThumbnailContainer imgurl={data.imgurl}>
-        <BsBoxArrowUpRight className="icon" onClick={handleIconClick} />
+      <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
+        <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
     </ContentContainer>
   );
@@ -66,6 +66,7 @@ const ContentContainer = styled.div`
   height: auto;
   margin: 100px 20px 20px 20px;
   border-radius: 10px;
+  background-color: var(--white-primary);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -86,6 +87,7 @@ const ProfileContainer = styled.div`
     width: 50px;
     height: 50px;
     margin: 20px;
+    object-fit: cover;
     border-radius: 50%;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -189,6 +191,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string }>`
     background-position: center center;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       height: 300px;
@@ -202,7 +205,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string }>`
       width: 100%;
       height: 100%;
       filter: blur(7px);
-      object-fit: cover;
+      object-fit: fill;
     }
 
     > .icon {

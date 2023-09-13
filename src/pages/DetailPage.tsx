@@ -4,8 +4,7 @@ import { styled } from 'styled-components';
 //component
 import ContentComponent from '@components/detail/ContentComonent';
 import ReviewComponent from '@components/detail/ReviewComponent';
-// import CommandComponent from '@components/detail/CommandComponent';
-// import PostCard from '@components/common/PostCard';
+import CommandComponent from '@components/detail/CommandComponent';
 
 // api
 import React, { useState, useEffect } from 'react';
@@ -39,7 +38,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
     <DetailContainer>
       {contentData ? <ContentComponent data={contentData} /> : <p>Loading...</p>}
       <ReviewComponent />
-      {/* <CommandComponent /> */}
+      <CommandComponent />
     </DetailContainer>
   );
 };
