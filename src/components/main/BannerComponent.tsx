@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 //Type
 import { BannerType } from "types/main/list";
 
 // component
-import Hashtag from "@components/common/Hashtag";
 
 
 interface BannerProps {
@@ -13,9 +13,15 @@ interface BannerProps {
 
 //**2023/07/07 BannerComponent - by jh
 const BannerComponent: React.FC<BannerProps> = ({ data }) => {
+  const navigate = useNavigate();
+
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handlePostClick = () => {
+    navigate(`/board/${data.contentId}`);
+  };
 
   return (
-    <BannerContainer>
+    <BannerContainer onClick={handlePostClick}>
       <RowBannerContainer>
         <BestBannerContainer>
           <div className="Label"> 브블 1위🥇 컨텐츠 </div>
@@ -25,7 +31,6 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
           <TagBannerForm>
             <div className="Label"> 현재 가장 인기 tag모음 </div>
             <div className="tags">
-              {/* <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> <Hashtag /> */}
             </div>
           </TagBannerForm>
           <CallBannerForm>
@@ -112,7 +117,7 @@ const PromoBannerContainer = styled.div`
     flex-direction: column;
     flex: 1;
 
-        // 태블릿 사이즈 부터는 bannercomponent는 숨김
+    // 태블릿 사이즈 부터는 bannercomponent는 숨김
     @media ${props => props.theme.breakpoints.tabletMax} {
     display: none;
   }
@@ -171,22 +176,14 @@ const CallBannerForm = styled.div`
     font-weight: 500;
     font-size: 25px;
     }
-  /* > img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
-    overflow: contain; 
-  } */
 `;
 
 const ImgContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
 
     > img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 250px;
+    max-height: 170px;
     object-fit: fill;
   }
 `;

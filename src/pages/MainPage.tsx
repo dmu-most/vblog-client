@@ -10,24 +10,25 @@ import CardComponent from '@components/main/CardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
-    const [imgUrl, setImgUrl] = useState<string>('');
+    const [bannerData, setbannerData] = useState<any>(null);
+
+  const fetchBannerData = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/banner`);
+      setbannerData(response.data);
+      // console.log('Fetched data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    // 이미지 URL을 받아오는 API 호출
-    axios.get(`${process.env.REACT_APP_API_URL}/vlog/banner`)
-      .then((response) => {
-        setImgUrl(response.data.imgUrl);
-         console.log('API Response Data:', response.data);
-         console.log('Updated imgUrl:', response.data.imgUrl);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchBannerData();
   }, []);
 
   return (
     <MainPageContainer>
-      <BannerComponent data={{ imgUrl: imgUrl }} /> 
+      {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
       <IntroComponent intro="OO님을 위한 브블의 콘텐츠 💬" />
       <CardComponent />
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />

@@ -14,7 +14,7 @@ export interface vblogListType {
 }
 
 export interface BannerType {
-  // contentId: number;
+  contentId: number;
   // heart: number;
   imgUrl: string;
 }
