@@ -16,9 +16,9 @@ interface DetailProps {
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
 
-  /** 2023/09/06 - 해당 URL 클릭 시 넘어가게 하는 함수 - by jh */
+  /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
-    window.location.href = data.link;
+    window.open(data.link, "_blank");
   };
   
 
