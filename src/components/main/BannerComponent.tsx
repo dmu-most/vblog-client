@@ -1,16 +1,25 @@
 import { styled } from "styled-components";
 
+//Type
+import { BannerType } from "types/main/list";
+
 // component
 import Hashtag from "@components/common/Hashtag";
 
+
+interface BannerProps {
+  data: BannerType;
+}
+
 //**2023/07/07 BannerComponent - by jh
-const BannerComponent = () => {
+const BannerComponent: React.FC<BannerProps> = ({ data }) => {
+
   return (
     <BannerContainer>
       <RowBannerContainer>
         <BestBannerContainer>
           <div className="Label"> 브블 1위🥇 컨텐츠 </div>
-          <img src="/assets/images/youtubeimg.png" />
+          <img src={data.imgUrl} alt="banner Image" />
         </BestBannerContainer>
         <PromoBannerContainer>
           <TagBannerForm>
@@ -176,8 +185,8 @@ const ImgContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
 
     > img {
-    width: 250px;
-    height: 150px;
-    overflow: fill; 
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fill;
   }
 `;
