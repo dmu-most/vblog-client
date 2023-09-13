@@ -14,7 +14,7 @@ const MainPage: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     // 이미지 URL을 받아오는 API 호출
-    axios.get('http://ec2-3-39-126-215.ap-northeast-2.compute.amazonaws.com/vlog/banner')
+    axios.get(`${process.env.REACT_APP_API_URL}/vlog/banner`)
       .then((response) => {
         setImgUrl(response.data.imgUrl);
          console.log('API Response Data:', response.data);
