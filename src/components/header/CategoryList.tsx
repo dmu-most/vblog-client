@@ -106,8 +106,8 @@ const CategoryDropdown = styled.div`
   align-items: center;
   flex-direction: column;
   position: fixed;
-  width: 15%;
-  height: 60%;
+  width: 300px;
+  height: 600px;
   top: 0;
   margin-top: 65px;
   z-index: 1;
