@@ -46,6 +46,8 @@ export default MyInfoDropDown;
 const DropDownContainer = styled.div`
   overflow: auto;
   z-index: 20;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const UlMenu = styled.ul<{ $isOpen: boolean }>`
@@ -54,7 +56,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
   border-radius: 8px;
   position: absolute;
   top: 58px;
-  right: 5px;
   width: 120px;
   text-align: center;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
@@ -73,7 +74,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
     font-size: 15px;
     height: 25px;
     color: var(--black-hunt);
-    font-weight: 500;
     width: 90%;
     padding: 0;
     margin: 0;
@@ -91,7 +91,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
     font-size: 15px;
     height: 100%;
     color: var(--black-hunt);
-    font-weight: 500;
     width: 100%;
 
     &:hover {
