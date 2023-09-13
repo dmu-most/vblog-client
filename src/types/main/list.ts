@@ -12,3 +12,9 @@ export interface vblogListType {
   hashtags: string[];
   imgurl: string;
 }
+
+export interface BannerType {
+  // contentId: number;
+  // heart: number;
+  imgUrl: string;
+}
