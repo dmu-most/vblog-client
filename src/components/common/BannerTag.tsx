@@ -67,7 +67,7 @@ const BannerTag : React.FC = (): JSX.Element => {
             <TagContainer height="30px" bgColor="var(--white-primary)" borderRadius="50%">
               <AiOutlineHeart color="var(--icon-red)"/>
             </TagContainer>
-            <TagContainer width="6rem" height="30px" bgColor="var(--tag-mint)" borderRadius="20px">
+            <TagContainer width="5.5rem" height="30px" bgColor="var(--tag-mint)" borderRadius="20px">
               <AiOutlineArrowLeft color="var(--white-primary)"/>
             </TagContainer>
         </BannerTagContainer>

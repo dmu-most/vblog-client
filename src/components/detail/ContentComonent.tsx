@@ -51,8 +51,8 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="key"> 브블 좋아요/싫어요 </div>
         </Grade>
       </GradeContainer>
-      <ThumbnailContainer imgurl={data.imgurl}>
-        <BsBoxArrowUpRight className="icon" onClick={handleIconClick} />
+      <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
+        <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
     </ContentContainer>
   );
@@ -191,6 +191,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string }>`
     background-position: center center;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       height: 300px;
