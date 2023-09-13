@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { BannerType } from "types/main/list";
 
 // component
-
+import BannerTag from "@components/common/BannerTag";
 
 interface BannerProps {
   data: BannerType;
@@ -21,9 +21,9 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
   };
 
   return (
-    <BannerContainer onClick={handlePostClick}>
+    <BannerContainer>
       <RowBannerContainer>
-        <BestBannerContainer>
+        <BestBannerContainer onClick={handlePostClick}>
           <div className="Label"> 브블 1위🥇 컨텐츠 </div>
           <img src={data.imgUrl} alt="banner Image" />
         </BestBannerContainer>
@@ -31,6 +31,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
           <TagBannerForm>
             <div className="Label"> 현재 가장 인기 tag모음 </div>
             <div className="tags">
+              <BannerTag />
             </div>
           </TagBannerForm>
           <CallBannerForm>

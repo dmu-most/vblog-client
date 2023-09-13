@@ -10,7 +10,7 @@ import CardComponent from '@components/main/CardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
-    const [bannerData, setbannerData] = useState<any>(null);
+  const [bannerData, setbannerData] = useState<any>(null);
 
   const fetchBannerData = async () => {
     try {
