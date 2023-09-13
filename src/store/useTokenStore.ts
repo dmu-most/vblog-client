@@ -44,8 +44,8 @@ const useTokenStore = create(
 );
 
 /** 2023/09/02 - React 컴포넌트 외부에서 토큰 불러오기 - by sineTlsl */
-export const getTokenState = () => {
+const getTokenState = () => {
   return useTokenStore.getState();
 };
 
-export { useTokenStore };
+export { useTokenStore, getTokenState };

@@ -30,7 +30,7 @@ const UserLoginBtnContainer = styled.div`
     margin: 0;
     padding: 0 10px;
     border: none;
-    background: var(--black-hunt);
+    background: var(--black-light);
     color: var(--white-hunt);
     border-radius: 5px;
     font-size: 16px;
