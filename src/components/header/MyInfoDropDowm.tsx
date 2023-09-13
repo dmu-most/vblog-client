@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // stores
@@ -7,14 +8,16 @@ import { useMemberStore } from '@store/useMemberStore';
 
 interface DropDownProps {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 /** 2023/09/13 - 헤더 회원정보 드롭다운 - by sineTlsl */
-const MyInfoDropDown: React.FC<DropDownProps> = ({ isOpen }): JSX.Element => {
+const MyInfoDropDown: React.FC<DropDownProps> = ({ isOpen, setIsOpen }): JSX.Element => {
   const navigate = useNavigate();
   const { clearTokens } = useTokenStore();
   const { clearMember } = useMemberStore();
 
+  /** 2023/09/13 - 로그아웃 - by sineTlsl */
   const handlerLogout = () => {
     clearTokens();
     clearMember();
