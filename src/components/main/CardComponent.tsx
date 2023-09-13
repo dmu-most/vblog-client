@@ -30,7 +30,7 @@ const CardComponent: React.FC = (): JSX.Element => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/list`);
       setVblogData(response.data);
-      console.log('Fetched data:', response.data);
+      // console.log('Fetched data:', response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
