@@ -11,6 +11,7 @@ import AlertModal from '@components/common/AlertModal';
 
 // store
 import { useTokenStore } from '@store/useTokenStore';
+import { useMemberStore } from '@store/useMemberStore';
 
 // util
 import { isValidId, isValidPassword } from '@utils/formValidation';
@@ -23,6 +24,9 @@ const LoginForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [rememberId, setRememberId] = useState<boolean>(false);
   const { setAccessToken, setRefreshToken } = useTokenStore();
+  const { setMember } = useMemberStore();
+
+  // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalErrorText, setModalErrorText] = useState<string[]>([]);
 
@@ -47,6 +51,9 @@ const LoginForm: React.FC = (): JSX.Element => {
 
       setAccessToken(res.accessToken);
       setRefreshToken(res.refreshToken);
+
+      setMember(res.data);
+
       navigate('/');
     } catch (err: any) {
       // 아이디와 비밀번호가 일치하지 않을 때, 모달창 추가
