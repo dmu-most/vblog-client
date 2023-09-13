@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
@@ -11,7 +11,7 @@ import MyInfoDropDown from '@components/header/MyInfoDropDowm';
 
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';
-import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { useMemberStore } from '@store/useMemberStore';
 
 type ContentMode = 'V' | 'B';
@@ -21,6 +21,7 @@ const RightHeader = () => {
   const { accessToken, refreshToken } = useTokenStore();
   const { mode, setMode } = useContentModeStore();
   const { member } = useMemberStore();
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -31,11 +32,24 @@ const RightHeader = () => {
     setMode(newMode);
   };
 
-  const handleBlurContainer = () => {
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 200);
-  };
+  useEffect(() => {
+    //
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      setTimeout(() => {
+        window.addEventListener('click', handleClickOutside);
+      }, 0);
+    }
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
 
   return (
     <RightHeaderContainer>
@@ -51,13 +65,15 @@ const RightHeader = () => {
           <ProfileImgWrap>
             <img src={member && member.imageUrl ? member.imageUrl : '/assets/images/avator_default.png'} />
           </ProfileImgWrap>
-          <UserDropDown onClick={() => setIsOpen(!isOpen)} onBlur={handleBlurContainer}>
-            {isOpen ? (
-              <BiSolidUpArrow size="10px" color="var(--gray-dark)" />
-            ) : (
-              <BiSolidDownArrow size="10px" color="var(--gray-dark)" />
-            )}
-            {isOpen && <MyInfoDropDown isOpen={isOpen} />}
+          <UserDropDown ref={dropDownRef}>
+            <button onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? (
+                <TiArrowSortedUp size="20px" color="var(--gray-dark)" />
+              ) : (
+                <TiArrowSortedDown size="20px" color="var(--gray-dark)" />
+              )}
+            </button>
+            {isOpen && <MyInfoDropDown isOpen={isOpen} setIsOpen={setIsOpen} />}
           </UserDropDown>
         </div>
       ) : (
@@ -146,6 +162,15 @@ const ProfileImgWrap = styled.div`
 
 // 유저 드롭다운
 const UserDropDown = styled.div`
-  cursor: pointer;
   user-select: none;
+  padding: 2px;
+  ${({ theme }) => theme.common.flexCenterRow};
+
+  > button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+  }
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // stores
@@ -7,14 +8,16 @@ import { useMemberStore } from '@store/useMemberStore';
 
 interface DropDownProps {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 /** 2023/09/13 - 헤더 회원정보 드롭다운 - by sineTlsl */
-const MyInfoDropDown: React.FC<DropDownProps> = ({ isOpen }): JSX.Element => {
+const MyInfoDropDown: React.FC<DropDownProps> = ({ isOpen, setIsOpen }): JSX.Element => {
   const navigate = useNavigate();
   const { clearTokens } = useTokenStore();
   const { clearMember } = useMemberStore();
 
+  /** 2023/09/13 - 로그아웃 - by sineTlsl */
   const handlerLogout = () => {
     clearTokens();
     clearMember();
@@ -46,6 +49,8 @@ export default MyInfoDropDown;
 const DropDownContainer = styled.div`
   overflow: auto;
   z-index: 20;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const UlMenu = styled.ul<{ $isOpen: boolean }>`
@@ -54,7 +59,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
   border-radius: 8px;
   position: absolute;
   top: 58px;
-  right: 5px;
   width: 120px;
   text-align: center;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
@@ -73,7 +77,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
     font-size: 15px;
     height: 25px;
     color: var(--black-hunt);
-    font-weight: 500;
     width: 90%;
     padding: 0;
     margin: 0;
@@ -91,7 +94,6 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
     font-size: 15px;
     height: 100%;
     color: var(--black-hunt);
-    font-weight: 500;
     width: 100%;
 
     &:hover {
