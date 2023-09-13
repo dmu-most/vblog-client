@@ -66,6 +66,7 @@ const ContentContainer = styled.div`
   height: auto;
   margin: 100px 20px 20px 20px;
   border-radius: 10px;
+  background-color: var(--white-primary);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -86,6 +87,7 @@ const ProfileContainer = styled.div`
     width: 50px;
     height: 50px;
     margin: 20px;
+    object-fit: cover;
     border-radius: 50%;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -202,7 +204,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string }>`
       width: 100%;
       height: 100%;
       filter: blur(7px);
-      object-fit: cover;
+      object-fit: fill;
     }
 
     > .icon {
