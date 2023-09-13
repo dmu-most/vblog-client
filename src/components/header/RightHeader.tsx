@@ -1,15 +1,18 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
 import { useTokenStore } from '@store/useTokenStore';
 
-// component
+// components
 import UserLoginBtn from '@components/header/UserLoginBtn';
+import MyInfoDropDown from '@components/header/MyInfoDropDowm';
 
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';
-import { BiSolidDownArrow } from 'react-icons/bi';
+import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi';
+import { useMemberStore } from '@store/useMemberStore';
 
 type ContentMode = 'V' | 'B';
 
@@ -17,12 +20,21 @@ type ContentMode = 'V' | 'B';
 const RightHeader = () => {
   const { accessToken, refreshToken } = useTokenStore();
   const { mode, setMode } = useContentModeStore();
+  const { member } = useMemberStore();
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   /** 2023/08/18 - Vlog or Blog 전환하는 함수 - by sineTlsl */
   const handleContentMode = () => {
     const newMode = mode === 'V' ? 'B' : 'V';
 
     setMode(newMode);
+  };
+
+  const handleBlurContainer = () => {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
   };
 
   return (
@@ -34,12 +46,19 @@ const RightHeader = () => {
         </VblogChangeBtn>
       </div>
       <div className="gap" />
-      {accessToken ? (
+      {accessToken && refreshToken ? (
         <div className="profile_wrap">
           <ProfileImgWrap>
-            <img src="/assets/images/avator_default.png" />
+            <img src={member && member.imageUrl ? member.imageUrl : '/assets/images/avator_default.png'} />
           </ProfileImgWrap>
-          <BiSolidDownArrow size="10px" color="var(--gray-dark)" />
+          <UserDropDown onClick={() => setIsOpen(!isOpen)} onBlur={handleBlurContainer}>
+            {isOpen ? (
+              <BiSolidUpArrow size="10px" color="var(--gray-dark)" />
+            ) : (
+              <BiSolidDownArrow size="10px" color="var(--gray-dark)" />
+            )}
+            {isOpen && <MyInfoDropDown isOpen={isOpen} />}
+          </UserDropDown>
         </div>
       ) : (
         <UserLoginBtn />
@@ -123,4 +142,10 @@ const ProfileImgWrap = styled.div`
     width: 30px;
     height: 30px;
   }
+`;
+
+// 유저 드롭다운
+const UserDropDown = styled.div`
+  cursor: pointer;
+  user-select: none;
 `;
