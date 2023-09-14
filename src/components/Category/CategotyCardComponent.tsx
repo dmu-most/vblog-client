@@ -1,19 +1,40 @@
 import { styled } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+// Type
+import { vblogListType } from "types/main/list";
 
 // Card
-import { vblogData } from '../../data/dummyData';
 import PostCard from '@components/common/PostCard';
 
 
 /** 2023/08/23 - category card - by jh */
 const CategoryCardComponent = () => {
 
+  // 데이터 셋업
+  const [vblogCategoryData, setVblogCategoryData] = useState<vblogListType[]>([]);
+
+    const CategoryData = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/category/Beauty`);
+      setVblogCategoryData(response.data);
+      // console.log('Fetched data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    CategoryData();
+  }, []);
+
   return (
     <CategoryCardContainer>
       <CardContainer>
-        {/* {vblogData.map((item) => (
-          <PostCard key={item.ContentId} data={item} />
-        ))} */}
+        {vblogCategoryData.map((item) => (
+          <PostCard key={item.contentId} data={item} />
+        ))}
       </CardContainer>
     </CategoryCardContainer>
   );

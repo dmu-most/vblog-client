@@ -20,7 +20,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/oauth/callback" element={<OauthCallbackPage />} />
         <Route path="/myinfo" element={<MyPage />} />
-        <Route path="/category" element={<CategoryPage />} />
+        <Route path="/category/*" element={<CategoryPage />} />
       </Routes>
     </Layout>
   );
