@@ -17,7 +17,7 @@ const CategoryCardComponent = () => {
 
     const CategoryData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/category/Beauty`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/category/Beauty`);
       setVblogCategoryData(response.data);
       // console.log('Fetched data:', response.data);
     } catch (error) {
