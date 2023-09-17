@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { useNavigate, useParams } from "react-router-dom";
 
 //icon
 import { MdTravelExplore, MdOutlineHealthAndSafety, MdOutlineFoodBank, MdFace4 } from 'react-icons/md';
 import { FaGamepad } from 'react-icons/fa';
 import { BiBroadcast } from 'react-icons/bi';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 /** 2023/09/06 - 헤더 왼쪽 컴포넌트 메뉴바 - 카테고리 작업 by jh */
 const CategoryList: React.FC = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  /** 2023/09/14 - 각 카테고리 클릭 시 카테고리페이지로 넘어가는 함수 by jh */
+  const handleItemClick = (category: string) => {
+     navigate(`/category/${category}`);
+   };
 
   /** 2023/09/06 - 메뉴 클릭 시 카테고리를 띄어주는 함수 by jh */
   const toggleMenu = () => {
@@ -33,27 +40,27 @@ const CategoryList: React.FC = (): JSX.Element => {
       {isHovered && isMenuOpen && (
             <CategoryDropdown>
               <h2> Category </h2>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Travel')}>
                 <MdTravelExplore color="var(--gray-dark)" size="20px" />
                 <CategoryItem>여행</CategoryItem>
               </CategoryItems>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Game')}>
                 <FaGamepad color="var(--gray-dark)" size="20px" />
                 <CategoryItem>게임</CategoryItem>
               </CategoryItems>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Health')}>
                 <MdOutlineHealthAndSafety color="var(--gray-dark)" size="20px" />
                 <CategoryItem>건강</CategoryItem>
               </CategoryItems>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Restaurant')}>
                 <MdOutlineFoodBank color="var(--gray-dark)" size="20px" />
                 <CategoryItem>맛집</CategoryItem>
               </CategoryItems>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Broadcasting')}>
                 <BiBroadcast color="var(--gray-dark)" size="20px" />
                 <CategoryItem>방송</CategoryItem>
               </CategoryItems>
-              <CategoryItems>
+              <CategoryItems onClick={() => handleItemClick('Beauty')}>
                 <MdFace4 color="var(--gray-dark)" size="20px" />
                 <CategoryItem>뷰티</CategoryItem>
               </CategoryItems>

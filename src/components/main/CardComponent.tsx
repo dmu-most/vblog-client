@@ -3,11 +3,11 @@ import { styled } from 'styled-components';
 import axios from 'axios';
 import { vblogListType } from "types/main/list";
 
+// store
+import { useContentModeStore } from '@store/useConentModeStore';
+
 // react icon
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
-
-// 실제 데이터가 들어올 시 제거
-// import { vblogData } from '../../data/dummyData';
 
 //api
 // import { vblogList } from '@api/main/vblogList';
@@ -17,27 +17,35 @@ import PostCard from '@components/common/PostCard';
 
 
 //**2023/07/07 CardComponent - by jh
-const CardComponent: React.FC<{ sortBy: string }> = ({ sortBy }): JSX.Element => {
+const CardComponent: React.FC = (): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
   const [maxScrollLeft, setMaxScrollLeft] = useState(0); // 가능한 최대 위치
+  const { mode } = useContentModeStore();
 
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-  const sortedVblogData = [...vblogData];
-
-  if (sortBy === "heart") {
-    sortedVblogData.sort((a, b) => b.heart - a.heart);
-    console.log("sortedVblogData:", sortedVblogData);
-  }
+   let apiUrl: string;  // Explicitly declare as string type
+   if(mode === "V") {
+     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/list`;
+   }
+   else if(mode === "B") {
+     apiUrl= `${process.env.REACT_APP_API_URL}/blog/list`;
+   }
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/vlog/list`);
+      const response = await axios.get(apiUrl);
+      
+      if (mode === "V") {
+        console.log('Fetched data for V:', response.data);  // Log the fetched data to console for V mode
+      } else if (mode === "B") {
+        console.log('Fetched data for B:', response.data);  // Log the fetched data to console for B mode
+      }
+      
       setVblogData(response.data);
-      // console.log('Fetched data:', response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -45,7 +53,7 @@ const CardComponent: React.FC<{ sortBy: string }> = ({ sortBy }): JSX.Element =>
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [mode]);
 
 
   /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
@@ -99,8 +107,8 @@ const CardComponent: React.FC<{ sortBy: string }> = ({ sortBy }): JSX.Element =>
             </ScrollBtn>
           )}
           <CardContainer ref={scrollRef}>
-            {sortedVblogData.length > 0 ? (
-              sortedVblogData.map((item) => (
+            {vblogData.length > 0 ? (
+              vblogData.map((item) => (
                 <PostCard key={item.contentId} data={item} />
              ))
             ) : (

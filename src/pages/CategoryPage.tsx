@@ -6,6 +6,8 @@ import CategoryDropdown from '@components/Category/CategoryDropdown';
 import CategoryCardComponent from '@components/Category/CategotyCardComponent';
 
 
+// const CategoryList = ["travel", "game", "health", "restaurant", "broadcasting", "Beauty"];
+
 /** 2023/08/23 - 카테고리 페이지 */
 const CategoryPage = () => {
 
