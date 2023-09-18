@@ -190,8 +190,8 @@ const ImgContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
 
     > img {
-    max-width: 250px;
-    max-height: 170px;
+    max-width: 240px;
+    max-height: 160px;
     object-fit: fill;
   }
 `;
