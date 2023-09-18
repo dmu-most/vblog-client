@@ -107,10 +107,11 @@ const IconContainer = styled.div`
 `;
 
 //ImgContainer :  카드 안에 들어갈 이미지
-const ImgContainer = styled.div<{ imgurl: string }>`
+const ImgContainer = styled.div<{ imgurl: string | undefined }>`
     width: 100%;
     height: 38%;
-    background-image: ${({ imgurl }) => `url(${imgurl})`};
+    background-image: ${({ imgurl }) =>
+      imgurl ? `url(${imgurl})` : `url('/assets/images/noImage.png')`};
     background-size: cover;
     background-position: center;
 
