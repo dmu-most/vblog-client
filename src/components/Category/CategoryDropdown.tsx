@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { useContentModeStore } from '@store/useConentModeStore';
 import { FaAngleDown } from "react-icons/fa";
-
-
-type ContentMode = 'V' | 'B';
 
 // 무한스크롤 사용 예정
 /** 2023/08/23 - category dropdown - by jh */
 const CategoryDropdown = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const { mode } = useContentModeStore();
 
     const toggleDropdown = () => {
       setDropdownOpen(!dropdownOpen);
@@ -18,7 +13,7 @@ const CategoryDropdown = () => {
 
   return (
     <CategoryDropdownContainer>
-      <DropdownLayout mode={mode}>
+      <DropdownLayout>
         <input />
         <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" onClick={toggleDropdown}/> </div>
         {dropdownOpen && (
@@ -43,10 +38,10 @@ const CategoryDropdownContainer = styled.div`
     padding: 1rem;
 `;
 
-const DropdownLayout = styled.div<{ mode: ContentMode }>`
+const DropdownLayout = styled.div`
   max-width: 150px;
   height: auto;
-  background: ${({ mode }) => (mode === 'V' ? 'var(--bg-green)' : 'var(--bg-brown)')};
+  background: var(--white-primary);
   transition: transform 0.3s ease, opacity 0.3s ease;
   box-shadow: 0 4px 5px 0 #00000026;
   position: relative;

@@ -35,7 +35,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
             </div>
           </TagBannerForm>
           <CallBannerForm>
-            <div className="Label"> 브블과 소통해요 🙋‍♀️ </div>
+            <div className="Label"> 브블이 뭔가요? 🙋‍♀️ </div>
             <ImgContainer>
             <img src="/assets/images/community.png" />
             </ImgContainer>
@@ -76,7 +76,9 @@ const BestBannerContainer = styled.div`
     flex-direction: column;
     flex: 2;
     width: 100%;
-    height: 100%;
+    height: 97%;
+    margin: 0.5rem;
+    background-color: var(--white-primary);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     cursor: pointer;
@@ -91,7 +93,7 @@ const BestBannerContainer = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 30px;
+    font-size: 25px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 13px;
@@ -129,12 +131,15 @@ const TagBannerForm = styled.div`
   flex-direction: column;
   flex: 1;
   width: 95%;
-  height: 95%;
+  height: 90%;
+  margin: 0.5rem;
+  background-color: var(--white-primary);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
   perspective: 1000px;
   transition: transform 0.3s ease;
+  /* margin-bottom: 1rem; */
 
   &:hover {
     transform: scale(1.02); /* 5% scale increase on mouse hover */
@@ -144,7 +149,7 @@ const TagBannerForm = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 20px;
     }
   > .tags {
     display: flex;
@@ -160,7 +165,9 @@ const CallBannerForm = styled.div`
   flex-direction: column;
   flex: 1;
   width: 95%;
-  height: 95%;
+  height: 90%;
+  margin: 0.5rem;
+  background-color: var(--white-primary);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
@@ -175,7 +182,7 @@ const CallBannerForm = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 20px;
     }
 `;
 
@@ -183,8 +190,8 @@ const ImgContainer = styled.div`
     ${({ theme }) => theme.common.flexCenter};
 
     > img {
-    max-width: 250px;
-    max-height: 170px;
+    max-width: 240px;
+    max-height: 160px;
     object-fit: fill;
   }
 `;

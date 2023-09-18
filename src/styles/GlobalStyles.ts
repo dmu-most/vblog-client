@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { useContentModeStore } from '@store/useConentModeStore';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -101,7 +102,7 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    background: var(--bg-green);
+    background: var(--bg-mode);
     flex-grow: 1; 
     margin-top: 0;
   }

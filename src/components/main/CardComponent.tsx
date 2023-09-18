@@ -16,8 +16,13 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 import PostCard from '@components/common/PostCard';
 
 
+// 각 컴포넌트에 맞게 다른 endpoint 넣기 위해 변수 생성
+interface CardComponentProps {
+  endpoint: string;
+}
+
 //**2023/07/07 CardComponent - by jh
-const CardComponent: React.FC = (): JSX.Element => {
+const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponentProps): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
@@ -27,12 +32,12 @@ const CardComponent: React.FC = (): JSX.Element => {
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-   let apiUrl: string;  // Explicitly declare as string type
+   let apiUrl: string;  // vlog/blog 모드변환 변수
    if(mode === "V") {
-     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/list`;
+     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
    }
    else if(mode === "B") {
-     apiUrl= `${process.env.REACT_APP_API_URL}/blog/list`;
+     apiUrl= `${process.env.REACT_APP_API_URL}/blog/${endpoint}`;
    }
 
   const fetchData = async () => {
@@ -40,9 +45,9 @@ const CardComponent: React.FC = (): JSX.Element => {
       const response = await axios.get(apiUrl);
       
       if (mode === "V") {
-        console.log('Fetched data for V:', response.data);  // Log the fetched data to console for V mode
+        // console.log('Fetched data for V:', response.data); 
       } else if (mode === "B") {
-        console.log('Fetched data for B:', response.data);  // Log the fetched data to console for B mode
+        // console.log('Fetched data for B:', response.data); 
       }
       
       setVblogData(response.data);
@@ -142,6 +147,7 @@ const CardContainer = styled.ul`
   ${({ theme }) => theme.common.flexCenterRow};
   width: fit-content;
   height: 400px;
+  margin: 0.5rem;
 
   transition: transform 0.3s ease;
   gap: 30px;

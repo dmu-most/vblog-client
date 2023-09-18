@@ -1,6 +1,9 @@
 import { styled } from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+
+// store
+import { useContentModeStore } from '@store/useConentModeStore';
 
 // Type
 import { vblogListType } from "types/main/list";
@@ -10,24 +13,69 @@ import PostCard from '@components/common/PostCard';
 
 
 /** 2023/08/23 - category card - by jh */
-const CategoryCardComponent = () => {
+const CategoryCardComponent: React.FC = (): JSX.Element => {
+  const { mode } = useContentModeStore();
 
   // 데이터 셋업
   const [vblogCategoryData, setVblogCategoryData] = useState<vblogListType[]>([]);
 
+  let apiUrl: string;  // Explicitly declare as string type
+   if(mode === "V") {
+     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/Beauty`;
+   }
+   else if(mode === "B") {
+     apiUrl= `${process.env.REACT_APP_API_URL}/blog/Beauty`;
+   }
+
     const CategoryData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/category/Beauty`);
+      const response = await axios.get(apiUrl);
+      
+      if (mode === "V") {
+        console.log('Fetched data for V:', response.data);  
+      } else if (mode === "B") {
+        console.log('Fetched data for B:', response.data);
+      }
+      
       setVblogCategoryData(response.data);
-      // console.log('Fetched data:', response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+  /** 2023/09/18 - 무한 스크롤 사용 함수 - by jh */
+  // 타겟 요소 지정
+  const containerRef = useRef(null);
+
   useEffect(() => {
     CategoryData();
-  }, []);
+  }, [mode]);
+
+  const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.5,
+  };
+
+  // 무한 스크롤을 위한 useEffect
+  useEffect(() => {
+    (async () => {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+        console.log("ㅋㅋㅋ");
+        }
+      }, options);
+  
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+  
+      return () => {
+        observer.disconnect();
+      };
+    })();
+  }, [containerRef]);
+  /** 무한 스크롤 */
 
   return (
     <CategoryCardContainer>

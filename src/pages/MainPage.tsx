@@ -30,11 +30,10 @@ const MainPage: React.FC = (): JSX.Element => {
       const response = await axios.get(apiUrl);
       
       if (mode === "V") {
-        console.log('Fetched data for V:', response.data);  // Log the fetched data to console for V mode
+        // console.log('Fetched data for V:', response.data); 
       } else if (mode === "B") {
-        console.log('Fetched data for B:', response.data);  // Log the fetched data to console for B mode
+        // console.log('Fetched data for B:', response.data); 
       }
-      
       setBannerData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -48,14 +47,14 @@ const MainPage: React.FC = (): JSX.Element => {
   return (
     <MainPageContainer>
       {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
-      <IntroComponent intro="OO님을 위한 브블의 콘텐츠 💬" />
-      <CardComponent />
+      <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
+      <CardComponent endpoint="likelist"/>
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
-      <CardComponent />
+      <CardComponent endpoint="reviewlist"/>
       <IntroComponent intro="브블Pick이 가장 많은 콘텐츠 ❤️" />
-      <CardComponent />
+      <CardComponent endpoint="likelist"/>
       <IntroComponent intro="새롭게 뜨고 있는 컨텐츠 모음 " />
-      <CardComponent />
+      <CardComponent endpoint="newlist"/>
     </MainPageContainer>
   );
 };
