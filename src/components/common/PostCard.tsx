@@ -127,12 +127,13 @@ const ContentContainer = styled.div`
 
     > .Content {
       ${({ theme }) => theme.common.flexRow};
-      padding: 7px;
+      padding: 10px;
       color: var(--black-hunt);
       font-weight: 400;
-      font-size: 14px;
+      font-size: 12px;
       overflow: hidden;           // Hide overflowing content
       text-overflow: ellipsis;    // Display ellipsis (...) for overflowed text
+      line-height: 1.5;          // Add spacing between lines
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 14px;
@@ -149,7 +150,7 @@ const TitleContainer = styled.div`
     padding: 10px 7px 7px 7px;
     color: var(--black-hunt);
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     white-space: nowrap;  
     overflow: hidden;    
     text-overflow: ellipsis;    // ...으로 바꿔주는 css
@@ -166,7 +167,7 @@ const TitleContainer = styled.div`
         padding: 14px 7px 7px 7px;
         color: var(--black-hunt);
         font-weight: 200;
-        font-size: 15px;
+        font-size: 12px;
         margin-left: auto;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
