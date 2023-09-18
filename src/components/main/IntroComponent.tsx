@@ -26,7 +26,7 @@ const IntroContainer = styled.div`
     padding: 1.5rem 7px;
     color: var(--black-hunt);
     font-weight: 500;
-    font-size: 25px;
+    font-size: 22px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 15px;

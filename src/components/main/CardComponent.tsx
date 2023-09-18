@@ -147,6 +147,7 @@ const CardContainer = styled.ul`
   ${({ theme }) => theme.common.flexCenterRow};
   width: fit-content;
   height: 400px;
+  margin: 0.5rem;
 
   transition: transform 0.3s ease;
   gap: 30px;
