@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // store
@@ -15,16 +16,17 @@ import PostCard from '@components/common/PostCard';
 /** 2023/08/23 - category card - by jh */
 const CategoryCardComponent: React.FC = (): JSX.Element => {
   const { mode } = useContentModeStore();
+  const { category } = useParams();
 
   // 데이터 셋업
   const [vblogCategoryData, setVblogCategoryData] = useState<vblogListType[]>([]);
 
   let apiUrl: string;  // Explicitly declare as string type
    if(mode === "V") {
-     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/Beauty`;
+     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${category}`;
    }
    else if(mode === "B") {
-     apiUrl= `${process.env.REACT_APP_API_URL}/blog/Beauty`;
+     apiUrl= `${process.env.REACT_APP_API_URL}/blog/category/${category}`;
    }
 
     const CategoryData = async () => {
@@ -32,9 +34,9 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
       const response = await axios.get(apiUrl);
       
       if (mode === "V") {
-        console.log('Fetched data for V:', response.data);  
+        // console.log('Fetched data for V:', response.data);  
       } else if (mode === "B") {
-        console.log('Fetched data for B:', response.data);
+        // console.log('Fetched data for B:', response.data);
       }
       
       setVblogCategoryData(response.data);
@@ -43,13 +45,13 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    CategoryData();
+  }, [mode, category]);
+
   /** 2023/09/18 - 무한 스크롤 사용 함수 - by jh */
   // 타겟 요소 지정
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    CategoryData();
-  }, [mode]);
 
   const options = {
   root: null,
