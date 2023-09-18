@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 // store
@@ -43,9 +43,39 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
     }
   };
 
+  /** 2023/09/18 - 무한 스크롤 사용 함수 - by jh */
+  // 타겟 요소 지정
+  const containerRef = useRef(null);
+
   useEffect(() => {
     CategoryData();
   }, [mode]);
+
+  const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.5,
+  };
+
+  // 무한 스크롤을 위한 useEffect
+  useEffect(() => {
+    (async () => {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+        console.log("ㅋㅋㅋ");
+        }
+      }, options);
+  
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+  
+      return () => {
+        observer.disconnect();
+      };
+    })();
+  }, [containerRef]);
+  /** 무한 스크롤 */
 
   return (
     <CategoryCardContainer>

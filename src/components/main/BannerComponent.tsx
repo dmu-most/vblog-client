@@ -35,7 +35,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
             </div>
           </TagBannerForm>
           <CallBannerForm>
-            <div className="Label"> 브블과 소통해요 🙋‍♀️ </div>
+            <div className="Label"> 브블이 뭔가요? 🙋‍♀️ </div>
             <ImgContainer>
             <img src="/assets/images/community.png" />
             </ImgContainer>
