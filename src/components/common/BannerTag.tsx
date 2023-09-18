@@ -9,13 +9,13 @@ import { AiOutlineArrowDown, AiOutlineArrowLeft, AiOutlineArrowRight,
 interface ButtonProps{
 	width?: string;
 	height?: string;
-	bgColor?: string;
-	borderRadius?: string;
-	borderSize?: number; 
-	borderColor?: string; 
-	textColor?:string; 
-	svgWidth? :string; 
-	svgHeight? :string;
+	bgcolor?: string;
+	borderradius?: string;
+	bordersize?: number; 
+	bordercolor?: string; 
+	textcolor?:string; 
+	svgwidth? :string; 
+	svgheight? :string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -25,49 +25,49 @@ interface TextButtonProps extends ButtonProps{
 const BannerTag : React.FC = (): JSX.Element => {   
 	return(
         <BannerTagContainer>
-            <TextTagContainer height="30px" bgColor="var(--tag-pink)" borderRadius="20px">
+            <TextTagContainer height="30px" bgcolor="var(--tag-pink)" borderradius="20px">
               <span className="Label"> #세계여행 </span>
             </TextTagContainer>
-            <ArrowTagContainer height="30px" bgColor="var(--white-hunt)" borderRadius="50%">
+            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
               <AiOutlineArrowLeft width="10px" height= "10px" />
             </ArrowTagContainer>
-            <TextTagContainer height="30px" bgColor="var(--tag-yellow)" borderRadius="20px">
+            <TextTagContainer height="30px" bgcolor="var(--tag-yellow)" borderradius="20px">
               <span className="Label"> #밈고리즘 </span>
             </TextTagContainer>
-            <TextTagContainer height="30px" bgColor="var(--white-primary)" borderColor="var(--tag-peach)" borderSize={2} borderRadius="20px">
+            <TextTagContainer height="30px" bgcolor="var(--white-primary)" bordercolor="var(--tag-peach)" bordersize={2} borderradius="20px">
               <span className="Label"> #배우는여행중 </span>
             </TextTagContainer>
-            <TagContainer width="30px" height="30px" bgColor="var(--tag-beige)" borderRadius="50%" />
-            <ArrowTagContainer height="30px" bgColor="var(--white-hunt)" borderRadius="50%">
+            <TagContainer width="30px" height="30px" bgcolor="var(--tag-beige)" borderradius="50%" />
+            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
               <AiOutlineArrowDown width="10px" height= "10px" />
             </ArrowTagContainer>
-            <TextTagContainer height="30px" bgColor="var(--tag-orange)" borderRadius="20px">
+            <TextTagContainer height="30px" bgcolor="var(--tag-orange)" borderradius="20px">
               <span className="Label"> #림툰 </span>
             </TextTagContainer>
-            <TagContainer width="30px" height="30px" bgColor="var(--tag-blue)" borderRadius="50%" />
-            <TextTagContainer height="30px" bgColor="var(--white-primary)" borderColor="var(--tag-green)" borderSize={2} borderRadius="20px">
+            <TagContainer width="30px" height="30px" bgcolor="var(--tag-blue)" borderradius="50%" />
+            <TextTagContainer height="30px" bgcolor="var(--white-primary)" bordercolor="var(--tag-green)" bordersize={2} borderradius="20px">
               <span className="Label"> #성수동맛집 </span>
             </TextTagContainer>
-            <ArrowTagContainer height="30px" bgColor="var(--white-hunt)" borderRadius="50%">
+            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
               <AiOutlineArrowRight width="10px" height= "10px" />
             </ArrowTagContainer>
-            <TagContainer width="30px" height="30px" bgColor="var(--tag-purple)" borderRadius="50%" />
-            <TextTagContainer height="30px" bgColor="var(--tag-orange)" borderRadius="20px">
+            <TagContainer width="30px" height="30px" bgcolor="var(--tag-purple)" borderradius="50%" />
+            <TextTagContainer height="30px" bgcolor="var(--tag-orange)" borderradius="20px">
               <span className="Label"> #새로 뜨는 영상 </span>
             </TextTagContainer>
-            <ArrowTagContainer height="30px" bgColor="var(--white-hunt)" borderRadius="50%">
+            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
               <AiOutlineArrowUp width="10px" height= "10px" />
             </ArrowTagContainer>
-            <BgchangeTagContainer height="30px" bgColor="var(--tag-pink)" borderRadius="20px">
+            <BgchangeTagContainer height="30px" bgcolor="var(--tag-pink)" borderradius="20px">
               <span className="Label"> #최근에 업로드 된 블로그 </span>
             </BgchangeTagContainer>
-            <TagContainer height="30px" bgColor="var(--white-primary)" borderRadius="50%">
+            <TagContainer height="30px" bgcolor="var(--white-primary)" borderradius="50%">
               <AiFillHeart color="var(--icon-red)"/>
             </TagContainer>
-            <TagContainer height="30px" bgColor="var(--white-primary)" borderRadius="50%">
+            <TagContainer height="30px" bgcolor="var(--white-primary)" borderradius="50%">
               <AiOutlineHeart color="var(--icon-red)"/>
             </TagContainer>
-            <TagContainer width="5.5rem" height="30px" bgColor="var(--tag-mint)" borderRadius="20px">
+            <TagContainer width="5.5rem" height="30px" bgcolor="var(--tag-mint)" borderradius="20px">
               <AiOutlineArrowLeft color="var(--white-primary)"/>
             </TagContainer>
         </BannerTagContainer>
@@ -86,11 +86,11 @@ const BannerTagContainer = styled.div`
 const TagContainer = styled.button<ButtonProps>`
 	width: ${({ width }) => (width ? width : 'auto')};
 	height: ${({ height }) => (height ? height : 'auto')};
-	background-color: ${({ bgColor }) => (bgColor ? bgColor : 'transparent')};
-	border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : 'none')};
-	border: ${({ borderSize, borderColor }) =>
-		borderSize && borderColor ? `${borderSize}px solid ${borderColor}` : 'none'};
-	color: ${({ textColor }) => (textColor ? textColor : 'inherit')};
+	background-color: ${({ bgcolor }) => (bgcolor ? bgcolor : 'transparent')};
+	border-radius: ${({ borderradius }) => (borderradius ? borderradius : 'none')};
+	border: ${({ bordersize, bordercolor }) =>
+		bordersize && bordercolor ? `${bordersize}px solid ${bordercolor}` : 'none'};
+	color: ${({ textcolor }) => (textcolor ? textcolor : 'inherit')};
     ${({ theme }) => theme.common.flexCenter};
     flex-direction: row;
     padding: 6px 12px;
@@ -125,7 +125,7 @@ const BgchangeTagContainer = styled(TagContainer)<ButtonProps>`
       background-color: var(--white-primary);
     }
     to {
-      background-color: ${({ bgColor }) => (bgColor ? bgColor : 'transparent')};
+      background-color: ${({ bgcolor }) => (bgcolor ? bgcolor : 'transparent')};
     }
   }
 

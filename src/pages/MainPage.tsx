@@ -30,11 +30,10 @@ const MainPage: React.FC = (): JSX.Element => {
       const response = await axios.get(apiUrl);
       
       if (mode === "V") {
-        console.log('Fetched data for V:', response.data);  // Log the fetched data to console for V mode
+        // console.log('Fetched data for V:', response.data); 
       } else if (mode === "B") {
-        console.log('Fetched data for B:', response.data);  // Log the fetched data to console for B mode
+        // console.log('Fetched data for B:', response.data); 
       }
-      
       setBannerData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

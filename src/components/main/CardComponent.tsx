@@ -15,8 +15,10 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 // Component
 import PostCard from '@components/common/PostCard';
 
+
+// 각 컴포넌트에 맞게 다른 endpoint 넣기 위해 변수 생성
 interface CardComponentProps {
-  endpoint: string; // Add a prop for the endpoint
+  endpoint: string;
 }
 
 //**2023/07/07 CardComponent - by jh
@@ -30,7 +32,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-   let apiUrl: string;  // Explicitly declare as string type
+   let apiUrl: string;  // vlog/blog 모드변환 변수
    if(mode === "V") {
      apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
    }
@@ -43,9 +45,9 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
       const response = await axios.get(apiUrl);
       
       if (mode === "V") {
-        console.log('Fetched data for V:', response.data);  // Log the fetched data to console for V mode
+        // console.log('Fetched data for V:', response.data); 
       } else if (mode === "B") {
-        console.log('Fetched data for B:', response.data);  // Log the fetched data to console for B mode
+        // console.log('Fetched data for B:', response.data); 
       }
       
       setVblogData(response.data);
