@@ -15,9 +15,12 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 // Component
 import PostCard from '@components/common/PostCard';
 
+interface CardComponentProps {
+  endpoint: string; // Add a prop for the endpoint
+}
 
 //**2023/07/07 CardComponent - by jh
-const CardComponent: React.FC = (): JSX.Element => {
+const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponentProps): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
@@ -29,10 +32,10 @@ const CardComponent: React.FC = (): JSX.Element => {
 
    let apiUrl: string;  // Explicitly declare as string type
    if(mode === "V") {
-     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/list`;
+     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
    }
    else if(mode === "B") {
-     apiUrl= `${process.env.REACT_APP_API_URL}/blog/list`;
+     apiUrl= `${process.env.REACT_APP_API_URL}/blog/${endpoint}`;
    }
 
   const fetchData = async () => {
