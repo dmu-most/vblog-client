@@ -83,10 +83,6 @@ const IconContainer = styled.div`
       color: var(--black-hunt);
       padding: 5px;
       font-size: 12px;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 11px;
-      }
     }
 
     > .UserName {
@@ -99,10 +95,6 @@ const IconContainer = styled.div`
         max-width: calc(100% - 100px);  
         overflow: hidden; 
         text-overflow: ellipsis;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 11px;
-      }
     }
 `;
 
@@ -136,10 +128,6 @@ const ContentContainer = styled.div`
       overflow: hidden;           // Hide overflowing content
       text-overflow: ellipsis;    // Display ellipsis (...) for overflowed text
       line-height: 1.5;          // Add spacing between lines
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 10px;
-      }
     }
 `;
 
@@ -158,10 +146,6 @@ const TitleContainer = styled.div`
     overflow: hidden;    
     text-overflow: ellipsis;    // ...으로 바꿔주는 css
     max-width: calc(100% - 100px); 
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 17px;
-      }
     }
 
     >.ContentDate {
@@ -172,10 +156,6 @@ const TitleContainer = styled.div`
         font-weight: 200;
         font-size: 11px;
         margin-left: auto;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 14px;
-      }
 
     }
 
@@ -189,7 +169,8 @@ const TagContainer = styled.div`
     padding: 7px;
     flex-wrap : wrap;
     width: 100%;
-    /* max-width: 100%; */
+    max-width: 100%;
     height: 20%;
-    overflow: hidden; 
+    overflow: hidden;
+    white-space: nowrap; 
 `;

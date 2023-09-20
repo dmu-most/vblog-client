@@ -28,9 +28,13 @@ const IntroContainer = styled.div`
     font-weight: 500;
     font-size: 20px;
 
+      @media ${props => props.theme.breakpoints.mobileSMax} {
+        margin-left: 10px;
+      }
+
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 15px;
-      padding: 30px 0 0 20px;
+      /* padding: 30px 0 0 20px; */
       }
         @media ${props => props.theme.breakpoints.mobileLMax} {
       font-size: 17px;

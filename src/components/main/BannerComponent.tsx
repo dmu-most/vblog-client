@@ -62,9 +62,6 @@ const BannerContainer = styled.div`
       margin: 40px 20px 20px 20px;
       height: 300px;
       }
-    /* @media ${props => props.theme.breakpoints.tablet} {
-      height: 350px;
-      } */
 `;
 
 const RowBannerContainer = styled.div`
@@ -100,6 +97,9 @@ const BestBannerContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 13px;
+      }
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 17px;
       }
 
     }
