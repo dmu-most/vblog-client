@@ -82,10 +82,10 @@ const IconContainer = styled.div`
     > .Label {
       color: var(--black-hunt);
       padding: 5px;
-      font-size: 15px;
+      font-size: 12px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 13px;
+      font-size: 11px;
       }
     }
 
@@ -93,15 +93,15 @@ const IconContainer = styled.div`
         display: flex;
         justify-content : flex-end;
         color: var(--black-hunt);
-        font-size: 15px;
+        font-size: 12px;
         margin-left: auto;
         white-space: nowrap;
-        max-width: calc(100% - 150px);  
+        max-width: calc(100% - 100px);  
         overflow: hidden; 
         text-overflow: ellipsis;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 13px;
+      font-size: 11px;
       }
     }
 `;
@@ -125,19 +125,20 @@ const ImgContainer = styled.div<{ imgurl: string | undefined }>`
 const ContentContainer = styled.div`
     width: 100%;
     height: 35%;
+    padding: 0 0.2rem;
 
     > .Content {
       ${({ theme }) => theme.common.flexRow};
       padding: 10px;
       color: var(--black-hunt);
       font-weight: 400;
-      font-size: 12px;
+      font-size: 13px;
       overflow: hidden;           // Hide overflowing content
       text-overflow: ellipsis;    // Display ellipsis (...) for overflowed text
       line-height: 1.5;          // Add spacing between lines
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 14px;
+      font-size: 10px;
       }
     }
 `;
@@ -146,12 +147,13 @@ const ContentContainer = styled.div`
 const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
+    padding: 0 0.2rem;
  
     >.Title {
     padding: 10px 7px 7px 7px;
     color: var(--black-hunt);
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     white-space: nowrap;  
     overflow: hidden;    
     text-overflow: ellipsis;    // ...으로 바꿔주는 css
@@ -168,7 +170,7 @@ const TitleContainer = styled.div`
         padding: 14px 7px 7px 7px;
         color: var(--black-hunt);
         font-weight: 200;
-        font-size: 12px;
+        font-size: 11px;
         margin-left: auto;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -187,5 +189,7 @@ const TagContainer = styled.div`
     padding: 7px;
     flex-wrap : wrap;
     width: 100%;
+    /* max-width: 100%; */
     height: 20%;
+    overflow: hidden; 
 `;

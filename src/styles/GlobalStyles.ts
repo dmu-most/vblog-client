@@ -32,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
     //background
     --bg-white: #f9f9f9;
     --bg-green: #FAFAF7;
-    --bg-brown: #faf4eb;
+    --bg-brown: #F7FAFA;
     // deep
     --deep-green: #71877e;
     //tag-color
@@ -73,7 +73,6 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: column;
     min-height: 100vh;
     flex-grow: 1;
-    background-color: var(--bg-green);
   }
   body {
     ${({ theme }) => theme.common.flexCol};
@@ -102,13 +101,14 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    background: var(--bg-mode);
     flex-grow: 1; 
     margin-top: 0;
+    background-color: var(--bg-white);
   }
-
+  
   .header_margin {
     margin-top: 65px;
+    background: var(--bg-mode);
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin-top: 50px;

@@ -51,7 +51,7 @@ export default BannerComponent;
 const BannerContainer = styled.div`
     display: flex;
     width: auto;
-    height: 350px;
+    height: 450px;
     margin: 3rem 2rem;
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin: 40px 20px 20px 20px;
@@ -60,7 +60,11 @@ const BannerContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
       margin: 40px 20px 20px 20px;
+      height: 300px;
       }
+    /* @media ${props => props.theme.breakpoints.tablet} {
+      height: 350px;
+      } */
 `;
 
 const RowBannerContainer = styled.div`
@@ -92,7 +96,7 @@ const BestBannerContainer = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 20px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 13px;
@@ -148,7 +152,7 @@ const TagBannerForm = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 17px;
     }
   > .tags {
     display: flex;
@@ -181,7 +185,7 @@ const CallBannerForm = styled.div`
     color: var(--black-hunt);
     padding: 20px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 17px;
     }
 `;
 

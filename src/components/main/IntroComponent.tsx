@@ -21,16 +21,19 @@ const IntroContainer = styled.div`
     ${({ theme }) => theme.common.flexRow};
     width: 100%;
     height: auto;
-    margin: 2rem;
+    margin: 0 2rem;
 
     >.Label {
     color: var(--black-hunt);
     font-weight: 500;
-    font-size: 22px;
+    font-size: 20px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 15px;
       padding: 30px 0 0 20px;
+      }
+        @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 17px;
       }
     }
 `;
