@@ -51,7 +51,7 @@ export default BannerComponent;
 const BannerContainer = styled.div`
     display: flex;
     width: auto;
-    height: 350px;
+    height: 450px;
     margin: 3rem 2rem;
     @media ${props => props.theme.breakpoints.mobileSMax} {
       margin: 40px 20px 20px 20px;
