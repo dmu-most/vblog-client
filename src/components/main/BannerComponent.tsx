@@ -60,7 +60,11 @@ const BannerContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
       margin: 40px 20px 20px 20px;
+      height: 350px;
       }
+    /* @media ${props => props.theme.breakpoints.tablet} {
+      height: 350px;
+      } */
 `;
 
 const RowBannerContainer = styled.div`
