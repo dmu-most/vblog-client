@@ -62,7 +62,7 @@ const MainPage: React.FC = (): JSX.Element => {
 export default MainPage;
 
 const MainPageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+ display: flex;
+ flex-direction: column;
   padding: 1.8rem;
 `;
