@@ -1,20 +1,26 @@
-
 const size = {
   mobileS: '475px',
   mobileL: '768px',
   tablet: '1024px',
-  desktop: '1350px',
+  desktopS: '1250px',
+  desktopM: '1439px',
+  desktopL: '1580px',
 };
 
 const breakpoints = {
   mobileSMax: `screen and (max-width: ${size.mobileS})`,
   mobileLMax: `screen and (max-width: ${size.mobileL})`,
   tabletMax: `screen and (max-width: ${size.tablet})`,
-  desktopMin: `screen and (max-width: ${size.desktop})`,
+  desktopSMax: `screen and (max-width: ${size.desktopS})`,
+  desktopMMax: `screen and (max-width: ${size.desktopM})`,
+  desktopLMax: `screen and (min-width: ${size.desktopL})`,
 };
 
 const widthSize = {
-  contentMax: '1350px',
+  contentMaxS: '1150px',
+  contentMaxM: '1250px',
+  contentMaxL: '1350px',
+  contentMaxXL: '1500px',
 };
 
 // 폰트 크기
