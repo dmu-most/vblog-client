@@ -7,7 +7,7 @@ import { useTokenStore } from '@store/useTokenStore';
 
 // components
 import UserLoginBtn from '@components/header/UserLoginBtn';
-import MyInfoDropDown from '@components/header/MyInfoDropDowm';
+import MyInfoDropDown from '@components/header/MyInfoDropDown';
 
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';

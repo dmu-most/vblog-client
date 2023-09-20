@@ -85,7 +85,6 @@ const TextContainer = styled.div`
   // 디바이스 크기가 1439px 보다 작을 경우 1250px
   @media ${props => props.theme.breakpoints.desktopMMax} {
     max-width: ${({ theme }) => theme.widthSize.contentMaxM};
-    padding: 0 2rem;
   }
 
   // 디바이스 크기가 1250px 보다 작을 경우 1150px

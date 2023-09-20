@@ -48,7 +48,6 @@ export default MyInfoDropDown;
 
 const DropDownContainer = styled.div`
   overflow: auto;
-  z-index: 20;
   display: flex;
   justify-content: flex-end;
 `;
@@ -57,6 +56,7 @@ const UlMenu = styled.ul<{ $isOpen: boolean }>`
   ${({ theme }) => theme.common.flexCenterCol};
   background: var(--white-primary);
   border-radius: 8px;
+  z-index: 2000;
   position: absolute;
   top: 58px;
   width: 120px;

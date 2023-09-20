@@ -8,6 +8,5 @@ export interface LoginFormType {
 /** 2023/09/13 - 로그인 성공 시 (Response) - by sineTlsl */
 export interface LoginResponse {
   imageUrl: string | null;
-  username: string;
+  username: string | null;
 }
-``;

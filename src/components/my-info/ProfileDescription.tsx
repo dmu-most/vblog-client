@@ -73,13 +73,14 @@ const ProfileDescriptionContainer = styled.div`
 // ===================== 프로필 이미지 =====================
 const ProfileImageWrap = styled.div`
   ${({ theme }) => theme.common.flexCenterRow};
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
 
   > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
