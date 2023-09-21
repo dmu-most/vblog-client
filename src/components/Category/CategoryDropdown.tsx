@@ -12,10 +12,10 @@ const CategoryDropdown = () => {
     };
 
   return (
-    <CategoryDropdownContainer>
+    <CategoryDropdownContainer onClick={toggleDropdown}>
       <DropdownLayout>
         <input />
-        <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" onClick={toggleDropdown}/> </div>
+        <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" /> </div>
         {dropdownOpen && (
           <div className='DropdownContent'>
             <ul>
