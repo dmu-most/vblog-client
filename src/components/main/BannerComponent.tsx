@@ -1,11 +1,11 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 //Type
-import { BannerType } from "types/main/list";
+import { BannerType } from 'types/main/list';
 
 // component
-import BannerTag from "@components/common/BannerTag";
+import BannerTag from '@components/common/BannerTag';
 
 interface BannerProps {
   data: BannerType;
@@ -37,7 +37,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
           <CallBannerForm>
             <div className="Label"> 브블이 뭔가요? 🙋‍♀️ </div>
             <ImgContainer>
-            <img src="/assets/images/community.png" />
+              <img src="/assets/images/community.png" />
             </ImgContainer>
           </CallBannerForm>
         </PromoBannerContainer>
@@ -49,45 +49,48 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
 export default BannerComponent;
 
 const BannerContainer = styled.div`
-    display: flex;
-    width: auto;
-    height: 450px;
-    margin: 3rem 2rem;
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      margin: 40px 20px 20px 20px;
-      height: 250px;
-      }
+  display: flex;
+  width: auto;
+  height: 450px;
+  margin: 3rem 2rem;
 
-    @media ${props => props.theme.breakpoints.mobileLMax} {
-      margin: 40px 20px 20px 20px;
-      height: 300px;
-      }
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    margin: 20px 20px 35px 20px;
+    height: 300px;
+  }
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    height: 250px;
+  }
+
+  /* @media ${props => props.theme.breakpoints.tablet} {
+      height: 350px;
+      } */
 `;
 
 const RowBannerContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 `;
 
 const BestBannerContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-    width: 100%;
-    /* height: 97%; */
-    margin: 0.5rem;
-    background-color: var(--white-primary);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    cursor: pointer;
-    perspective: 1000px;
-    transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  width: 100%;
+  /* height: 97%; */
+  margin: 0.5rem;
+  background-color: var(--white-primary);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  perspective: 1000px;
+  transition: transform 0.3s ease;
 
-    &:hover {
-      transform: scale(1.02); /* 5% scale increase on mouse hover */
-    }
+  &:hover {
+    transform: scale(1.02); /* 5% scale increase on mouse hover */
+  }
 
   > .Label {
     color: var(--black-hunt);
@@ -97,34 +100,30 @@ const BestBannerContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 13px;
-      }
-    @media ${props => props.theme.breakpoints.mobileLMax} {
-      font-size: 17px;
-      }
-
     }
-  
+  }
+
   > img {
     width: 100%;
     height: 100%;
-    overflow: hidden; 
-    border-radius: 0 0 10px 10px; 
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       /* padding: 20px;
       font-size: 15px; */
-      }
+    }
   }
 `;
 
 const PromoBannerContainer = styled.div`
-    ${({ theme }) => theme.common.flexCenter};
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  ${({ theme }) => theme.common.flexCenter};
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
-    // 태블릿 사이즈 부터는 bannercomponent는 숨김
-    @media ${props => props.theme.breakpoints.tabletMax} {
+  // 태블릿 사이즈 부터는 bannercomponent는 숨김
+  @media ${props => props.theme.breakpoints.tabletMax} {
     display: none;
   }
 `;
@@ -138,7 +137,7 @@ const TagBannerForm = styled.div`
   margin: 0.5rem;
   background-color: var(--white-primary);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   perspective: 1000px;
   transition: transform 0.3s ease;
@@ -153,11 +152,11 @@ const TagBannerForm = styled.div`
     padding: 20px;
     font-weight: 500;
     font-size: 17px;
-    }
+  }
   > .tags {
     display: flex;
     flex-direction: row;
-    flex-wrap : wrap;
+    flex-wrap: wrap;
     width: 100%;
     padding: 10px;
   }
@@ -172,7 +171,7 @@ const CallBannerForm = styled.div`
   margin: 0.5rem;
   background-color: var(--white-primary);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   perspective: 1000px;
   transition: transform 0.3s ease;
@@ -186,13 +185,13 @@ const CallBannerForm = styled.div`
     padding: 20px;
     font-weight: 500;
     font-size: 17px;
-    }
+  }
 `;
 
 const ImgContainer = styled.div`
-    ${({ theme }) => theme.common.flexCenter};
+  ${({ theme }) => theme.common.flexCenter};
 
-    > img {
+  > img {
     max-width: 240px;
     max-height: 160px;
     object-fit: fill;

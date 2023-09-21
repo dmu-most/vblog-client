@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 interface IntroProps {
   intro: string;
@@ -9,35 +9,35 @@ interface IntroProps {
 const IntroComponent: React.FC<IntroProps> = ({ intro }) => {
   return (
     <IntroContainer>
-      <div className='Label'>{intro}</div>
+      <div className="Label">{intro}</div>
     </IntroContainer>
   );
 };
 
 export default IntroComponent;
 
-
 const IntroContainer = styled.div`
-    ${({ theme }) => theme.common.flexRow};
-    width: 100%;
-    height: auto;
-    margin: 0 2rem;
+  ${({ theme }) => theme.common.flexRow};
+  width: 100%;
+  height: auto;
+  padding-top: 4rem;
+  margin: 0 2rem;
 
-    >.Label {
+  > .Label {
     color: var(--black-hunt);
     font-weight: 500;
     font-size: 20px;
-
-      @media ${props => props.theme.breakpoints.mobileSMax} {
-        margin-left: 10px;
-      }
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 15px;
-      /* padding: 30px 0 0 20px; */
-      }
-        @media ${props => props.theme.breakpoints.mobileLMax} {
+  }
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    width: auto;
+    > .Label {
       font-size: 17px;
-      }
     }
+  }
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    padding-top: 1.7rem;
+    > .Label {
+      font-size: 15px;
+    }
+  }
 `;

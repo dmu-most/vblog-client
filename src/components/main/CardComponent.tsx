@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
-import { vblogListType } from "types/main/list";
+import { vblogListType } from 'types/main/list';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
@@ -14,7 +14,6 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 
 // Component
 import PostCard from '@components/common/PostCard';
-
 
 // 각 컴포넌트에 맞게 다른 endpoint 넣기 위해 변수 생성
 interface CardComponentProps {
@@ -32,24 +31,23 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-   let apiUrl: string;  // vlog/blog 모드변환 변수
-   if(mode === "V") {
-     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
-   }
-   else if(mode === "B") {
-     apiUrl= `${process.env.REACT_APP_API_URL}/blog/${endpoint}`;
-   }
+  let apiUrl: string; // vlog/blog 모드변환 변수
+  if (mode === 'V') {
+    apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
+  } else if (mode === 'B') {
+    apiUrl = `${process.env.REACT_APP_API_URL}/blog/${endpoint}`;
+  }
 
   const fetchData = async () => {
     try {
       const response = await axios.get(apiUrl);
-      
-      if (mode === "V") {
-        // console.log('Fetched data for V:', response.data); 
-      } else if (mode === "B") {
-        // console.log('Fetched data for B:', response.data); 
+
+      if (mode === 'V') {
+        // console.log('Fetched data for V:', response.data);
+      } else if (mode === 'B') {
+        // console.log('Fetched data for B:', response.data);
       }
-      
+
       setVblogData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -59,7 +57,6 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   useEffect(() => {
     fetchData();
   }, [mode]);
-
 
   /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
   const HandlerScrollLeft = () => {
@@ -105,23 +102,21 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   return (
     <div>
       <ScrollableCardContainer>
-        <ScrollContainer> 
+        <ScrollContainer>
           {scrollPosition > 0 && (
             <ScrollBtn onClick={HandlerScrollLeft}>
-              <FaArrowAltCircleLeft className='FaArrowAltCircleLeft'/>
+              <FaArrowAltCircleLeft className="FaArrowAltCircleLeft" />
             </ScrollBtn>
           )}
           <CardContainer ref={scrollRef}>
             {vblogData.length > 0 ? (
-              vblogData.map((item) => (
-                <PostCard key={item.contentId} data={item} />
-             ))
+              vblogData.map(item => <PostCard key={item.contentId} data={item} />)
             ) : (
-            <p>Loading...</p>
+              <p>Loading...</p>
             )}
           </CardContainer>
           <ScrollBtn onClick={HandlerScrollRight}>
-            {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight className='FaArrowAltCircleRight'/>}
+            {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight className="FaArrowAltCircleRight" />}
           </ScrollBtn>
         </ScrollContainer>
       </ScrollableCardContainer>
@@ -145,17 +140,15 @@ const ScrollableCardContainer = styled.div`
 
 const CardContainer = styled.ul`
   ${({ theme }) => theme.common.flexCenterRow};
-  width: fit-content;
+  margin: 1rem 2rem 1rem 2rem;
   height: 400px;
-  margin: 2rem;
-
   transition: transform 0.3s ease;
-  gap: 30px;
+  gap: 20px;
   overflow: auto; // add
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
+    margin: 0 2rem 0 2rem;
     padding: 0 20px 0 20px;
-    height: 350px;
   }
 `;
 
@@ -178,7 +171,7 @@ const ScrollBtn = styled.button`
     cursor: pointer;
     transition: color 0.3s ease;
     font-size: 40px;
-    
+
     &:hover {
       color: var(--gray-dark);
     }
