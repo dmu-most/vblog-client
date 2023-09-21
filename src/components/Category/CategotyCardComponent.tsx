@@ -3,6 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
 
@@ -17,67 +20,74 @@ import PostCard from '@components/common/PostCard';
 const CategoryCardComponent: React.FC = (): JSX.Element => {
   const { mode } = useContentModeStore();
   const { category } = useParams();
-
-  // 데이터 셋업
+  const [isLoading, setIsLoading] = useState(false);
   const [vblogCategoryData, setVblogCategoryData] = useState<vblogListType[]>([]);
+  const [page, setPage] = useState(1); // Current page
 
-  let apiUrl: string;  // Explicitly declare as string type
-   if(mode === "V") {
-     apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${category}`;
-   }
-   else if(mode === "B") {
-     apiUrl= `${process.env.REACT_APP_API_URL}/blog/category/${category}`;
-   }
+  // typescript 영향으로 빈 문자열 전역 선언
+  let apiUrl = '';
 
-    const CategoryData = async () => {
+  /** 2023/09/10 - catogorypage api 서버 연결 - by jh */
+  const fetchCategoryData = async () => {
+    setIsLoading(true);
     try {
-      const response = await axios.get(apiUrl);
-      
-      if (mode === "V") {
-        // console.log('Fetched data for V:', response.data);  
-      } else if (mode === "B") {
-        // console.log('Fetched data for B:', response.data);
+      // let apiUrl: string;
+
+      if (mode === 'V') {
+        apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${category}?page=${page}`;
+      } else if (mode === 'B') {
+        apiUrl = `${process.env.REACT_APP_API_URL}/blog/category/${category}?page=${page}`;
       }
-      
-      setVblogCategoryData(response.data);
+
+      const response = await axios.get(apiUrl);
+      const newData = response.data;
+
+      if (newData.length === 0) {
+        // No more data to load
+        return;
+      }
+
+      setVblogCategoryData((prevData) => [...prevData, ...newData]);
+      setPage((prevPage) => prevPage + 1);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    CategoryData();
-  }, [mode, category]);
+  /** 2023/09/10 - 스크롤 시 데이터에 의해 페이지가 무한 생성 - by jh */
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
 
-  /** 2023/09/18 - 무한 스크롤 사용 함수 - by jh */
-  // 타겟 요소 지정
-  const containerRef = useRef(null);
-
-  const options = {
-  root: null,
-  rootMargin: "0px",
-  threshold: 0.5,
+    if (
+      container.getBoundingClientRect().bottom <= window.innerHeight &&
+      !isLoading
+    ) {
+      fetchCategoryData();
+    }
   };
 
-  // 무한 스크롤을 위한 useEffect
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  /** 2023/09/10 - 무한스크롤 이벤트 리스너 , 비동기 처리 - by jh */
   useEffect(() => {
-    (async () => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-        console.log("ㅋㅋㅋ");
-        }
-      }, options);
-  
-      if (containerRef.current) {
-        observer.observe(containerRef.current);
-      }
-  
-      return () => {
-        observer.disconnect();
-      };
-    })();
-  }, [containerRef]);
-  /** 무한 스크롤 */
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isLoading, fetchCategoryData]);
+
+  /** 2023/09/10 - 이때 mode와 category도 페이지가 1일때 바동기 처리 - by jh */
+  useEffect(() => {
+    setVblogCategoryData([]);
+    setPage(1);
+  }, [category, mode]);
+
+  useEffect(() => {
+    fetchCategoryData();
+  }, [mode, category]);
 
   return (
     <CategoryCardContainer>
@@ -86,6 +96,14 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
           <PostCard key={item.contentId} data={item} />
         ))}
       </CardContainer>
+
+    {isLoading && (
+      <SpinnerContainer>
+        <PuffLoader color="var(--green-hunt)" loading={true} size={40} />
+      </SpinnerContainer>
+    )}
+
+      <div ref={containerRef}></div>
     </CategoryCardContainer>
   );
 };
@@ -122,4 +140,19 @@ const CardContainer = styled.div`
   @media screen and (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
   }
+`;
+
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--green-hunt);
+  height: 100vh; /* Adjust this value to your liking */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background */
+  z-index: 1000; /* Adjust this value based on your layout */
 `;
