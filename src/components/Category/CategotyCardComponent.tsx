@@ -99,7 +99,7 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
 
     {isLoading && (
       <SpinnerContainer>
-        <PuffLoader color="var(--green-hunt)" loading={true} size={40} />
+        <PuffLoader loading={true} size={40} />
       </SpinnerContainer>
     )}
 

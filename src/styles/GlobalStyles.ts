@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import { useContentModeStore } from '@store/useConentModeStore';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
