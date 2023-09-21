@@ -12,10 +12,10 @@ const CategoryDropdown = () => {
     };
 
   return (
-    <CategoryDropdownContainer>
+    <CategoryDropdownContainer onClick={toggleDropdown}>
       <DropdownLayout>
         <input />
-        <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" onClick={toggleDropdown}/> </div>
+        <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" /> </div>
         {dropdownOpen && (
           <div className='DropdownContent'>
             <ul>
@@ -41,13 +41,16 @@ const CategoryDropdownContainer = styled.div`
 const DropdownLayout = styled.div`
   max-width: 150px;
   height: auto;
+  margin: 0 2rem;
   background: var(--white-primary);
   transition: transform 0.3s ease, opacity 0.3s ease;
   box-shadow: 0 4px 5px 0 #00000026;
   position: relative;
 
-  @media ${props => props.theme.breakpoints.desktopMin} {
+  @media ${props => props.theme.breakpoints.mobileS} {
       margin-left: 4rem;
+      max-width: 120px;
+
       }
 
 
