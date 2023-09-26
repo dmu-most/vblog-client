@@ -6,6 +6,9 @@ import { FaUserPen } from "react-icons/fa6";
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
 
+//data
+import { vblogReviewData } from "../../data/dummyData";
+
 //**2023/07/29 ReviewComponent- by jh
 const ReviewComponent: React.FC = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
@@ -42,13 +45,12 @@ const ReviewComponent: React.FC = () => {
             <div className="text"> ㅣ </div>
             <div className="RatingButton"> 평점순 </div>
           </RatingContainer>
+            {vblogReviewData.length > 0 ? (
+              vblogReviewData.map(item => <ReviewForm key={item.reviewId} data={item} />)
+            ) : (
+              <p>Loading...</p>
+            )}
           <ReviewFormContainer>
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
           </ReviewFormContainer>
           <RatingModal isOpen={isRatingModalOpen} closeModal={closeRatingModal} />
         </ReviewContainer>

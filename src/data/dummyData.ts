@@ -144,3 +144,24 @@ export const vblogBannerData = [
     hashtags: ['내돈내산', '맛집탐방', '여행스타그램', '일상이야기'],
   },
 ];
+
+export const vblogReviewData = [
+  {
+    reviewId: 0,
+    createDate: '2023.07.19',
+    content: '재밌어요',
+    userId: '싱니',
+  },
+  {
+    reviewId: 1,
+    createDate: '2023.07.19',
+    content: '굳이에요',
+    userId: '싱니',
+  },
+  {
+    reviewId: 2,
+    createDate: '2023.07.19',
+    content: '짱나네요',
+    userId: '싱니',
+  },
+];

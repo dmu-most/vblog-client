@@ -3,21 +3,31 @@ import styled from "styled-components";
 // marerial UI
 import Rating from '@mui/material/Rating';
 
+//type
+import { vblogReviewType } from "types/detail/review";
+
+//data
+import { vblogReviewData } from "data/dummyData";
+
+interface ReviewFormProps {
+  data: vblogReviewType;
+}
+
 //**2023/08/07 ReviewForm
-const ReviewForm = () => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ data }) => {
     return (
         <ReviewFormContainer>
             <ReviewTitleContainer>
                 <div className="Grade"> 
                   <Rating name="read-only" size="small" readOnly />
                 </div>
-                <div className="ReviewDate"> 2023.08.07 </div>
+                <div className="ReviewDate"> {data.createDate} </div>
             </ReviewTitleContainer>
             <ReviewContentContainer>
-                <div className="ReviewContent"> 이번 안유진 폼 미쳤다잉 </div>
+                <div className="ReviewContent"> {data.content} </div>
             </ReviewContentContainer>
             <ReviewWriterContainer>
-                <div className="ReviewWriter"> fasdlfdfs...</div>
+                <div className="ReviewWriter"> {data.userId}</div>
             </ReviewWriterContainer>
         </ReviewFormContainer>
   );
