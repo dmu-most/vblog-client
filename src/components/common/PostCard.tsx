@@ -24,6 +24,11 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
     navigate(`/board/${data.contentId}`);
   };
 
+  const handlerImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+      target.src = '/assets/images/noimage.png';
+  };
+
   return (
     <CardContainer onClick={handlePostClick}>
       <IconContainer>
@@ -33,7 +38,9 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
         <div className="Label"> {data.review} </div>
         <div className="UserName"> {data.userName} </div>
       </IconContainer>
-      <ImgContainer imgurl={data.imgurl}></ImgContainer>
+      <ImgContainer>
+        <img src={data.imgurl || '/assets/images/noimage.png'} alt="" onError={handlerImgError} />
+      </ImgContainer>
       <ContentContainer>
         <TitleContainer>
           <div className="Title"> {data.contentTitle} </div>
@@ -109,10 +116,9 @@ const IconContainer = styled.div`
 `;
 
 //ImgContainer :  카드 안에 들어갈 이미지
-const ImgContainer = styled.div<{ imgurl: string | undefined }>`
+const ImgContainer = styled.div`
   width: 300px;
   height: 178px;
-  background-image: ${({ imgurl }) => (imgurl ? `url(${imgurl})` : `url('/assets/images/noImage.png')`)};
   background-size: cover;
   background-position: center;
 

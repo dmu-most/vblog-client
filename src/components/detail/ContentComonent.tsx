@@ -218,7 +218,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     width: 100%;
     height: 600px;
     background-image: ${({ imgurl }) =>
-      imgurl ? `url(${imgurl})` : `url('/assets/images/noImage.png')`};
+      imgurl ? `url(${imgurl})` : `url('/assets/images/noimage.png')`};
     background-size: cover; // This will ensure the background image covers the entire container
     background-repeat: no-repeat;
     background-position: center center;
