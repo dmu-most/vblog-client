@@ -84,7 +84,7 @@ export default ContentComponent;
 const ContentContainer = styled.div`
   width: 70%;
   height: auto;
-  margin: 100px 20px 20px 20px;
+  margin: 100px 2rem 2rem 2rem;
   border-radius: 10px;
   background-color: var(--white-primary);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -98,19 +98,19 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  margin-top: 30px;
+  margin: 2rem;
 
   > img {
     width: 50px;
     height: 50px;
-    margin: 20px;
+    margin: 1.5rem;
     object-fit: fill;
     border-bottom: 10px;
     border-radius: 50%;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
       }
     }
 `;
@@ -118,7 +118,6 @@ const ProfileContainer = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: auto;
   padding-top: 13px;
 
@@ -128,7 +127,7 @@ const TitleContainer = styled.div`
     font-weight: 600;
     font-size: 20px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     font-size: 15px;
     }
   }
@@ -138,8 +137,8 @@ const TitleContainer = styled.div`
     color: var(--black-hunt);
     font-size: 15px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    font-size: 13px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    font-size: 12px;
     }
   }
 `;
@@ -149,15 +148,14 @@ const TagContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
     height: auto;
-    padding: 15px;
+    margin: 2rem 2rem 2rem 3.5rem;
     flex-wrap : wrap;
 `;
 
 const MyLikeContainer = styled.div`
   margin-left: auto;
-  padding-right: 2.5rem;
+  padding: 1rem;
   cursor: pointer;
 
   .heart-icon {
@@ -177,23 +175,18 @@ const MyLikeContainer = styled.div`
 
 const Line = styled.hr`
   color: var(--gray-light);
-  width: 90%;
+  width: 88%;
   border-top: 1px solid;
 `;
 
 const GradeContainer = styled.div`
     ${({ theme }) => theme.common.flexCenterRow};
-    width: 100%;
     height: auto;
-    padding: 30px;
-    gap: 200px;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-          gap: 50px;
-    }
+    margin: 2rem;
+    gap: 150px;
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
-          gap: 50px;
+          gap: 30px;
     }
 `;
 
@@ -202,10 +195,10 @@ const Grade = styled.div`
 
     > .key {
     color: var(--gray-dark);
-    font-size: 15px;
+    font-size: 11px;
     padding: 15px;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
+    @media ${props => props.theme.breakpoints.mobileLMax} {
       font-size: 5px;
      }
     }
@@ -215,8 +208,8 @@ const Grade = styled.div`
     font-weight: 500;
     font-size: 30px;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 17px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 20px;
      }
     }  
 `;
@@ -233,12 +226,8 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     overflow: hidden;
     cursor: pointer;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      height: 300px;
-     }
-
     @media ${props => props.theme.breakpoints.mobileLMax} {
-      height: 400px;
+      height: 300px;
     }
 
     > img {

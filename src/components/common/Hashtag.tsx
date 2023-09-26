@@ -51,8 +51,8 @@ const TagContainer = styled.div<TagContainerProps>`
     border-radius: 20px;
     cursor: pointer;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-    height: 15px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+    height: 1.5rem;
       }
 
     > .Label{
@@ -63,8 +63,8 @@ const TagContainer = styled.div<TagContainerProps>`
         font-family: sans-serif;
         letter-spacing: 1px;
 
-        @media ${props => props.theme.breakpoints.mobileSMax} {
-        font-size: 9px;
+        @media ${props => props.theme.breakpoints.mobileLMax} {
+        font-size: 7px;
           }
         }
 
