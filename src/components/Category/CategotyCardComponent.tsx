@@ -15,9 +15,13 @@ import { vblogListType } from "types/main/list";
 // Card
 import PostCard from '@components/common/PostCard';
 
+/** 2023/09/26 - 최신순/인기순 정렬을 위한 props 추가 - by jh */
+interface CategoryCardComponentProps {
+  sortType: string;
+}
 
 /** 2023/08/23 - category card - by jh */
-const CategoryCardComponent: React.FC = (): JSX.Element => {
+const CategoryCardComponent: React.FC<CategoryCardComponentProps> = ({ sortType }): JSX.Element => {
   const { mode } = useContentModeStore();
   const { category } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,19 +35,18 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
   const fetchCategoryData = async () => {
     setIsLoading(true);
     try {
-      // let apiUrl: string;
 
       if (mode === 'V') {
-        apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${category}?page=${page}`;
+        // sortType에 따라 API 호출 URL 변경
+        apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${sortType}list/${category}?page=${page}`;
       } else if (mode === 'B') {
-        apiUrl = `${process.env.REACT_APP_API_URL}/blog/category/${category}?page=${page}`;
+        apiUrl = `${process.env.REACT_APP_API_URL}/blog/category/${sortType}list/${category}?page=${page}`;
       }
 
       const response = await axios.get(apiUrl);
       const newData = response.data;
 
       if (newData.length === 0) {
-        // No more data to load
         return;
       }
 
@@ -83,11 +86,11 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
   useEffect(() => {
     setVblogCategoryData([]);
     setPage(1);
-  }, [category, mode]);
+  }, [category, mode, sortType]);
 
   useEffect(() => {
     fetchCategoryData();
-  }, [mode, category]);
+  }, [mode, category, sortType]);
 
   return (
     <CategoryCardContainer>

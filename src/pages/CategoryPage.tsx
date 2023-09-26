@@ -1,20 +1,18 @@
 import { styled } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 // import { vblogData } from '../data/dummyData';
 
 // Component
 import CategoryDropdown from '@components/Category/CategoryDropdown';
 import CategoryCardComponent from '@components/Category/CategotyCardComponent';
 
-
-// const CategoryList = ["travel", "game", "health", "restaurant", "broadcasting", "Beauty"];
-
-/** 2023/08/23 - 카테고리 페이지 */
-const CategoryPage = () => {
+const CategoryPage: React.FC = () => {
+  const [sortType, setSortType] = useState('new'); // 최신순 또는 인기순
 
   return (
     <CategoryContainer>
-        <CategoryDropdown />
-        <CategoryCardComponent />
+      <CategoryDropdown setSortType={setSortType} />
+      <CategoryCardComponent sortType={sortType} />
     </CategoryContainer>
   );
 };
