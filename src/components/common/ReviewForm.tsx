@@ -3,21 +3,31 @@ import styled from "styled-components";
 // marerial UI
 import Rating from '@mui/material/Rating';
 
+//type
+import { vblogReviewType } from "types/detail/review";
+
+//data
+import { vblogReviewData } from "data/dummyData";
+
+interface ReviewFormProps {
+  data: vblogReviewType;
+}
+
 //**2023/08/07 ReviewForm
-const ReviewForm = () => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ data }) => {
     return (
         <ReviewFormContainer>
             <ReviewTitleContainer>
                 <div className="Grade"> 
                   <Rating name="read-only" size="small" readOnly />
                 </div>
-                <div className="ReviewDate"> 2023.08.07 </div>
+                <div className="ReviewDate"> {data.createDate} </div>
             </ReviewTitleContainer>
             <ReviewContentContainer>
-                <div className="ReviewContent"> 이번 안유진 폼 미쳤다잉 </div>
+                <div className="ReviewContent"> {data.content} </div>
             </ReviewContentContainer>
             <ReviewWriterContainer>
-                <div className="ReviewWriter"> fasdlfdfs...</div>
+                <div className="ReviewWriter"> {data.userId}</div>
             </ReviewWriterContainer>
         </ReviewFormContainer>
   );
@@ -26,7 +36,7 @@ const ReviewForm = () => {
 export default ReviewForm;
 
 const ReviewFormContainer = styled.div`
-  width: 97%;
+  width: 90%;
   height: auto;
   background-color: var(--bg-green);
   margin: 15px;
@@ -48,15 +58,15 @@ gap: 20px;
 
 > .Grade{
     // 수정할 부분
-    font-size: 16px;
+    font-size: 14px;
     }
 
 > .ReviewDate{
-    font-size: 16px;
+    font-size: 14px;
     color: var(--gray-primary);
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 13px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 10px;
       }
     }
 `;
@@ -66,11 +76,11 @@ const ReviewContentContainer = styled.div`
   padding: 20px 0px 20px 0px;
 
   > .ReviewContent {
-    font-size: 16px;
+    font-size: 15px;
     color: var(--black-hunt);
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 12px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 10px;
       }
   }
 `;
@@ -81,7 +91,7 @@ const ReviewWriterContainer = styled.div`
   height: auto;
 
   > .ReviewWriter {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--gray-primary);
 
     @media ${props => props.theme.breakpoints.mobileSMax} {

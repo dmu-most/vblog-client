@@ -15,9 +15,13 @@ import { vblogListType } from "types/main/list";
 // Card
 import PostCard from '@components/common/PostCard';
 
+/** 2023/09/26 - 최신순/인기순 정렬을 위한 props 추가 - by jh */
+interface CategoryCardComponentProps {
+  sortType: string;
+}
 
 /** 2023/08/23 - category card - by jh */
-const CategoryCardComponent: React.FC = (): JSX.Element => {
+const CategoryCardComponent: React.FC<CategoryCardComponentProps> = ({ sortType }): JSX.Element => {
   const { mode } = useContentModeStore();
   const { category } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,19 +35,18 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
   const fetchCategoryData = async () => {
     setIsLoading(true);
     try {
-      // let apiUrl: string;
 
       if (mode === 'V') {
-        apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${category}?page=${page}`;
+        // sortType에 따라 API 호출 URL 변경
+        apiUrl = `${process.env.REACT_APP_API_URL}/vlog/category/${sortType}list/${category}?page=${page}`;
       } else if (mode === 'B') {
-        apiUrl = `${process.env.REACT_APP_API_URL}/blog/category/${category}?page=${page}`;
+        apiUrl = `${process.env.REACT_APP_API_URL}/blog/category/${sortType}list/${category}?page=${page}`;
       }
 
       const response = await axios.get(apiUrl);
       const newData = response.data;
 
       if (newData.length === 0) {
-        // No more data to load
         return;
       }
 
@@ -69,6 +72,7 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
     }
   };
 
+  /** 2023/09/10 - ref 생성 - by jh */
   const containerRef = useRef<HTMLDivElement>(null);
 
   /** 2023/09/10 - 무한스크롤 이벤트 리스너 , 비동기 처리 - by jh */
@@ -79,15 +83,15 @@ const CategoryCardComponent: React.FC = (): JSX.Element => {
     };
   }, [isLoading, fetchCategoryData]);
 
-  /** 2023/09/10 - 이때 mode와 category도 페이지가 1일때 바동기 처리 - by jh */
+  /** 2023/09/10 - 이때 mode와 category,sortType도 페이지가 1일때 바동기 처리 - by jh */
   useEffect(() => {
     setVblogCategoryData([]);
     setPage(1);
-  }, [category, mode]);
+  }, [category, mode, sortType]);
 
   useEffect(() => {
     fetchCategoryData();
-  }, [mode, category]);
+  }, [mode, category, sortType]);
 
   return (
     <CategoryCardContainer>
@@ -147,12 +151,12 @@ const SpinnerContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: var(--green-hunt);
-  height: 100vh; /* Adjust this value to your liking */
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background */
-  z-index: 1000; /* Adjust this value based on your layout */
+  background-color: rgba(255, 255, 255, 0.8); 
+  z-index: 1000;
 `;

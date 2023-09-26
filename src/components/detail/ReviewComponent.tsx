@@ -6,6 +6,9 @@ import { FaUserPen } from "react-icons/fa6";
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
 
+//data
+import { vblogReviewData } from "../../data/dummyData";
+
 //**2023/07/29 ReviewComponent- by jh
 const ReviewComponent: React.FC = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
@@ -42,13 +45,12 @@ const ReviewComponent: React.FC = () => {
             <div className="text"> ㅣ </div>
             <div className="RatingButton"> 평점순 </div>
           </RatingContainer>
+            {vblogReviewData.length > 0 ? (
+              vblogReviewData.map(item => <ReviewForm key={item.reviewId} data={item} />)
+            ) : (
+              <p>Loading...</p>
+            )}
           <ReviewFormContainer>
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
-            <ReviewForm />
           </ReviewFormContainer>
           <RatingModal isOpen={isRatingModalOpen} closeModal={closeRatingModal} />
         </ReviewContainer>
@@ -58,10 +60,10 @@ const ReviewComponent: React.FC = () => {
 export default ReviewComponent;
 
 const ReviewContainer = styled.div`
-  width: 80%;
+  width: 70%;
   height: auto;
-  margin: 50px 20px 20px 20px;
-  padding: 30px;
+  margin: 50px 2rem 2rem 2rem;
+  padding: 2rem;
   border-radius: 10px;
   background-color: var(--white-primary);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -86,7 +88,7 @@ const WriteContainer = styled.div`
     }
 
     > input::placeholder {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
   
@@ -113,10 +115,10 @@ const ButtonContainer = styled.div`
   ${({ theme }) => theme.common.flexCenter};
   cursor: pointer;
   color: var(--black-light);
-  font-size: 16px;
+  font-size: 14px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-  font-size: 13px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+  font-size: 11px;
       }
   }
 
@@ -124,19 +126,19 @@ const ButtonContainer = styled.div`
   > .WriteButton {
   ${({ theme }) => theme.common.flexCenter};
   background-color: var(--gray-primary);
-  width: 70px;
-  height: 40px;
+  width: 60px;
+  height: 30px;
   border: none;
   border-radius: 40%;
   cursor: pointer;
   margin-right: 15px;
   color: var(--white-primary);
-  font-size: 16px;
+  font-size: 14px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 50px;
-    height: 30px;
-    font-size: 13px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    width: 45px;
+    height: 25px;
+    font-size: 11px;
       }
   }
 `;
@@ -148,10 +150,10 @@ const AllReviewContainer = styled.div`
     padding: 15px;
     color: var(--black-hunt);
     font-weight: 500;
-    font-size: 25px;
+    font-size: 22px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 18px;
+      font-size: 15px;
       }
     }
 `;
@@ -163,10 +165,10 @@ const RatingContainer = styled.div`
   > .RatingButton {
     /* padding: 15px; */
     color: var(--gray-dark);
-    font-size: 15px;
+    font-size: 12px;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 12px;
+      font-size: 10px;
     }
     }
     > .text {

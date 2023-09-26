@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import React, { useState } from "react";
 // Type
 import { vblogType } from "types/detail/vblog";
 
@@ -7,6 +8,7 @@ import Hashtag from "@components/common/Hashtag";
 
 // icon
 import { BsBoxArrowUpRight } from 'react-icons/bs';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 
 interface DetailProps {
@@ -15,10 +17,16 @@ interface DetailProps {
 
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+  const [liked, setliked] = useState(false);
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
     window.open(data.link, "_blank");
+  };
+  /** 2023/09/06 - 찜 UI 클릭 시 icon 변경 - by jh */
+  const handleLikeClick = () => {
+    // "좋아요" 버튼 클릭 시 상태를 토글합니다.
+    setliked(!liked);
   };
   
 
@@ -35,6 +43,18 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
+      <MyLikeContainer onClick={handleLikeClick}>
+        <div
+          className={`heart-icon ${liked ? 'liked' : ''}`}
+          style={{
+            color: 'var(--icon-red)',
+            width: '20px',
+            height: '20px',
+          }}
+        >
+          {liked ? <AiFillHeart /> : <AiOutlineHeart />}
+        </div>
+      </MyLikeContainer>
       </TagContainer>
       <Line />
       <GradeContainer>
@@ -62,17 +82,14 @@ export default ContentComponent;
 
 
 const ContentContainer = styled.div`
-  width: 80%;
+  width: 70%;
   height: auto;
-  margin: 100px 20px 20px 20px;
+  margin: 100px 2rem 2rem 2rem;
   border-radius: 10px;
   background-color: var(--white-primary);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 90%;
-      }
-    @media ${props => props.theme.breakpoints.mobileLMax} {
     width: 90%;
       }
 `;
@@ -81,18 +98,19 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  margin-top: 30px;
+  margin: 2rem;
 
   > img {
     width: 50px;
     height: 50px;
-    margin: 20px;
-    object-fit: cover;
+    margin: 1.5rem;
+    object-fit: fill;
+    border-bottom: 10px;
     border-radius: 50%;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
       }
     }
 `;
@@ -100,7 +118,6 @@ const ProfileContainer = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: auto;
   padding-top: 13px;
 
@@ -110,7 +127,7 @@ const TitleContainer = styled.div`
     font-weight: 600;
     font-size: 20px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     font-size: 15px;
     }
   }
@@ -120,8 +137,8 @@ const TitleContainer = styled.div`
     color: var(--black-hunt);
     font-size: 15px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    font-size: 13px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    font-size: 12px;
     }
   }
 `;
@@ -130,31 +147,46 @@ const TitleContainer = styled.div`
 const TagContainer = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100%;
+    align-items: center;
     height: auto;
-    padding: 15px;
+    margin: 2rem 2rem 2rem 3.5rem;
     flex-wrap : wrap;
+`;
+
+const MyLikeContainer = styled.div`
+  margin-left: auto;
+  padding: 1rem;
+  cursor: pointer;
+
+  .heart-icon {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
+  }
+
+  .liked {
+    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding-right: 0.5rem;
+  }
 `;
 
 const Line = styled.hr`
   color: var(--gray-light);
-  width: 90%;
+  width: 88%;
   border-top: 1px solid;
 `;
 
 const GradeContainer = styled.div`
     ${({ theme }) => theme.common.flexCenterRow};
-    width: 100%;
     height: auto;
-    padding: 30px;
-    gap: 200px;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-          gap: 50px;
-    }
+    margin: 2rem;
+    gap: 150px;
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
-          gap: 50px;
+          gap: 30px;
     }
 `;
 
@@ -163,10 +195,10 @@ const Grade = styled.div`
 
     > .key {
     color: var(--gray-dark);
-    font-size: 15px;
+    font-size: 11px;
     padding: 15px;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
+    @media ${props => props.theme.breakpoints.mobileLMax} {
       font-size: 5px;
      }
     }
@@ -176,8 +208,8 @@ const Grade = styled.div`
     font-weight: 500;
     font-size: 30px;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 17px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 20px;
      }
     }  
 `;
@@ -186,7 +218,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     width: 100%;
     height: 600px;
     background-image: ${({ imgurl }) =>
-      imgurl ? `url(${imgurl})` : `url('/assets/images/noImage.png')`};
+      imgurl ? `url(${imgurl})` : `url('/assets/images/noimage.png')`};
     background-size: cover; // This will ensure the background image covers the entire container
     background-repeat: no-repeat;
     background-position: center center;
@@ -194,12 +226,8 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     overflow: hidden;
     cursor: pointer;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      height: 300px;
-     }
-
     @media ${props => props.theme.breakpoints.mobileLMax} {
-      height: 400px;
+      height: 300px;
     }
 
     > img {

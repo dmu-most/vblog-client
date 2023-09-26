@@ -2,25 +2,45 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { FaAngleDown } from "react-icons/fa";
 
-// 무한스크롤 사용 예정
-/** 2023/08/23 - category dropdown - by jh */
-const CategoryDropdown = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const toggleDropdown = () => {
-      setDropdownOpen(!dropdownOpen);
-    };
+interface CategoryDropdownProps {
+  setSortType: (sortType: string) => void;
+}
+/** 2023/08/23 - category dropdown - by jh */
+const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ setSortType }): JSX.Element => {
+  
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('최신순');
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  /** 2023/09/26 - 최신순 인기순 정렬을 위한 옵션 클릭 함수 추가 - by jh */
+  const handleOptionClick = (option: string) => {
+    console.log('handleOptionClick called'); // 확인을 위한 로그 추가
+    setSelectedOption(option);
+    setDropdownOpen(false);
+
+    // 선택된 옵션에 따라 sortType 변경
+    if (option === '최신순') {
+      setSortType('new');
+    } else if (option === '인기순') {
+      setSortType('like');
+    }
+  };
 
   return (
-    <CategoryDropdownContainer onClick={toggleDropdown}>
+    <CategoryDropdownContainer>
       <DropdownLayout>
-        <input />
-        <div className='DropdownLabel' onClick={toggleDropdown}> 최신순 <FaAngleDown className="DropdownIcon" /> </div>
+        <div className='DropdownLabel' onClick={toggleDropdown}>
+          {selectedOption} <FaAngleDown className={`DropdownIcon ${dropdownOpen ? 'open' : ''}`} />
+        </div>
         {dropdownOpen && (
           <div className='DropdownContent'>
             <ul>
-              <li>최신순</li>
-              <li>인기순</li>
+              <li onClick={() => handleOptionClick('최신순')}>최신순</li>
+              <li onClick={() => handleOptionClick('인기순')}>인기순</li>
             </ul>
           </div>
         )}

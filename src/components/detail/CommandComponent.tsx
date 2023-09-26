@@ -60,7 +60,7 @@ export default CommandComponent;
 
 
 const CommandContainer = styled.div`
-  width: 80%;
+  width: 70%;
   height: auto;
   margin: 50px 20px 20px 20px;
   padding: 20px;
