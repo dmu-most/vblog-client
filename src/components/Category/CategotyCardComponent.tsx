@@ -72,6 +72,7 @@ const CategoryCardComponent: React.FC<CategoryCardComponentProps> = ({ sortType 
     }
   };
 
+  /** 2023/09/10 - ref 생성 - by jh */
   const containerRef = useRef<HTMLDivElement>(null);
 
   /** 2023/09/10 - 무한스크롤 이벤트 리스너 , 비동기 처리 - by jh */
@@ -82,7 +83,7 @@ const CategoryCardComponent: React.FC<CategoryCardComponentProps> = ({ sortType 
     };
   }, [isLoading, fetchCategoryData]);
 
-  /** 2023/09/10 - 이때 mode와 category도 페이지가 1일때 바동기 처리 - by jh */
+  /** 2023/09/10 - 이때 mode와 category,sortType도 페이지가 1일때 바동기 처리 - by jh */
   useEffect(() => {
     setVblogCategoryData([]);
     setPage(1);
@@ -150,12 +151,12 @@ const SpinnerContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: var(--green-hunt);
-  height: 100vh; /* Adjust this value to your liking */
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background */
-  z-index: 1000; /* Adjust this value based on your layout */
+  background-color: rgba(255, 255, 255, 0.8); 
+  z-index: 1000;
 `;

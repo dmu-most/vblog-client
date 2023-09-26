@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import React, { useState } from "react";
 // Type
 import { vblogType } from "types/detail/vblog";
 
@@ -7,6 +8,7 @@ import Hashtag from "@components/common/Hashtag";
 
 // icon
 import { BsBoxArrowUpRight } from 'react-icons/bs';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 
 interface DetailProps {
@@ -15,10 +17,16 @@ interface DetailProps {
 
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+  const [liked, setliked] = useState(false);
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
     window.open(data.link, "_blank");
+  };
+  /** 2023/09/06 - 찜 UI 클릭 시 icon 변경 - by jh */
+  const handleLikeClick = () => {
+    // "좋아요" 버튼 클릭 시 상태를 토글합니다.
+    setliked(!liked);
   };
   
 
@@ -35,6 +43,18 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
+      <MyLikeContainer onClick={handleLikeClick}>
+        <div
+          className={`heart-icon ${liked ? 'liked' : ''}`}
+          style={{
+            color: 'var(--icon-red)',
+            width: '20px',
+            height: '20px',
+          }}
+        >
+          {liked ? <AiFillHeart /> : <AiOutlineHeart />}
+        </div>
+      </MyLikeContainer>
       </TagContainer>
       <Line />
       <GradeContainer>
@@ -62,7 +82,7 @@ export default ContentComponent;
 
 
 const ContentContainer = styled.div`
-  width: 80%;
+  width: 70%;
   height: auto;
   margin: 100px 20px 20px 20px;
   border-radius: 10px;
@@ -70,9 +90,6 @@ const ContentContainer = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 90%;
-      }
-    @media ${props => props.theme.breakpoints.mobileLMax} {
     width: 90%;
       }
 `;
@@ -87,7 +104,8 @@ const ProfileContainer = styled.div`
     width: 50px;
     height: 50px;
     margin: 20px;
-    object-fit: cover;
+    object-fit: fill;
+    border-bottom: 10px;
     border-radius: 50%;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -130,10 +148,31 @@ const TitleContainer = styled.div`
 const TagContainer = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
     width: 100%;
     height: auto;
     padding: 15px;
     flex-wrap : wrap;
+`;
+
+const MyLikeContainer = styled.div`
+  margin-left: auto;
+  padding-right: 2.5rem;
+  cursor: pointer;
+
+  .heart-icon {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
+  }
+
+  .liked {
+    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding-right: 0.5rem;
+  }
 `;
 
 const Line = styled.hr`
