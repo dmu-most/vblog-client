@@ -1,6 +1,6 @@
 
 // ============================ postcard -> main ============================
-/** 2023/08/28 - postcard 안에 들어갈 양식 - jh */
+/** 2023/08/28 - postcard 안에 들어갈 타입 - jh */
 export interface vblogListType {
   contentId: number;
   contentDate: string;
@@ -13,6 +13,7 @@ export interface vblogListType {
   imgurl: string;
 }
 
+/** 2023/08/28 - banner 안에 들어갈 타입 - jh */
 export interface BannerType {
   contentId: number;
   // heart: number;

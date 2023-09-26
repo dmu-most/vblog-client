@@ -1,6 +1,6 @@
 
 // ============================ detail ============================
-/** 2023/08/28 - detail 안에 들어갈 양식 - jh */
+/** 2023/08/28 - detail 안에 들어갈 타입 - jh */
 export interface vblogType {
   contentId: number;
   contentTitle: string;
