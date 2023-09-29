@@ -20,6 +20,6 @@ const MyPageContainer = styled.section`
   ${({ theme }) => theme.common.flexCol};
   height: 100%;
   width: 100%;
-  max-width: 1000px;
+  max-width: 920px;
   margin: 0 auto;
 `;

@@ -83,6 +83,10 @@ const ContentTabItems = styled.li<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? 'var(--black-hunt)' : 'var(--gray-dark)')};
   position: relative;
 
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    font-size: 15px;
+  }
+
   ${({ $active }) =>
     $active &&
     `
@@ -101,10 +105,6 @@ const ContentTabItems = styled.li<{ $active: boolean }>`
 
   &:hover {
     color: var(--black-light);
-  }
-
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    font-size: 15px;
   }
 `;
 
