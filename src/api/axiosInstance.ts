@@ -24,6 +24,10 @@ instance.interceptors.request.use(
     const onlyAuthorization = config.headers['Only-Authorization'];
     const onlyRefresh = config.headers['Only-Refresh'];
 
+    if (config.url && (config.url.includes('/token/refresh-access') || config.url.includes('/token/verify-access'))) {
+      return config;
+    }
+
     delete config.headers['No-Auth'];
     delete config.headers['Only-Authorization'];
     delete config.headers['Only-Refresh'];
@@ -35,40 +39,33 @@ instance.interceptors.request.use(
 
     // 액세스 토큰만 필요할 때
     if (onlyAuthorization) {
-      if (refreshToken) {
+      if (accessToken) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
-      return config;
-    }
-    // 리프레시 토큰만 필요할 때
-    if (onlyRefresh) {
-      if (accessToken) {
+    } else if (onlyRefresh) {
+      // 리프레시 토큰만 필요할 때
+      if (refreshToken) {
         config.headers['Refresh'] = `Bearer ${refreshToken}`;
       }
-      return config;
-    }
-    // 액세스 & 리프레시 토큰 둘 다 필요할 때
-    if (refreshToken && accessToken) {
+    } else if (refreshToken && accessToken) {
+      // 액세스 & 리프레시 토큰 둘 다 필요할 때
       config.headers['Authorization'] = `Bearer ${accessToken}`;
       config.headers['Refresh'] = `Bearer ${refreshToken}`;
     }
 
     try {
       // 유효한 액세스 토큰인지 확인
+      console.log('Attempting to get Access Token >> ', accessToken);
       const { result } = await getAccessToken();
+      console.log('너 지금 테스트하니..?', result);
 
       // 유효하지 않을 경우 재발급
       if (!result) {
         const res = await postNewAccessToken();
-
-        try {
-          setAccessToken(res.accessToken);
-        } catch (err) {
-          console.error(err);
-        }
+        setAccessToken(res.accessToken);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Error:', error);
     }
 
     return config;

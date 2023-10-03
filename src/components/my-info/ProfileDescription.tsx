@@ -7,9 +7,14 @@ import { MyInfoType } from 'types/myInfo';
 // api
 import { getMyInfo } from '@api/myInfo';
 
+// components
+import UserProfileUpdate from '@components/my-info/UserProfileUpdate';
+import SocialIcons from '@components/my-info/SocialIcons';
+
 /** 2023/09/13 - 프로필 소개 컴포넌트 - by sineTlsl */
 const ProfileDescription: React.FC = (): JSX.Element => {
   const [myInfoData, setMyInfoData] = useState<MyInfoType>();
+  const [isProfileEdit, setIsProfileEdit] = useState<boolean>(false);
 
   const fetchMyInfoData = async () => {
     const res = await getMyInfo();
@@ -24,33 +29,29 @@ const ProfileDescription: React.FC = (): JSX.Element => {
     fetchMyInfoData();
   }, []);
 
+  const handlerProfileEdit = () => {
+    setIsProfileEdit(!isProfileEdit);
+  };
+
   return (
     <ProfileDescriptionContainer>
-      {myInfoData && (
-        <>
-          <ProfileImageWrap>
-            <img src={myInfoData.imageUrl ? myInfoData.imageUrl : '/assets/images/avator_default.png'} />
-          </ProfileImageWrap>
-          <ProfileInfoWrap>
-            <ProfileInfoText>
-              <p className="myinfo_name">{myInfoData.username}</p>
-              {/* <p className="myinfo_email">{myInfoData}</p> */}
-              <div className="myinfo_socialType">
-                {myInfoData.socialType ? (
-                  <>
-                    {myInfoData.socialType === 'kakao' && <img src="/assets/images/kakao-logo.png" />}
-                    {myInfoData.socialType === 'naver' && <img src="/assets/images/naver-logo.png" />}
-                    {myInfoData.socialType === 'google' && <img src="/assets/images/google-logo.png" />}
-                  </>
-                ) : (
-                  <p className="local_text">local</p>
-                )}
-              </div>
-            </ProfileInfoText>
-            <ProfileUpdateBtn>회원정보 수정</ProfileUpdateBtn>
-          </ProfileInfoWrap>
-        </>
-      )}
+      {myInfoData &&
+        (!isProfileEdit ? (
+          <>
+            <ProfileImageWrap>
+              <img src={myInfoData.imageUrl ? myInfoData.imageUrl : '/assets/images/avator_default.png'} />
+            </ProfileImageWrap>
+            <ProfileInfoWrap>
+              <ProfileInfoText>
+                <p className="myinfo_name">{myInfoData.username}</p>
+                <SocialIcons socialType={myInfoData.socialType} />
+              </ProfileInfoText>
+              <ProfileUpdateBtn onClick={handlerProfileEdit}>회원정보 수정</ProfileUpdateBtn>
+            </ProfileInfoWrap>
+          </>
+        ) : (
+          <UserProfileUpdate profile={myInfoData} handlerProfileEdit={handlerProfileEdit} />
+        ))}
     </ProfileDescriptionContainer>
   );
 };
@@ -58,14 +59,12 @@ const ProfileDescription: React.FC = (): JSX.Element => {
 export default ProfileDescription;
 
 const ProfileDescriptionContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenterRow};
   width: 100%;
   padding: 32px 64px;
-  display: flex;
-  justify-content: flex-start;
   gap: 20px;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    ${({ theme }) => theme.common.flexCenterRow};
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     padding: 25px;
   }
 `;
@@ -73,8 +72,8 @@ const ProfileDescriptionContainer = styled.div`
 // ===================== 프로필 이미지 =====================
 const ProfileImageWrap = styled.div`
   ${({ theme }) => theme.common.flexCenterRow};
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
 
   > img {
     width: 100%;
@@ -84,8 +83,10 @@ const ProfileImageWrap = styled.div`
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 110px;
-    height: 110px;
+    min-width: 100px;
+    min-height: 100px;
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -105,45 +106,30 @@ const ProfileInfoText = styled.div`
   gap: 5px;
 
   > .myinfo_name {
-    font-size: 25px;
+    font-size: 22px;
     color: var(--black-hunt);
     font-weight: 600;
-  }
-  > .myinfo_socialType {
-    display: flex;
-    gap: 0.5rem;
-
-    > img {
-      object-fit: cover;
-      width: 20px;
-      height: 20px;
-    }
-  }
-  > .myinfo_socialType > .local_text {
-    font-size: 16px;
-    color: var(--gray-dark);
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     > .myinfo_name {
-      font-size: 25px;
-    }
-    > .myinfo_email {
-      font-size: 16px;
+      font-size: 20px;
     }
   }
 `;
 
 // ===================== 프로필 회원수정 버튼  =====================
 const ProfileUpdateBtn = styled.button`
-  border: none;
-  background: var(--green-hunt);
-  padding: 8px 15px;
+  padding: 2px 15px;
+  height: 32px;
   font-size: 16px;
   margin: 0;
-  border-radius: 7px;
-  color: var(--white-primary);
+  border-radius: 5px;
+  color: var(--green-hunt);
+  border: 1.5px solid var(--green-hunt);
+  background: none;
   font-weight: 600;
+  cursor: pointer;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     font-size: 14px;
