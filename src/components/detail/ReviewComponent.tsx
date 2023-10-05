@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { FaUserPen } from "react-icons/fa6";
+import axios from 'axios';
 
 //Component
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
 
 //data
-import { vblogReviewData } from "../../data/dummyData";
+// import { vblogReviewData } from "../../data/dummyData";
+
+//api
+import { getReviewCheck } from "@api/detail/review";
+
+//type
+import {  vblogReviewType } from "types/detail/review";
 
 //**2023/07/29 ReviewComponent- by jh
 const ReviewComponent: React.FC = () => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const openRatingModal = () => {
     setIsRatingModalOpen(true);
@@ -26,6 +35,18 @@ const ReviewComponent: React.FC = () => {
     alert("작성이 완료되었습니다.");
   };
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getReviewCheck();
+      try {
+        setReviewData(response);
+      } catch (error) {
+        console.error('Error fetching review data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
     return (
         <ReviewContainer>
@@ -45,8 +66,8 @@ const ReviewComponent: React.FC = () => {
             <div className="text"> ㅣ </div>
             <div className="RatingButton"> 평점순 </div>
           </RatingContainer>
-            {vblogReviewData.length > 0 ? (
-              vblogReviewData.map(item => <ReviewForm key={item.reviewId} data={item} />)
+            {reviewData.length > 0 ? (
+              reviewData.map(item => <ReviewForm key={item.reviewId} data={item} />)
             ) : (
               <p>Loading...</p>
             )}
@@ -166,6 +187,7 @@ const RatingContainer = styled.div`
     /* padding: 15px; */
     color: var(--gray-dark);
     font-size: 12px;
+    cursor: pointer;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 10px;

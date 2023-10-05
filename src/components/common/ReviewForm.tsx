@@ -19,15 +19,15 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ data }) => {
         <ReviewFormContainer>
             <ReviewTitleContainer>
                 <div className="Grade"> 
-                  <Rating name="read-only" size="small" readOnly />
+                  <Rating name="read-only" size="small" readOnly value={data.grade} />
                 </div>
-                <div className="ReviewDate"> {data.createDate} </div>
+                <div className="ReviewDate"> {data.reviewDate} </div>
             </ReviewTitleContainer>
             <ReviewContentContainer>
-                <div className="ReviewContent"> {data.content} </div>
+                <div className="ReviewContent"> {data.reviewContent} </div>
             </ReviewContentContainer>
             <ReviewWriterContainer>
-                <div className="ReviewWriter"> {data.userId}</div>
+                <div className="ReviewWriter"> {data.userName}</div>
             </ReviewWriterContainer>
         </ReviewFormContainer>
   );
