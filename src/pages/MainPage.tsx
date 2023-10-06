@@ -9,6 +9,7 @@ import { useContentModeStore } from '@store/useConentModeStore';
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
 import CardComponent from '@components/main/CardComponent';
+import UserCardComponent from '@components/main/CardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
@@ -45,7 +46,7 @@ const MainPage: React.FC = (): JSX.Element => {
     <MainPageContainer>
       {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
       <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
-      <CardComponent endpoint="likelist" />
+      <UserCardComponent endpoint="likelist" />
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent endpoint="reviewlist" />
       <IntroComponent intro="브블Pick이 가장 많은 콘텐츠 ❤️" />

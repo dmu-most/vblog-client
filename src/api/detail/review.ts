@@ -4,8 +4,8 @@ import instance from '@api/axiosInstance';
 import { vblogReviewType } from 'types/detail/review';
 
 // ============================ 리뷰조회 ============================
-export const getReviewCheck = async () => {
-  const { data } = await instance.get<vblogReviewType[]>('/review/new/1', {
+export const getReviewCheck = async (contentId: number) => {
+  const { data } = await instance.get<vblogReviewType[]>(`/review/new/${contentId}`, {
     headers: {
       'No-Auth': true,
     },

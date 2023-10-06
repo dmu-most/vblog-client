@@ -16,11 +16,16 @@ import { getReviewCheck } from "@api/detail/review";
 //type
 import {  vblogReviewType } from "types/detail/review";
 
+
+interface ReviewComponentProps {
+  contentId: number;
+}
+
 //**2023/07/29 ReviewComponent- by jh
-const ReviewComponent: React.FC = () => {
+const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Element => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const openRatingModal = () => {
     setIsRatingModalOpen(true);
@@ -36,17 +41,35 @@ const ReviewComponent: React.FC = () => {
   };
 
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await getReviewCheck(contentId);
+  //     try {
+  //       setReviewData(response);
+  //     } catch (error) {
+  //       console.error('Error fetching review data:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [contentId]);
+
+  // console.log(reviewData);
+
+    useEffect(() => {
     const fetchData = async () => {
-      const response = await getReviewCheck();
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/review/new/1`);
       try {
-        setReviewData(response);
+        setReviewData(response.data);
       } catch (error) {
         console.error('Error fetching review data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [contentId]);
+
+  // console.log(reviewData);
+
+  
 
     return (
         <ReviewContainer>

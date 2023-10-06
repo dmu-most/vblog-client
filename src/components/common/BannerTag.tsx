@@ -29,7 +29,7 @@ const BannerTag : React.FC = (): JSX.Element => {
               <span className="Label"> #세계여행 </span>
             </TextTagContainer>
             <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowLeft width="10px" height= "10px" />
+              <AiOutlineArrowLeft width="5px" height= "5px" />
             </ArrowTagContainer>
             <TextTagContainer height="30px" bgcolor="var(--tag-yellow)" borderradius="20px">
               <span className="Label"> #밈고리즘 </span>
