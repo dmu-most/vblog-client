@@ -41,31 +41,31 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   };
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await getReviewCheck(contentId);
-  //     try {
-  //       setReviewData(response);
-  //     } catch (error) {
-  //       console.error('Error fetching review data:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [contentId]);
-
-  // console.log(reviewData);
-
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/review/new/1`);
+      const response = await getReviewCheck(contentId);
       try {
-        setReviewData(response.data);
+        setReviewData(response);
       } catch (error) {
         console.error('Error fetching review data:', error);
       }
     };
     fetchData();
   }, [contentId]);
+
+  // console.log(reviewData);
+
+  //   useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/review/new/${contentId}`);
+  //     try {
+  //       setReviewData(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching review data:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [contentId]);
 
   // console.log(reviewData);
 
