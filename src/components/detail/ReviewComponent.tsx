@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { FaUserPen } from "react-icons/fa6";
 
@@ -6,26 +6,56 @@ import { FaUserPen } from "react-icons/fa6";
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
 
-//data
-import { vblogReviewData } from "../../data/dummyData";
+//api
+import { getReviewNewCheck, getReviewGradeCheck } from "@api/detail/review";
+
+//type
+import {  vblogReviewType } from "types/detail/review";
+
+interface ReviewComponentProps {
+  contentId: number;
+}
 
 //**2023/07/29 ReviewComponent- by jh
-const ReviewComponent: React.FC = () => {
+const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Element => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
+  const [sortBy, setSortBy] = useState<"new" | "grade">("new");
 
+  /** 2023/08/09 - 모달 오픈 함수 - by jh */
   const openRatingModal = () => {
     setIsRatingModalOpen(true);
   };
 
+  /** 2023/08/09 - 모달 종료 함수 - by jh */
   const closeRatingModal = () => {
     setIsRatingModalOpen(false);
   };
 
+  /** 2023/08/09 - 작성 완룟 시 클릭 함수 - by jh */
   const handleWriteClick = () => {
     // 작성하기 버튼 클릭 시 alert 띄워 줌
     alert("작성이 완료되었습니다.");
   };
 
+  /** 2023/08/09 - 안가순 / 평점순 api 받는 함수 - by jh */
+  const fetchReviewData = async () => {
+    try {
+      if (sortBy === "new") {
+        const res = await getReviewNewCheck(contentId);
+        setReviewData(res);
+      } else if (sortBy === "grade") {
+        const res = await getReviewGradeCheck(contentId);
+        setReviewData(res);
+      }
+    } catch (error) {
+      console.error('Error fetching review data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviewData();
+  }, [contentId, sortBy]);
 
     return (
         <ReviewContainer>
@@ -41,15 +71,15 @@ const ReviewComponent: React.FC = () => {
             <div className="Label"> 브블 리뷰 </div>
           </AllReviewContainer>
           <RatingContainer>
-            <div className="RatingButton"> 최신순 </div>
-            <div className="text"> ㅣ </div>
-            <div className="RatingButton"> 평점순 </div>
+            <div className="RatingButton" onClick={() => setSortBy("new")}> 최신순 </div>
+            <div className="text">ㅣ</div>
+            <div className="RatingButton" onClick={() => setSortBy("grade")}> 평점순 </div>
           </RatingContainer>
-            {vblogReviewData.length > 0 ? (
-              vblogReviewData.map(item => <ReviewForm key={item.reviewId} data={item} />)
-            ) : (
-              <p>Loading...</p>
-            )}
+          {reviewData.length > 0 ? (
+            reviewData.map((item) => <ReviewForm key={item.reviewId} data={item} />)
+          ) : (
+            <p>리뷰가 없습니다.</p>
+          )}
           <ReviewFormContainer>
           </ReviewFormContainer>
           <RatingModal isOpen={isRatingModalOpen} closeModal={closeRatingModal} />
@@ -166,6 +196,7 @@ const RatingContainer = styled.div`
     /* padding: 15px; */
     color: var(--gray-dark);
     font-size: 12px;
+    cursor: pointer;
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 10px;
