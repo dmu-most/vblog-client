@@ -78,7 +78,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
           {reviewData.length > 0 ? (
             reviewData.map((item) => <ReviewForm key={item.reviewId} data={item} />)
           ) : (
-            <p>리뷰가 없습니다.</p>
+            <p>no review</p>
           )}
           <ReviewFormContainer>
           </ReviewFormContainer>
