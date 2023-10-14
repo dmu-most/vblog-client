@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { FaUserPen } from "react-icons/fa6";
 
+// marerial UI
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import SentimentVeryDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentVeryDissatisfiedOutlined';
+
 //Component
 import ReviewForm from "@components/common/ReviewForm";
 import RatingModal from "./modal/RatingModal";
@@ -21,6 +25,8 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
   const [sortBy, setSortBy] = useState<"new" | "grade">("new");
+  const [isLikeClicked, setIsLikeClicked] = useState(false);
+  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
 
   /** 2023/08/09 - 모달 오픈 함수 - by jh */
   const openRatingModal = () => {
@@ -32,11 +38,20 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     setIsRatingModalOpen(false);
   };
 
-  /** 2023/08/09 - 작성 완룟 시 클릭 함수 - by jh */
-  const handleWriteClick = () => {
-    // 작성하기 버튼 클릭 시 alert 띄워 줌
-    alert("작성이 완료되었습니다.");
-  };
+// 좋아요 클릭 함수
+const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsLikeClicked(true);
+};
+// 싫어요 클릭 함수
+const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  setIsDislikeClicked(true);
+};
+
+  /** 2023/08/09 - 작성 완료 시 클릭 함수 - by jh */
+  // const handleWriteClick = () => {
+  //   // 작성하기 버튼 클릭 시 alert 띄워 줌
+  //   alert("작성이 완료되었습니다.");
+  // };
 
   /** 2023/08/09 - 안가순 / 평점순 api 받는 함수 - by jh */
   const fetchReviewData = async () => {
@@ -64,8 +79,17 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
             <input className="Input" type="text" placeholder="브블리뷰를 작성해주세요." />
           </WriteContainer>
           <ButtonContainer>
-            <div className="WriteButton" onClick={handleWriteClick} > 작성 </div>
-            <div className="Score" onClick={openRatingModal}> 평점 </div>
+            <div className="WriteButton" onClick={openRatingModal} > 작성 </div>
+        <LikeDislikeContainer>
+            <LikeContainer onClick={handleLikeClick}>
+                <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
+                <div className="Label"> Like </div>
+            </LikeContainer>
+            <DislikeContainer onClick={handleDislikeClick}>
+                <SentimentVeryDissatisfiedOutlinedIcon fontSize="medium" color="inherit" />
+                <div className="Label"> DisLike </div>
+            </DislikeContainer>
+        </LikeDislikeContainer>
           </ButtonContainer>
           <AllReviewContainer>
             <div className="Label"> 브블 리뷰 </div>
@@ -221,4 +245,48 @@ const ReviewFormContainer = styled.div`
   @media ${props => props.theme.breakpoints.mobileSMax} {
     max-height: 200px;
     }
+`;
+
+// ============================ 리뷰 좋아요 싫어요 ===============================================
+
+const LikeDislikeContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenter};
+  flex-direction: row;  
+  gap: 1rem;
+`;
+
+const LikeContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenter};
+  flex-direction: column;  
+  cursor: pointer;
+  color: var(--icon-red);
+
+    > .Label {
+    color: var(--black-hunt);
+    font-size: 10px;
+    font-weight: 400;
+    padding: 5px;
+  }
+
+    &:hover {
+    transform: scale(1.2); /* 마우스 오버 시 10% 확대 */
+  }
+`;
+
+const DislikeContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenter};
+  flex-direction: column;  
+  cursor: pointer;
+  color: var(--icon-blue);
+
+    > .Label {
+    color: var(--black-hunt);
+    font-size: 10px;
+    font-weight: 400;
+    padding: 5px;
+  }
+
+    &:hover {
+    transform: scale(1.2); /* 마우스 오버 시 10% 확대 */
+  }
 `;
