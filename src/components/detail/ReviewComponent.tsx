@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { styled } from "styled-components";
+
+// react icon
 import { FaUserPen } from "react-icons/fa6";
 
 // marerial UI
@@ -16,6 +19,9 @@ import { getReviewNewCheck, getReviewGradeCheck } from "@api/detail/review";
 //type
 import {  vblogReviewType } from "types/detail/review";
 
+//store
+import { useMemberStore } from "@store/useMemberStore";
+
 interface ReviewComponentProps {
   contentId: number;
 }
@@ -27,6 +33,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const [sortBy, setSortBy] = useState<"new" | "grade">("new");
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
+  const navigate = useNavigate();
 
   /** 2023/08/09 - 모달 오픈 함수 - by jh */
   const openRatingModal = () => {
@@ -38,20 +45,23 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     setIsRatingModalOpen(false);
   };
 
-// 좋아요 클릭 함수
-const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-  setIsLikeClicked(true);
-};
-// 싫어요 클릭 함수
-const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-  setIsDislikeClicked(true);
-};
+  // 좋아요 클릭 함수
+  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    setIsLikeClicked(true);
+  };
+  // 싫어요 클릭 함수
+  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    setIsDislikeClicked(true);
+  };
 
-  /** 2023/08/09 - 작성 완료 시 클릭 함수 - by jh */
-  // const handleWriteClick = () => {
-  //   // 작성하기 버튼 클릭 시 alert 띄워 줌
-  //   alert("작성이 완료되었습니다.");
-  // };
+  const handleWriteClick = () => {
+   if (!useMemberStore.getState().member) {
+     alert("로그인을 진행해주세요");
+     navigate('/login'); 
+    } else {
+     openRatingModal();
+   }
+  };
 
   /** 2023/08/09 - 안가순 / 평점순 api 받는 함수 - by jh */
   const fetchReviewData = async () => {
@@ -79,7 +89,7 @@ const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
             <input className="Input" type="text" placeholder="브블리뷰를 작성해주세요." />
           </WriteContainer>
           <ButtonContainer>
-            <div className="WriteButton" onClick={openRatingModal} > 작성 </div>
+            <div className="WriteButton" onClick={handleWriteClick} > 작성 </div>
         <LikeDislikeContainer>
             <LikeContainer onClick={handleLikeClick}>
                 <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
