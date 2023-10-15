@@ -3,9 +3,6 @@ import axios from 'axios';
 // store
 import { getTokenState } from '@store/useTokenStore';
 
-// api
-import { getAccessToken, postNewAccessToken } from './auth/token';
-
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
   timeout: 5000,
