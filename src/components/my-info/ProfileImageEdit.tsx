@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useMemberStore } from '@store/useMemberStore';
 
 // api
-import { deleteMyInfoImage, patchMyInfoImage } from '@api/myInfo';
+import { deleteMyInfoImage, patchMyInfoImage } from '@api/my-info';
 
 interface ProfileImageProps {
   image: string | null;

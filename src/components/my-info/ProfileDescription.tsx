@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 // type
-import { MyInfoType } from 'types/myInfo';
+import { MyInfoType } from 'types/my-info';
 
 // api
-import { getMyInfo } from '@api/myInfo';
+import { getMyInfo } from '@api/my-info';
 
 // components
 import UserProfileUpdate from '@components/my-info/UserProfileUpdate';

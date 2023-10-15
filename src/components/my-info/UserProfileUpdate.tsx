@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useMemberStore } from '@store/useMemberStore';
 
 // type
-import { MyInfoType } from 'types/myInfo';
+import { MyInfoType } from 'types/my-info';
 
 // api
-import { patchMyInfoName } from '@api/myInfo';
+import { patchMyInfoName } from '@api/my-info';
 
 // components
 import ProfileImageEdit from '@components/my-info/ProfileImageEdit';
