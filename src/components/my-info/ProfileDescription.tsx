@@ -27,9 +27,10 @@ const ProfileDescription: React.FC = (): JSX.Element => {
   };
   useEffect(() => {
     fetchMyInfoData();
-  }, []);
+  }, [isProfileEdit]);
 
-  const handlerProfileEdit = () => {
+  /** 2023/10/15 - 프로필 보기 or 프로피 수정 모드 - by sineTlsl */
+  const handlerProfileEdit = async () => {
     setIsProfileEdit(!isProfileEdit);
   };
 

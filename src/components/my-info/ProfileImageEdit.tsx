@@ -1,6 +1,12 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
 
+// store
+import { useMemberStore } from '@store/useMemberStore';
+
+// api
+import { deleteMyInfoImage, patchMyInfoImage } from '@api/myInfo';
+
 interface ProfileImageProps {
   image: string | null;
   setImage: (image: string) => void;
@@ -8,7 +14,48 @@ interface ProfileImageProps {
 
 /** 2023/09/28 - 마이페이지 프로필 이미지 수정 컴포넌트 - by sineTlsl */
 const ProfileImageEdit: React.FC<ProfileImageProps> = ({ image, setImage }): JSX.Element => {
+  const { setMember } = useMemberStore();
   const profileImgInput = useRef<HTMLInputElement>(null);
+
+  /** 2023/10/15 - 이미지 선택 대화상자 open - by sineTlsl */
+  const handlerUpdateImg = () => {
+    if (profileImgInput.current) {
+      profileImgInput.current.click();
+    }
+  };
+
+  /** 2023/10/15 - 프로필 이미지 선택 - by sineTlsl */
+  const handlerChangeImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadImgFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', uploadImgFile);
+
+      const res = await patchMyInfoImage(formData);
+      try {
+        if (res.imageUrl) {
+          setImage(res.imageUrl);
+          setMember({ username: res.username, imageUrl: res.imageUrl });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  /** 2023/10/15 - 프로필 이미지 제거 - by sineTlsl */
+  const handlerRemoveImg = async () => {
+    const res = await deleteMyInfoImage();
+
+    try {
+      setImage('');
+      setMember({ username: res.username, imageUrl: res.imageUrl });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <ProfileImageContainer>
@@ -20,13 +67,17 @@ const ProfileImageEdit: React.FC<ProfileImageProps> = ({ image, setImage }): JSX
             accept="image/jpg, image/png, image/jpeg"
             name="profile_img"
             ref={profileImgInput}
-            // onChange={handlerChangeImg}
+            onChange={handlerChangeImg}
           />
         </div>
       </ProfileImageWrap>
       <ImageBtnWrap>
-        <button className="common upload_btn">이미지 업로드</button>
-        <button className="common remove_btn">이미지 제거</button>
+        <button className="common upload_btn" onClick={handlerUpdateImg}>
+          이미지 업로드
+        </button>
+        <button className="common remove_btn" onClick={handlerRemoveImg}>
+          이미지 제거
+        </button>
       </ImageBtnWrap>
     </ProfileImageContainer>
   );
