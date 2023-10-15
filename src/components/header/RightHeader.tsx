@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
 import { useTokenStore } from '@store/useTokenStore';
+import { useMemberStore } from '@store/useMemberStore';
 
 // components
 import UserLoginBtn from '@components/header/UserLoginBtn';
@@ -12,7 +13,6 @@ import MyInfoDropDown from '@components/header/MyInfoDropDown';
 // icon
 import { HiOutlineSearch } from 'react-icons/hi';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
-import { useMemberStore } from '@store/useMemberStore';
 
 type ContentMode = 'V' | 'B';
 
