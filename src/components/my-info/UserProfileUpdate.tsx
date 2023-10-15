@@ -8,7 +8,7 @@ import { useMemberStore } from '@store/useMemberStore';
 import { MyInfoType } from 'types/myInfo';
 
 // api
-import { patchMyInfoName } from '@api/myInfo';
+import { patchMyInfoName } from '@api/my-info/member';
 
 // components
 import ProfileImageEdit from '@components/my-info/ProfileImageEdit';

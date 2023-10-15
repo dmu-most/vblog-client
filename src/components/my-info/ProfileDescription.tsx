@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { MyInfoType } from 'types/myInfo';
 
 // api
-import { getMyInfo } from '@api/myInfo';
+import { getMyInfo } from '@api/my-info/member';
 
 // components
 import UserProfileUpdate from '@components/my-info/UserProfileUpdate';
