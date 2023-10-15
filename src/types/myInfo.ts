@@ -8,6 +8,11 @@ export interface MyInfoType {
   socialType: string | null;
 }
 
+/** 2023/10/15 - 회원정보 이름 수정 Type - sineTlsl */
+export interface MyInfoPatchRequest {
+  username: string;
+}
+
 // ============================ 최근목록 ============================
 interface Content {
   title: string;

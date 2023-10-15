@@ -3,9 +3,6 @@ import axios from 'axios';
 // store
 import { getTokenState } from '@store/useTokenStore';
 
-// api
-import { getAccessToken, postNewAccessToken } from './auth/token';
-
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
   timeout: 5000,
@@ -60,19 +57,20 @@ instance.interceptors.response.use(
   },
   async err => {
     const originalRequest = err.config;
-    const { setAccessToken, setRefreshToken, refreshToken } = getTokenState();
+    const { setAccessToken, setRefreshToken, accessToken, refreshToken } = getTokenState();
 
     // originalRequest._retry: 원래의 요청을 이미 한 번 다시 보냈는지를 나타내는 플래그
-    if (err.response.status === 401 && !originalRequest._retry) {
+    if (accessToken && refreshToken && err.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       return axios
         .post(
-          `${process.env.REACT_APP_API_URL}/token/refresh-access`,
+          `${process.env.REACT_APP_API_URL}/token/verify/access`,
           {},
           {
             headers: {
-              refresh: refreshToken,
+              Authorization: `Bearer ${accessToken}`,
+              Refresh: `Bearer ${refreshToken}`,
             },
           },
         )

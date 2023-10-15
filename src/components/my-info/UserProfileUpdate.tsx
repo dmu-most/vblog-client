@@ -1,8 +1,14 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+// store
+import { useMemberStore } from '@store/useMemberStore';
 
 // type
 import { MyInfoType } from 'types/myInfo';
+
+// api
+import { patchMyInfoName } from '@api/myInfo';
 
 // components
 import ProfileImageEdit from '@components/my-info/ProfileImageEdit';
@@ -15,9 +21,21 @@ interface ProfileProps {
 
 /** 2023/09/28 - 프로필 업데이트 컴포넌트 - by sineTlsl */
 const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit }): JSX.Element => {
+  const { setMember } = useMemberStore();
   const [name, setName] = useState<string>(profile.username);
   const [image, setImage] = useState<string | null>(profile.imageUrl);
 
+  /** 2023/10/15 - 프로필 이름 수정 핸들러 - by sineTlsl */
+  const handlerNameUpdate = async () => {
+    const res = await patchMyInfoName({ username: name });
+
+    try {
+      handlerProfileEdit();
+      setMember({ username: res.username, imageUrl: res.imageUrl });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <UserProfileContainer>
       <ProfileEditWrap>
@@ -26,7 +44,7 @@ const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit
           <p className="name">Name</p>
           <div className="profile_name_wrap">
             <ProfileNameEdit name={name} setName={setName} />
-            <button onClick={handlerProfileEdit}>저장</button>
+            <button onClick={handlerNameUpdate}>저장</button>
           </div>
         </ProfileInfoText>
       </ProfileEditWrap>
