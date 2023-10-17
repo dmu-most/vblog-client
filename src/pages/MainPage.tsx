@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
+import { useMemberStore } from '@store/useMemberStore';
 
 // component
 import BannerComponent from '@components/main/BannerComponent';
@@ -15,6 +16,7 @@ import UserCardComponent from '@components/main/CardComponent';
 const MainPage: React.FC = (): JSX.Element => {
   const [bannerData, setBannerData] = useState<any>(null);
   const { mode } = useContentModeStore();
+  const { member } = useMemberStore();
 
   let apiUrl: string; // Explicitly declare as string type
   if (mode === 'V') {
@@ -45,8 +47,12 @@ const MainPage: React.FC = (): JSX.Element => {
   return (
     <MainPageContainer>
       {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
-      <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
-      <UserCardComponent endpoint="likelist" />
+      {member ? (
+        <>
+          <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
+          <UserCardComponent endpoint="likelist" />
+        </>
+      ) : null}
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent endpoint="reviewlist" />
       <IntroComponent intro="브블Pick이 가장 많은 콘텐츠 ❤️" />
