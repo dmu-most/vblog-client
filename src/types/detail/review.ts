@@ -12,5 +12,5 @@ export interface vblogReviewType {
 /** 2023/08/28 - detail 안에 review 작성 Form type - jh */
 export interface ReviewFormType {
   reviewContent: string;
-  grade: number;
+  rating: number;
 }

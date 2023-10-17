@@ -33,6 +33,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const [sortBy, setSortBy] = useState<"new" | "grade">("new");
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
+  const [inputValue, setInputValue] = useState(""); // review의 들어오는 input 값 정의
   const navigate = useNavigate();
 
   /** 2023/08/09 - 모달 오픈 함수 - by jh */
@@ -86,10 +87,16 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
         <ReviewContainer>
           <WriteContainer>
             <FaUserPen size={30}/>
-            <input className="Input" type="text" placeholder="브블리뷰를 작성해주세요." />
+            <input 
+              className="Input" 
+              type="text" 
+              value={inputValue}
+              placeholder="브블리뷰를 작성해주세요." 
+              onChange={(e) => setInputValue(e.target.value)}
+            />
           </WriteContainer>
           <ButtonContainer>
-            <div className="WriteButton" onClick={handleWriteClick}> 작성 </div>
+            <div className="WriteButton" onClick={handleWriteClick} > 작성 </div>
         <LikeDislikeContainer>
             <LikeContainer onClick={handleLikeClick}>
                 <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
@@ -116,7 +123,10 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
           )}
           <ReviewFormContainer>
           </ReviewFormContainer>
-          <RatingModal isOpen={isRatingModalOpen} closeModal={closeRatingModal} />
+          <RatingModal 
+            isOpen={isRatingModalOpen}
+            closeModal={closeRatingModal}
+            inputValue={inputValue} />
         </ReviewContainer>
     )
 }

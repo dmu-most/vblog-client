@@ -4,14 +4,16 @@ import { styled } from "styled-components";
 // marerial UI
 import Rating from '@mui/material/Rating';
 
+import { PostReview } from "@api/detail";
 
 interface RatingModalProps {
   isOpen: boolean;
   closeModal: () => void;
+  inputValue: string;
 }
 
 //**2023/08/07 작성 클릭 시 평점과 리뷰를 등록할 수 있는 모달 - by jh
-const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
+const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal, inputValue }) => {
   const [ratingValue, setRatingValue] = useState<number | null>(4.5);
 
   // 평점 값 함수
@@ -20,11 +22,22 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
   };
 
   // 평점과 리뷰 등록 함수
-  const handleRegisterClick = () => {
-    // 등록하기 버튼 클릭 시 등록 완료 alert
-    alert("등록이 완료되었습니다.");
-    // alert 보여준 후 모달 종료
-    closeModal();
+  const handleRegisterClick = async () => {
+    if (ratingValue === null) {
+      alert("평점을 선택해주세요.");
+    } else {
+      try {
+        const res = await PostReview({
+          rating: ratingValue,
+          reviewContent: inputValue,
+        });
+        console.log(res);
+        closeModal();
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        alert("오류나써");
+      }
+    }
   };
 
 
@@ -47,10 +60,6 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
 };
 
 export default RatingModal;
-
-// Rest of the code...
-
-
 
 const RatingModalOverlay = styled.div<{ isOpen: boolean }>`
   ${({ theme }) => theme.common.flexCenter};
