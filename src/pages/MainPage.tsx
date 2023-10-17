@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import axios from 'axios';
+
+import { getvlogbannerCheck, getblogbannerCheck } from '@api/main/vblogList';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
@@ -18,30 +19,34 @@ const MainPage: React.FC = (): JSX.Element => {
   const { mode } = useContentModeStore();
   const { member } = useMemberStore();
 
-  let apiUrl: string; // Explicitly declare as string type
-  if (mode === 'V') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/vlog/banner`;
-  } else if (mode === 'B') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/blog/banner`;
-  }
+  const getAllBannerCheck = async () => {
+  try {
+    let bannerApi;
+    if (mode === 'V') {
+      bannerApi = getvlogbannerCheck; // Use the vlog banner API
+    } else if (mode === 'B') {
+      bannerApi = getblogbannerCheck; // Use the blog banner API
+    }
 
-  const fetchBannerData = async () => {
-    try {
-      const response = await axios.get(apiUrl);
+    if (bannerApi) {
+      const res = await bannerApi();
 
       if (mode === 'V') {
-        // console.log('Fetched data for V:', response.data);
+        // console.log('Fetched data for V:', res.data);
       } else if (mode === 'B') {
-        // console.log('Fetched data for B:', response.data);
+        // console.log('Fetched data for B:', res.data);
       }
-      setBannerData(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+      setBannerData(res);
+    } else {
+      console.error('Invalid mode:', mode);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
   useEffect(() => {
-    fetchBannerData();
+    getAllBannerCheck();
   }, [mode]);
 
   return (
@@ -49,7 +54,7 @@ const MainPage: React.FC = (): JSX.Element => {
       {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
       {member ? (
         <>
-          <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
+          <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />
           <UserCardComponent endpoint="likelist" />
         </>
       ) : null}
