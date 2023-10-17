@@ -10,7 +10,7 @@ interface RatingModalProps {
   closeModal: () => void;
 }
 
-//**2023/08/07 평점 클릭 시 평점과 좋아요/싫어요를 등록할 수 있는 모달 - by jh
+//**2023/08/07 작성 클릭 시 평점과 리뷰를 등록할 수 있는 모달 - by jh
 const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
   const [ratingValue, setRatingValue] = useState<number | null>(4.5);
 
@@ -19,7 +19,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal }) => {
     setRatingValue(value);
   };
 
-  // 평점 , 좋아요/싫어요 등록 함수
+  // 평점과 리뷰 등록 함수
   const handleRegisterClick = () => {
     // 등록하기 버튼 클릭 시 등록 완료 alert
     alert("등록이 완료되었습니다.");

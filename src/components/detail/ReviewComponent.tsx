@@ -57,7 +57,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const handleWriteClick = () => {
    if (!useMemberStore.getState().member) {
      alert("로그인을 진행해주세요");
-     navigate('/login'); 
+     navigate('/login');
     } else {
      openRatingModal();
    }
@@ -80,7 +80,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
 
   useEffect(() => {
     fetchReviewData();
-  }, [contentId, sortBy]);
+  }, [useMemberStore.getState().member,contentId, sortBy]);
 
     return (
         <ReviewContainer>
@@ -89,7 +89,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
             <input className="Input" type="text" placeholder="브블리뷰를 작성해주세요." />
           </WriteContainer>
           <ButtonContainer>
-            <div className="WriteButton" onClick={handleWriteClick} > 작성 </div>
+            <div className="WriteButton" onClick={handleWriteClick}> 작성 </div>
         <LikeDislikeContainer>
             <LikeContainer onClick={handleLikeClick}>
                 <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
