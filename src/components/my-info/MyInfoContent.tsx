@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+// components
+import MyReviewList from '@components/my-info/MyReviewList';
+import MyRecentList from '@components/my-info//MyRecentList';
+
 // icons
 import { AiFillHeart } from 'react-icons/ai';
 import { FaClockRotateLeft } from 'react-icons/fa6';
@@ -11,6 +15,12 @@ const contentTabs = [
   { title: '브이로그', subTabs: ['스크랩', '기록', '리뷰'] },
   { title: '블로그', subTabs: ['스크랩', '기록', '리뷰'] },
 ];
+
+export interface MyContentListProps {
+  mode: string;
+}
+
+export type ReviewMode = '브이로그' | '블로그';
 
 /** 2023/08/22 - 마이 페이지 콘텐츠 - by sineTlsl */
 const MyInfoContent: React.FC = (): JSX.Element => {
@@ -47,6 +57,8 @@ const MyInfoContent: React.FC = (): JSX.Element => {
           </SubContentTabItems>
         ))}
       </ContentTabWrap>
+      {currentSubTabMode === 1 && <MyRecentList mode={contentTabs[currentTabMode].title} />}
+      {currentSubTabMode === 2 && <MyReviewList mode={contentTabs[currentTabMode].title} />}
     </MyInfoContentContainer>
   );
 };
@@ -58,6 +70,7 @@ const MyInfoContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  flex-grow: 1;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     padding: 5px 20px 20px 20px;
