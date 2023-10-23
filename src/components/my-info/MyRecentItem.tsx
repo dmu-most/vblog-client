@@ -33,7 +33,7 @@ const RecentItemContainer = styled.article`
 
 // ===================== 이미지 박스 =====================
 const ImageWrap = styled.div`
-  min-width: 300px;
+  min-width: 290px;
   min-height: 150px;
   height: auto;
   max-width: 100%;
