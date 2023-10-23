@@ -10,18 +10,17 @@ import { useContentModeStore } from '@store/useConentModeStore';
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 
 //api
-// import { vblogList } from '@api/main/vblogList';
+import { getUserCardCheck } from '@api/main/vblogList';
 
 // Component
 import PostCard from '@components/common/PostCard';
 
 // 각 컴포넌트에 맞게 다른 endpoint 넣기 위해 변수 생성
-interface CardComponentProps {
-  endpoint: string;
-}
+// interface CardComponentProps {
+// }
 
 //**2023/07/07 CardComponent - by jh
-const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponentProps): JSX.Element => {
+const UserCardComponent: React.FC = (): JSX.Element => {
   const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
   const scrollAmount = 600; // 한 번에 스크롤할 양
   const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
@@ -31,32 +30,28 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-  let apiUrl: string; // vlog/blog 모드변환 변수
-  if (mode === 'V') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/vlog/${endpoint}`;
-  } else if (mode === 'B') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/blog/${endpoint}`;
-  }
-
   const fetchData = async () => {
-    try {
-      const response = await axios.get(apiUrl);
-
-      if (mode === 'V') {
-        // console.log('Fetched data for V:', response.data);
-      } else if (mode === 'B') {
-        // console.log('Fetched data for B:', response.data);
-      }
-
-      setVblogData(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const res = await getUserCardCheck();
+  console.log('value',res);
+  try{
+    setVblogData(res);
+  }catch (error) {
+    console.error("error fetching fetcgdata", error);
+  }
+}
 
   useEffect(() => {
+    // const fetchData = async () => {
+    //   const res = await getUserCardCheck();
+    //   console.log('value',res);
+    //   try{
+    //     setVblogData(res);
+    //   }catch (error) {
+    //     console.error("error fetching fetchdata", error);
+    //   }
+    // }
     fetchData();
-  }, [mode]);
+  }, []);
 
   /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
   const HandlerScrollLeft = () => {
@@ -124,7 +119,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
   );
 };
 
-export default CardComponent;
+export default UserCardComponent;
 
 const ScrollableCardContainer = styled.div`
   width: 100%;
