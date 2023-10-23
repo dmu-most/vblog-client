@@ -8,13 +8,13 @@ import { FaUserPen } from "react-icons/fa6";
 // marerial UI
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentVeryDissatisfiedOutlined';
+import Rating from '@mui/material/Rating';
 
 //Component
 import ReviewForm from "@components/common/ReviewForm";
-import RatingModal from "./modal/RatingModal";
 
 //api
-import { getReviewNewCheck, getReviewGradeCheck } from "@api/detail/review";
+import { getReviewNewCheck, getReviewGradeCheck, PostReview } from "@api/detail/review";
 
 //type
 import {  vblogReviewType } from "types/detail/review";
@@ -28,23 +28,14 @@ interface ReviewComponentProps {
 
 //**2023/07/29 ReviewComponent- by jh
 const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Element => {
-  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
   const [sortBy, setSortBy] = useState<"new" | "grade">("new");
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
+  const [ratingValue, setRatingValue] = useState<number | null>(4.5);
   const [inputValue, setInputValue] = useState(""); // review의 들어오는 input 값 정의
   const navigate = useNavigate();
 
-  /** 2023/08/09 - 모달 오픈 함수 - by jh */
-  const openRatingModal = () => {
-    setIsRatingModalOpen(true);
-  };
-
-  /** 2023/08/09 - 모달 종료 함수 - by jh */
-  const closeRatingModal = () => {
-    setIsRatingModalOpen(false);
-  };
 
   // 좋아요 클릭 함수
   const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
@@ -55,16 +46,46 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     setIsDislikeClicked(true);
   };
 
-  const handleWriteClick = () => {
-   if (!useMemberStore.getState().member) {
-     alert("로그인을 진행해주세요");
-     navigate('/login');
-    } else {
-     openRatingModal();
-   }
+  // 평점 값 함수
+  const handleRatingChange = (event: any, value: number | null) => { 
+    setRatingValue(value);
   };
 
-  /** 2023/08/09 - 안가순 / 평점순 api 받는 함수 - by jh */
+  const handleReviewWriteClick = async () => {
+    if (!useMemberStore.getState().member) {
+      alert("로그인을 진행해주세요");
+      navigate('/login');
+    } else if (inputValue.trim() === "") {
+      alert("리뷰를 작성해주세요.");
+    } else {
+      if (ratingValue === null) {
+        alert("평점을 선택해주세요.");
+      } else {
+        try {
+          const reviewForm = {
+            reviewContent: inputValue,
+            rating: ratingValue
+          };
+
+          const res = await PostReview(reviewForm); 
+          if (res) {
+            console.log(res.data);
+            alert("작성이 완료되었습니다.");
+          } else {
+            console.log(res);
+            alert("작성 중에 오류가 발생했습니다.");
+          }
+        } catch (error) {
+          console.error('Error posting the review:', error);
+          alert("오류나써.");
+        }
+      }
+    }
+  };
+
+
+
+  /** 2023/08/09 - 인가순 / 평점순 api 받는 함수 - by jh */
   const fetchReviewData = async () => {
     try {
       if (sortBy === "new") {
@@ -85,6 +106,15 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
 
     return (
         <ReviewContainer>
+          {/* 평점을 선택하는 컨테이너 */}
+          <RatingContainer>
+            <div className="Label"> 평점을 선택해주세요.</div>
+            <Ratings>{ratingValue}</Ratings>
+            <StarRatingContainer>
+              <Rating name="half-rating" value={ratingValue} precision={0.5} onChange={handleRatingChange} size="medium"/>
+            </StarRatingContainer>
+          </RatingContainer>
+          {/* 리뷰를 작성하는 컨테이너 */}
           <WriteContainer>
             <FaUserPen size={30}/>
             <input 
@@ -96,7 +126,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
             />
           </WriteContainer>
           <ButtonContainer>
-            <div className="WriteButton" onClick={handleWriteClick} > 작성 </div>
+            <div className="WriteButton" onClick={handleReviewWriteClick} > 작성 </div>
         <LikeDislikeContainer>
             <LikeContainer onClick={handleLikeClick}>
                 <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
@@ -108,14 +138,15 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
             </DislikeContainer>
         </LikeDislikeContainer>
           </ButtonContainer>
+          {/* 리뷰 조회 컨테이너 */}
           <AllReviewContainer>
             <div className="Label"> 브블 리뷰 </div>
           </AllReviewContainer>
-          <RatingContainer>
+          <SortingContainer>
             <div className="RatingButton" onClick={() => setSortBy("new")}> 최신순 </div>
             <div className="text">ㅣ</div>
             <div className="RatingButton" onClick={() => setSortBy("grade")}> 평점순 </div>
-          </RatingContainer>
+          </SortingContainer>
           {reviewData.length > 0 ? (
             reviewData.map((item) => <ReviewForm key={item.reviewId} data={item} />)
           ) : (
@@ -123,10 +154,6 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
           )}
           <ReviewFormContainer>
           </ReviewFormContainer>
-          <RatingModal 
-            isOpen={isRatingModalOpen}
-            closeModal={closeRatingModal}
-            inputValue={inputValue} />
         </ReviewContainer>
     )
 }
@@ -135,7 +162,7 @@ export default ReviewComponent;
 
 const ReviewContainer = styled.div`
   width: 70%;
-  height: 1000px;
+  height: 700px;
   overflow-y: auto;
   margin: 50px 2rem 2rem 2rem;
   padding: 2rem;
@@ -146,6 +173,34 @@ const ReviewContainer = styled.div`
   @media ${props => props.theme.breakpoints.mobileSMax} {
     width: 90%;
       }
+`;
+
+// 평점을 선택하는 부분
+const RatingContainer = styled.span`
+  ${({ theme }) => theme.common.flexCenter};
+  flex-direction: column; 
+
+  > .Label {
+    padding: 1rem;
+    color: var(--black-hunt);
+    font-weight: 500;
+    font-size: 15px;
+
+    @media ${props => props.theme.breakpoints.mobileSMax} {
+      font-size: 15px;
+      }
+    }
+`;
+
+const Ratings = styled.span`
+  font-size: 50px;
+  padding: 1rem;
+  color: var(--black-hunt);
+`;
+
+const StarRatingContainer = styled.div`
+  padding: 1rem;
+  cursor: pointer;
 `;
 
 // 리뷰 작성하는 컨테이너
@@ -159,7 +214,7 @@ const WriteContainer = styled.div`
   // For mobile screens
   @media ${props => props.theme.breakpoints.mobileSMax} {
     > svg {
-      font-size: 20px; 
+      font-size: 15px; 
     }
 
     > input::placeholder {
@@ -233,7 +288,7 @@ const AllReviewContainer = styled.div`
     }
 `;
 
-const RatingContainer = styled.div`
+const SortingContainer = styled.div`
   ${({ theme }) => theme.common.flexRow};
   padding: 15px;
 

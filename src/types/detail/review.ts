@@ -14,3 +14,8 @@ export interface ReviewFormType {
   reviewContent: string;
   rating: number;
 }
+
+/** 2023/08/28 - detail 안에 review 작성 결과 - jh */
+export interface ReviewFormResponse {
+  data: ReviewFormType[];
+}
