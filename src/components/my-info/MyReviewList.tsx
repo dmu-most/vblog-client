@@ -11,7 +11,7 @@ import { MyContentListProps, MyContentMode, ReviewContent, ReviewResponseType } 
 import MyReviewItem from '@components/my-info/MyReviewItem';
 import ReviewPagination from '@components/my-info/ReviewPagination';
 
-const ReviewApiMapping: Record<MyContentMode, () => Promise<ReviewResponseType>> = {
+const ReviewApiMapping: Record<MyContentMode, (page: number) => Promise<ReviewResponseType>> = {
   브이로그: getMyReviewVlog,
   블로그: getMyReviewBlog,
 };
@@ -28,7 +28,7 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
       if (selectedApi) {
         try {
-          const res = await selectedApi();
+          const res = await selectedApi(currentPage);
           console.log(res);
           setReview(res);
           setReviewsData(res.content);
@@ -39,7 +39,7 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
     };
 
     fetchData();
-  }, [mode]);
+  }, [mode, currentPage]);
 
   return (
     <ReviewListContainer>
@@ -62,7 +62,6 @@ const ReviewListContainer = styled.ul`
   width: 100%;
   gap: 40px;
   padding: 50px 0 20px 0;
-  overflow-y: scroll;
   flex-grow: 1;
   justify-content: space-between;
 `;

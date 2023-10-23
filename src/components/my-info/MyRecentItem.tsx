@@ -37,7 +37,6 @@ const ImageWrap = styled.div`
   min-height: 150px;
   height: auto;
   max-width: 100%;
-  max-height: 300px;
 
   > img {
     width: 100%;
@@ -48,17 +47,27 @@ const ImageWrap = styled.div`
 // ===================== 텍스트 박스 =====================
 const TextWrap = styled.div`
   width: 100%;
+  height: 58px;
+  color: var(--black-hunt);
   ${({ theme }) => theme.common.flexCol};
 
   > .desc {
     display: -webkit-box;
     text-align: center;
     font-size: 14px;
-    padding: 5px 6px;
+    padding: 3px 6px;
     line-height: 22px;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    height: auto;
+
+    > .desc {
+      font-size: 13px;
+    }
   }
 `;

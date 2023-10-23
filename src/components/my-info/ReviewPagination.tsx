@@ -14,7 +14,7 @@ interface PaginationProps {
 const ReviewPagination: React.FC<PaginationProps> = ({ data, currentPage, setCurrentPage }): JSX.Element => {
   const [startPage, setStartPage] = useState<number>(1);
 
-  const totalPages = data.totalPages;
+  const totalPages = data.pageSize;
 
   const handlerPageChange = (page: number) => {
     setCurrentPage(page);

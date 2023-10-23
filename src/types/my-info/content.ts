@@ -22,36 +22,15 @@ export interface ReviewContent {
   reviewId: number;
   content: string;
   createdDate: string;
-  userId: null;
   grade: number;
   category: string;
   boardId: number;
-}
-interface Sort {
-  empty: boolean;
-  unsorted: boolean;
-  sorted: boolean;
-}
-interface Pageable {
-  sort: Sort;
-  offset: number;
-  pageNumber: number;
-  pageSize: number;
-  paged: boolean;
-  unpaged: boolean;
 }
 
 /** 2023/10/15 - 리뷰 조회 Type - sineTlsl */
 export interface ReviewResponseType {
   content: ReviewContent[];
-  pageable: Pageable;
-  last: boolean;
+  pageNumber: number;
+  pageSize: number;
   totalElements: number;
-  totalPages: number;
-  first: boolean;
-  size: number;
-  number: number;
-  sort: Sort;
-  numberOfElements: number;
-  empty: boolean;
 }
