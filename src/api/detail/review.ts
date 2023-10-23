@@ -32,7 +32,8 @@ export const getReviewGradeCheck = async (contentId: number) => {
 export const PostReview = async (body: ReviewFormType) => {
   const { data } = await instance.post(`/review/1`, body, {
     headers: {
-      'Only-Authorization': true,
+       'Authorization': true,
+       'Refresh': true,
     },
   });
 

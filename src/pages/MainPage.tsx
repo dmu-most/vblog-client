@@ -11,7 +11,7 @@ import { useMemberStore } from '@store/useMemberStore';
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
 import CardComponent from '@components/main/CardComponent';
-import UserCardComponent from '@components/main/CardComponent';
+import UserCardComponent from '@components/main/UserCardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
@@ -55,7 +55,7 @@ const MainPage: React.FC = (): JSX.Element => {
       {member ? (
         <>
           <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />
-          <UserCardComponent endpoint="likelist" />
+          <UserCardComponent />
         </>
       ) : null}
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />

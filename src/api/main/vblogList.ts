@@ -25,3 +25,16 @@ export const getblogbannerCheck = async () => {
 
   return data;
 };
+
+// ============================ 사용자 알고리즘 조회 ===============================================
+/** 2023/10/13 - 사용자 알고리즘 조회 - by jh */
+export const getUserCardCheck = async () => {
+  const { data } = await instance.get<vblogListType[]>('/vlog/userBase', {
+    headers: {
+       'Authorization': true,
+       'Refresh': true,
+    },
+  });
+
+  return data;
+};
