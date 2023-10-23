@@ -21,26 +21,6 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal, inputValu
     setRatingValue(value);
   };
 
-  // 평점과 리뷰 등록 함수
-  const handleRegisterClick = async () => {
-    if (ratingValue === null) {
-      alert("평점을 선택해주세요.");
-    } else {
-      try {
-        const res = await PostReview({
-          rating: ratingValue,
-          reviewContent: inputValue,
-        });
-        console.log(res);
-        closeModal();
-      } catch (error) {
-        console.error("Error submitting review:", error);
-        alert("오류나써");
-      }
-    }
-  };
-
-
   return (
     <RatingModalOverlay isOpen={isOpen}>
       <RatingModalContent isOpen={isOpen}>
@@ -53,7 +33,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, closeModal, inputValu
           <Rating name="half-rating" value={ratingValue} precision={0.5} onChange={handleRatingChange} size="large"/>
         </StarRatingContainer>
         </RatingContainer>
-        <SubmitButton onClick={handleRegisterClick}> 등록하기 </SubmitButton>
+        <SubmitButton> 등록하기 </SubmitButton>
       </RatingModalContent>
     </RatingModalOverlay>
   );
