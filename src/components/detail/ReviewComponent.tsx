@@ -34,23 +34,30 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
   const [ratingValue, setRatingValue] = useState<number | null>(4.5);
   const [inputValue, setInputValue] = useState(""); // review의 들어오는 input 값 정의
+  const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
 
-  // 좋아요 클릭 함수
+  //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
   const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsLikeClicked(true);
   };
-  // 싫어요 클릭 함수
+  //**2023/07/29 싫어요 클릭 시 이벤트 함수- by jh
   const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsDislikeClicked(true);
   };
 
-  // 평점 값 함수
+  //**2023/07/29 평점 클릭 시 이벤트 함수- by jh
   const handleRatingChange = (event: any, value: number | null) => { 
     setRatingValue(value);
   };
 
+  //**2023/10/24 리뷰 작성 시 리렌더링 함수(alert은 modal로 바꿀 예정) - by jh
+  const triggerRefresh = () => {
+    setRefresh(!refresh);
+  };
+
+  //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수 - by jh
   const handleReviewWriteClick = async () => {
     if (!useMemberStore.getState().member) {
       alert("로그인을 진행해주세요");
@@ -64,15 +71,19 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
         try {
           const reviewForm = {
             reviewContent: inputValue,
-            rating: ratingValue
+            grade: ratingValue
           };
 
-          const res = await PostReview(reviewForm); 
+          // api 연결
+          const res = await PostReview(contentId, reviewForm); 
+          // ========= 콘솔은 나중에 지움 ==================
+          // console.log("Response:", res);
           if (res) {
-            console.log(res.data);
+          triggerRefresh();
+          setInputValue("");
+          setRatingValue(4.5);
             alert("작성이 완료되었습니다.");
           } else {
-            console.log(res);
             alert("작성 중에 오류가 발생했습니다.");
           }
         } catch (error) {
@@ -82,8 +93,6 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
       }
     }
   };
-
-
 
   /** 2023/08/09 - 인가순 / 평점순 api 받는 함수 - by jh */
   const fetchReviewData = async () => {
@@ -100,9 +109,10 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     }
   };
 
+  /** 2023/08/09 - 리뷰 작성 , 조회처리 - by jh */
   useEffect(() => {
     fetchReviewData();
-  }, [useMemberStore.getState().member,contentId, sortBy]);
+  }, [useMemberStore.getState().member, contentId, sortBy, refresh]);
 
     return (
         <ReviewContainer>
