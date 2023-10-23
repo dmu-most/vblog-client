@@ -135,7 +135,8 @@ export default ReviewComponent;
 
 const ReviewContainer = styled.div`
   width: 70%;
-  height: auto;
+  height: 1000px;
+  overflow-y: auto;
   margin: 50px 2rem 2rem 2rem;
   padding: 2rem;
   border-radius: 10px;
@@ -260,11 +261,11 @@ const ReviewFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 400px;
-  overflow-y: auto;
+  overflow-y: auto; /* Add overflow-y property for vertical scrolling */
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     max-height: 200px;
-    }
+  }
 `;
 
 // ============================ 리뷰 좋아요 싫어요 ===============================================
