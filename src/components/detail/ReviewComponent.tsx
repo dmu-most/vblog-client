@@ -38,6 +38,11 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const navigate = useNavigate();
 
 
+  //**2023/10/24 리뷰 작성,좋아요,싫어요 시 리렌더링 함수(alert은 modal로 바꿀 예정) - by jh
+  const triggerRefresh = () => {
+    setRefresh(!refresh);
+  };
+
   //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
   const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsLikeClicked(true);
@@ -50,11 +55,6 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   //**2023/07/29 평점 클릭 시 이벤트 함수- by jh
   const handleRatingChange = (event: any, value: number | null) => { 
     setRatingValue(value);
-  };
-
-  //**2023/10/24 리뷰 작성 시 리렌더링 함수(alert은 modal로 바꿀 예정) - by jh
-  const triggerRefresh = () => {
-    setRefresh(!refresh);
   };
 
   //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수 - by jh
