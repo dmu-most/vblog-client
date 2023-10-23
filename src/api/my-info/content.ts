@@ -1,6 +1,6 @@
 import instance from '@api/axiosInstance';
 
-import { RecentListItem, ReviewResponseType } from 'types/my-info';
+import { CommonResponseType, RecentListItem, ReviewResponseType } from 'types/index';
 
 // ============================ 최근목록 ============================
 /** 2023/10/15 - 최근목록 Vlog GET 요청 - by sineTlsl */
@@ -52,6 +52,17 @@ export const getMyReviewBlog = async (page: number) => {
     params: {
       page,
     },
+    headers: {
+      'Only-Authorization': true,
+    },
+  });
+
+  return data;
+};
+
+/** 2023/10/23 - 리뷰 DELETE 요청 - by sineTlsl */
+export const deleteMyReview = async (reviewId: number) => {
+  const { data } = await instance.delete<CommonResponseType>(`/review/${reviewId}`, {
     headers: {
       'Only-Authorization': true,
     },
