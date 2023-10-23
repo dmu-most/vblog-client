@@ -109,48 +109,50 @@ export default CardComponent;
 
 const ScrollableCardContainer = styled.div`
   margin: 2rem 1rem ;
+  z-index: 2;
 `;
 
-const CardContainer = styled.ul`
-  ${({ theme }) => theme.common.flexCenterRow};
-  margin: 1rem;
-  height: 400px;
-  transition: transform 0.3s ease;
-  gap: 20px;
-  overflow: auto; // add
+// const CardContainer = styled.ul`
+//   ${({ theme }) => theme.common.flexCenterRow};
+//   margin: 1rem;
+//   height: 400px;
+//   transition: transform 0.3s ease;
+//   gap: 20px;
+//   overflow: auto; // add
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    margin: 0 2rem 0 2rem;
-    padding: 0 20px 0 20px;
-  }
-`;
+//   @media ${props => props.theme.breakpoints.mobileSMax} {
+//     margin: 0 2rem 0 2rem;
+//     padding: 0 20px 0 20px;
+//   }
+// `;
 
-const ScrollContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// const ScrollContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   z-index: 2;
+// `;
 
-const ScrollBtn = styled.button`
-  border: none;
-  background: transparent;
-  transition: color 0.3s ease;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 55px;
+// const ScrollBtn = styled.button`
+//   border: none;
+//   background: transparent;
+//   transition: color 0.3s ease;
+//   font-size: 1rem;
+//   cursor: pointer;
+//   width: 55px;
 
-  > .FaArrowAltCircleLeft,
-  > .FaArrowAltCircleRight {
-    color: var(--gray-light);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    font-size: 40px;
+//   > .FaArrowAltCircleLeft,
+//   > .FaArrowAltCircleRight {
+//     color: var(--gray-light);
+//     cursor: pointer;
+//     transition: color 0.3s ease;
+//     font-size: 40px;
 
-    &:hover {
-      color: var(--gray-dark);
-    }
-  }
+//     &:hover {
+//       color: var(--gray-dark);
+//     }
+//   }
 
-  @media ${props => props.theme.breakpoints.mobileLMax} {
-    display: none;
-  }
-`;
+//   @media ${props => props.theme.breakpoints.mobileLMax} {
+//     display: none;
+//   }
+// `;
