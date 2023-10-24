@@ -54,7 +54,7 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
           {/* 브블로그 폴터 리스트 컨테이너 */}
           <li>
             <AiOutlinePlus />
-             나중에 볼 동영상
+             모든 게시물
           </li>
           <li> 파리 </li>
           <li> 베트남 </li>
