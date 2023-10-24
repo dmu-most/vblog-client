@@ -51,8 +51,10 @@ const LoginForm: React.FC = (): JSX.Element => {
 
       setAccessToken(res.accessToken);
       setRefreshToken(res.refreshToken);
-
-      setMember(res.data);
+      setMember({
+        imageUrl: res.data.imageUrl,
+        username: res.data.username,
+      });
 
       navigate('/');
     } catch (err: any) {
