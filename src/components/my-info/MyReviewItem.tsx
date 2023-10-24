@@ -1,5 +1,12 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { ReviewContent } from 'types/my-info';
+
+// api
+import { deleteMyReview } from '@api/my-info';
+
+// component
+import AlertModal from '@components/common/AlertModal';
 
 // icons
 import { AiFillStar, AiOutlineStar, AiFillEdit } from 'react-icons/ai';
@@ -7,11 +14,27 @@ import { BsFillTrash3Fill } from 'react-icons/bs';
 
 interface MyReviewItemProps {
   review: ReviewContent;
+  onDelete: (reviewId: number) => void;
 }
 
 /** 2023/10/21 - 리뷰 아이템 컴포넌트 - by sineTlsl */
-const MyReviewItem: React.FC<MyReviewItemProps> = ({ review }): JSX.Element => {
+const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, onDelete }): JSX.Element => {
   const rating = review.grade;
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  /** 2023/10/23 - 리뷰 삭제 - by sineTlsl */
+  const handlerDeleteReview = async () => {
+    try {
+      await deleteMyReview(review.reviewId);
+      setIsModalOpen(true);
+
+      setInterval(() => {
+        onDelete(review.reviewId);
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <ReviewContainer>
@@ -33,12 +56,16 @@ const MyReviewItem: React.FC<MyReviewItemProps> = ({ review }): JSX.Element => {
           <button>
             <AiFillEdit size={16} color="#699BF7" />
           </button>
-          <button>
+          <button onClick={handlerDeleteReview}>
             <BsFillTrash3Fill size={16} color="#699BF7" />
           </button>
         </div>
       </div>
-
+      <div>
+        <AlertModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <p>삭제되었습니다.</p>
+        </AlertModal>
+      </div>
       <p className="review_content">{review.content}</p>
     </ReviewContainer>
   );
@@ -77,6 +104,7 @@ const ReviewContainer = styled.div`
       margin: 0;
       background: 0;
       border: none;
+      cursor: pointer;
     }
   }
   .gap {
