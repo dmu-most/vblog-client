@@ -8,12 +8,11 @@ import CommandComponent from '@components/detail/CommandComponent';
 
 // api
 import { getContentCheck } from '@api/detail/vblogContent';
-
+import { postRecentItem } from '@api/detail';
 
 interface DetailPageProps {
   contentId: number;
 }
-
 
 /** 2023/07/29 - deatailpage - by jh*/
 const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
@@ -24,14 +23,26 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
    setContentData(res);
   };
 
+  /** 2023/10/23 - 최근목록 POST api 요청 - by sineTlsl */
+  const fetchRecentPost = async () => {
+    const res = await postRecentItem(contentId);
+
+    try {
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     getAllContentCheck();
+    fetchRecentPost();
   }, [contentId]);
 
   return (
     <DetailContainer>
       {contentData ? <ContentComponent data={contentData} /> : <p>Loading...</p>}
-      <ReviewComponent contentId={contentId}/>
+      <ReviewComponent contentId={contentId} />
       <CommandComponent />
     </DetailContainer>
   );

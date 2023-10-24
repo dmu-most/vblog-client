@@ -1,23 +1,26 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // apis
 import { getRecentVlog, getRecentBlog } from '@api/my-info';
 
 // types
-import { MyContentListProps, MyContentMode, RecentListItem } from 'types/my-info';
+import { MyContentListProps, MyContentMode, RecentResponseType, RecentContent } from 'types/my-info';
 
 // components
 import MyRecentItem from '@components/my-info/MyRecentItem';
-import { Link } from 'react-router-dom';
 
-const RecentApiMapping: Record<MyContentMode, () => Promise<RecentListItem[]>> = {
+const RecentApiMapping: Record<MyContentMode, (page: number) => Promise<RecentResponseType>> = {
   브이로그: getRecentVlog,
   블로그: getRecentBlog,
 };
+
 /** 2023/10/22 - 리뷰 최근기록 리스트 컴포넌트 - by sineTlsl */
 const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
-  const [recentData, setRecentData] = useState<RecentListItem[]>([]);
+  const [recent, setRecent] = useState<RecentResponseType>();
+  const [recentData, setRecentData] = useState<RecentContent[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,10 +28,11 @@ const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
       if (selectedApi) {
         try {
-          const res = await selectedApi();
+          const res = await selectedApi(currentPage);
 
           console.log(res);
-          setRecentData(res);
+          setRecent(res);
+          setRecentData(res.content);
         } catch (err) {
           console.log(err);
         }
@@ -58,7 +62,7 @@ export default MyRecentList;
 
 const RecentListContainer = styled.ul`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 100%;
   gap: 4px;
@@ -68,10 +72,10 @@ const RecentListContainer = styled.ul`
     width: 100%;
   }
 
-  @media (min-width: 640px) {
+  @media screen and (max-width: 950px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (min-width: ${props => props.theme.size.mobileL}) {
-    grid-template-columns: repeat(3, 1fr);
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 // components
 import MyReviewList from '@components/my-info/MyReviewList';
-import MyRecentList from '@components/my-info//MyRecentList';
+import MyRecentList from '@components/my-info/MyRecentList';
+import MyScrapList from '@components/my-info/MyScrapList';
 
 // icons
 import { AiFillHeart } from 'react-icons/ai';
@@ -57,6 +58,7 @@ const MyInfoContent: React.FC = (): JSX.Element => {
           </SubContentTabItems>
         ))}
       </ContentTabWrap>
+      {currentSubTabMode === 0 && <MyScrapList mode={contentTabs[currentTabMode].title} />}
       {currentSubTabMode === 1 && <MyRecentList mode={contentTabs[currentTabMode].title} />}
       {currentSubTabMode === 2 && <MyReviewList mode={contentTabs[currentTabMode].title} />}
     </MyInfoContentContainer>
