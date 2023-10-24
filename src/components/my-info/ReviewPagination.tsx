@@ -11,11 +11,13 @@ interface PaginationProps {
   setCurrentPage: (currentPage: number) => void;
 }
 
+/** 2023/10/22 - 리뷰 페이지네이션 컴포넌트 - by sineTlsl */
 const ReviewPagination: React.FC<PaginationProps> = ({ data, currentPage, setCurrentPage }): JSX.Element => {
   const [startPage, setStartPage] = useState<number>(1);
 
   const totalPages = data.pageSize;
 
+  /** 2023/10/22 - 페이지 전환 함수 - by sineTlsl */
   const handlerPageChange = (page: number) => {
     setCurrentPage(page);
     console.log(page);

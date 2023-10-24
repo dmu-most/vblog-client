@@ -41,12 +41,19 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
     fetchData();
   }, [mode, currentPage]);
 
+  /** 2023/10/23 - 리뷰 삭제 시 리뷰 리스트 데이터 변경 - by sineTlsl */
+  const handlerDeleteReview = (reviewId: number) => {
+    const filterd = reviewsData.filter(review => review.reviewId !== reviewId);
+
+    setReviewsData(filterd);
+  };
+
   return (
     <ReviewListContainer>
       {reviewsData &&
         reviewsData.map(review => (
           <li key={review.reviewId}>
-            <MyReviewItem review={review} />
+            <MyReviewItem review={review} onDelete={handlerDeleteReview} />
           </li>
         ))}
       {review && <ReviewPagination data={review} currentPage={currentPage} setCurrentPage={setCurrentPage} />}

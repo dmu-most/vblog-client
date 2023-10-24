@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 // types
-import { RecentListItem } from 'types/my-info';
+import { RecentContent } from 'types/my-info';
 
 interface RecentItemProps {
-  recent: RecentListItem;
+  recent: RecentContent;
 }
 
 /** 2023/10/22 - 리뷰 최근기록 아이템 컴포넌트 - by sineTlsl */

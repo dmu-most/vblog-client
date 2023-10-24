@@ -6,19 +6,21 @@ import { Link } from 'react-router-dom';
 import { getRecentVlog, getRecentBlog } from '@api/my-info';
 
 // types
-import { MyContentListProps, MyContentMode, RecentListItem } from 'types/my-info';
+import { MyContentListProps, MyContentMode, RecentResponseType, RecentContent } from 'types/my-info';
 
 // components
 import MyRecentItem from '@components/my-info/MyRecentItem';
 
-const RecentApiMapping: Record<MyContentMode, (page: number) => Promise<RecentListItem[]>> = {
+const RecentApiMapping: Record<MyContentMode, (page: number) => Promise<RecentResponseType>> = {
   브이로그: getRecentVlog,
   블로그: getRecentBlog,
 };
+
 /** 2023/10/22 - 리뷰 최근기록 리스트 컴포넌트 - by sineTlsl */
 const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
-  const [recentData, setRecentData] = useState<RecentListItem[]>([]);
-  const page = 2;
+  const [recent, setRecent] = useState<RecentResponseType>();
+  const [recentData, setRecentData] = useState<RecentContent[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,10 +28,11 @@ const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
       if (selectedApi) {
         try {
-          const res = await selectedApi(page);
+          const res = await selectedApi(currentPage);
 
           console.log(res);
-          setRecentData(res);
+          setRecent(res);
+          setRecentData(res.content);
         } catch (err) {
           console.log(err);
         }
