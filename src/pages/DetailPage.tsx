@@ -7,7 +7,6 @@ import ReviewComponent from '@components/detail/ReviewComponent';
 import CommandComponent from '@components/detail/CommandComponent';
 
 // api
-import axios from 'axios';
 import { getContentCheck } from '@api/detail/vblogContent';
 
 

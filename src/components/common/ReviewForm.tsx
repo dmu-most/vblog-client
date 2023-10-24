@@ -15,21 +15,21 @@ interface ReviewFormProps {
 
 //**2023/08/07 ReviewForm
 const ReviewForm: React.FC<ReviewFormProps> = ({ data }) => {
-  return (
-    <ReviewFormContainer>
-      <ReviewTitleContainer>
-        <div className="Grade"> 
-          <Rating name="read-only" size="small" readOnly value={data.grade} />
-        </div>
-        <div className="ReviewDate"> {data.reviewDate} </div>
-      </ReviewTitleContainer>
-      <ReviewContentContainer>
-        <div className="ReviewContent"> {data.reviewContent} </div>
-      </ReviewContentContainer>
-      <ReviewWriterContainer>
-        <div className="ReviewWriter"> {data.userName}</div>
-      </ReviewWriterContainer>
-    </ReviewFormContainer>
+    return (
+        <ReviewFormContainer>
+            <ReviewTitleContainer>
+                <div className="Grade"> 
+                  <Rating name="read-only" size="small" readOnly value={data.grade} />
+                </div>
+                <div className="ReviewDate"> {data.reviewDate} </div>
+            </ReviewTitleContainer>
+            <ReviewContentContainer>
+                <div className="ReviewContent"> {data.reviewContent} </div>
+            </ReviewContentContainer>
+            <ReviewWriterContainer>
+                <div className="ReviewWriter"> {data.userName}</div>
+            </ReviewWriterContainer>
+        </ReviewFormContainer>
   );
 };
 
