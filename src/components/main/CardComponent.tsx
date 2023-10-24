@@ -109,6 +109,7 @@ export default CardComponent;
 
 const ScrollableCardContainer = styled.div`
   margin: 2rem 1rem ;
+  overflow-y: auto;
   z-index: 2;
 `;
 

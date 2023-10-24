@@ -31,8 +31,7 @@ export const getblogbannerCheck = async () => {
 export const getUserCardCheck = async () => {
   const { data } = await instance.get<vblogListType[]>('/vlog/userBase', {
     headers: {
-       'Authorization': true,
-       'Refresh': true,
+      'Only-Authorization': true,
     },
   });
 
