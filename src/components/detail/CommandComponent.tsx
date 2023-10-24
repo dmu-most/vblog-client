@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
 
@@ -39,19 +39,19 @@ const CommandComponent: React.FC = (): JSX.Element => {
   }, []);
 
     return (
-        <CommandContainer>
-            <IntroComponent intro="관련 브이로그 추천 👉" />
-                <ScrollableCardContainer>
-                    <CommandCardContainer {...swipeHandlers}>
-                      {vblogData.length > 0 ? (
-                        vblogData.map((item) => (
-                        <PostCard key={item.contentId} data={item} />
-                        ))
-                       ) : (
-                      <p>Loading...</p>
-                      )}
-                    </CommandCardContainer>
-                 </ScrollableCardContainer>
+      <CommandContainer>
+        <IntroComponent intro="관련 브이로그 추천 👉" />
+          <ScrollableCardContainer>
+            <CommandCardContainer {...swipeHandlers}>
+              {vblogData.length > 0 ? (
+                vblogData.map((item) => (
+                  <PostCard key={item.contentId} data={item} />
+                ))
+              ) : (
+                <p>Loading...</p>
+                )}
+                </CommandCardContainer>
+                </ScrollableCardContainer>
         </CommandContainer>
     )
 }

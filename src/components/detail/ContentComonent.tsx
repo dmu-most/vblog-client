@@ -6,10 +6,10 @@ import { vblogType } from "types/detail/vblog";
 // Component
 import Hashtag from "@components/common/Hashtag";
 import LikeDisLikeButton from "./LikeDisLikeButton";
+import ScrapModal from "./modal/ScrapModal";
 
 // icon
-import { BsBoxArrowUpRight } from 'react-icons/bs';
-import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
+import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
 interface DetailProps {
   data: vblogType;
@@ -18,6 +18,8 @@ interface DetailProps {
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
   const [scrap, setScrap] = useState(false);
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
@@ -25,14 +27,14 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
   };
   /** 2023/09/06 - 스크랩 클릭 시 icon 변경 - by jh */
   const handleScrapClick = () => {
-    // "스크랩" 버튼 클릭 시 상태를 토글합니다.
+    setIsModalOpen(true);
     setScrap(!scrap);
   };
   
 
   return (
     <ContentContainer>
-            <ScrapContainer onClick={handleScrapClick}>
+      <ScrapContainer onClick={handleScrapClick}>
         <div
           className={`scrap-icon ${scrap ? 'scrap' : ''}`}
           style={{
@@ -77,6 +79,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
       <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
         <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
+      <ScrapModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </ContentContainer>
   );
 };

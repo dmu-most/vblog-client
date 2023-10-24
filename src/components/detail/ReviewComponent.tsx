@@ -6,8 +6,6 @@ import { styled } from "styled-components";
 import { FaUserPen } from "react-icons/fa6";
 
 // marerial UI
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import SentimentVeryDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentVeryDissatisfiedOutlined';
 import Rating from '@mui/material/Rating';
 
 //Component

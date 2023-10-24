@@ -18,10 +18,6 @@ interface ButtonProps{
 	svgheight? :string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface TextButtonProps extends ButtonProps{
-}
-
 const BannerTag : React.FC = (): JSX.Element => {   
 	return(
         <BannerTagContainer>

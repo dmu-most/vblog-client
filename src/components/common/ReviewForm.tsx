@@ -6,9 +6,6 @@ import Rating from '@mui/material/Rating';
 //type
 import { vblogReviewType } from "types/detail/review";
 
-//data
-import { vblogReviewData } from "data/dummyData";
-
 interface ReviewFormProps {
   data: vblogReviewType;
 }

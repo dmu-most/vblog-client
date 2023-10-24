@@ -34,7 +34,7 @@ const LikeDisLikeButton: React.FC = () => {
         {isLikeClicked ? <BsHandThumbsUpFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsUp fontSize="medium" color="inherit" />}
       </LikeContainer>
-      <div className="label"> ㅣ </div>
+      <label> ㅣ </label>
       <DislikeContainer onClick={handleDislikeClick}>
         {isDislikeClicked ? <BsHandThumbsDownFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsDown fontSize="medium" color="inherit" />}
@@ -62,7 +62,7 @@ const AllLikeContainer = styled.div`
     background-color: var(--gray-primary);
   }
 
-  > .label {
+  > label {
     color: var(--gray-dark);
     font-size: 15px;
     font-weight: 400;
