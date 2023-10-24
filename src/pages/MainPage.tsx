@@ -30,12 +30,6 @@ const MainPage: React.FC = (): JSX.Element => {
 
     if (bannerApi) {
       const res = await bannerApi();
-
-      if (mode === 'V') {
-        // console.log('Fetched data for V:', res.data);
-      } else if (mode === 'B') {
-        // console.log('Fetched data for B:', res.data);
-      }
       setBannerData(res);
     } else {
       console.error('Invalid mode:', mode);
