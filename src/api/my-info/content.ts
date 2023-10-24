@@ -1,11 +1,49 @@
 import instance from '@api/axiosInstance';
 
-import { CommonResponseType, RecentListItem, ReviewResponseType } from 'types/index';
+import { CommonResponseType, RecentResponseType, ReviewResponseType, ScrapResponseType } from 'types/index';
+
+// ============================ 스크랩 ============================
+/** 2023/10/23 - 스크랩 폴더 POST 요청 - by sineTlsl */
+export const postScrapFolder = async (name: string, type: string) => {
+  const { data } = await instance.post<ScrapResponseType>(
+    '/folders',
+    { name, type },
+    {
+      headers: {
+        'Only-Authorization': true,
+      },
+    },
+  );
+
+  return data;
+};
+
+/** 2023/10/23 - 스크랩 폴더 Vlog GET 요청 - by sineTlsl */
+export const getScrapVlog = async () => {
+  const { data } = await instance.get<ScrapResponseType>('/myinfo/folders/vlog', {
+    headers: {
+      'Only-Authorization': true,
+    },
+  });
+
+  return data;
+};
+
+/** 2023/10/23 - 스크랩 폴더 Blog GET 요청 - by sineTlsl */
+export const getScrapBlog = async () => {
+  const { data } = await instance.get<ScrapResponseType>('/myinfo/folders/blog', {
+    headers: {
+      'Only-Authorization': true,
+    },
+  });
+
+  return data;
+};
 
 // ============================ 최근목록 ============================
 /** 2023/10/15 - 최근목록 Vlog GET 요청 - by sineTlsl */
 export const getRecentVlog = async (page: number) => {
-  const { data } = await instance.get<RecentListItem[]>('/myinfo/recently/vlog', {
+  const { data } = await instance.get<RecentResponseType>('/myinfo/recently/vlog', {
     params: {
       page,
     },
@@ -19,7 +57,7 @@ export const getRecentVlog = async (page: number) => {
 
 /** 2023/10/15 - 최근목록 Blog GET 요청 - by sineTlsl */
 export const getRecentBlog = async (page: number) => {
-  const { data } = await instance.get<RecentListItem[]>('/myinfo/recently/blog', {
+  const { data } = await instance.get<RecentResponseType>('/myinfo/recently/blog', {
     params: {
       page,
     },

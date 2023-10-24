@@ -34,7 +34,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
     const res = await postRecentItem(contentId);
 
     try {
-      console.log(res.result);
+      console.log(res);
     } catch (err) {
       console.error(err);
     }
