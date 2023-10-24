@@ -5,11 +5,11 @@ import { vblogType } from "types/detail/vblog";
 
 // Component
 import Hashtag from "@components/common/Hashtag";
+import LikeDisLikeButton from "./LikeDisLikeButton";
+import ScrapModal from "./modal/ScrapModal";
 
 // icon
-import { BsBoxArrowUpRight } from 'react-icons/bs';
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-
+import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
 interface DetailProps {
   data: vblogType;
@@ -17,21 +17,35 @@ interface DetailProps {
 
 //**2023/07/29 CommandComponent- by jh
 const ContentComponent: React.FC<DetailProps> = ({ data }) => {
-  const [liked, setliked] = useState(false);
+  const [scrap, setScrap] = useState(false);
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
     window.open(data.link, "_blank");
   };
-  /** 2023/09/06 - 찜 UI 클릭 시 icon 변경 - by jh */
-  const handleLikeClick = () => {
-    // "좋아요" 버튼 클릭 시 상태를 토글합니다.
-    setliked(!liked);
+  /** 2023/09/06 - 스크랩 클릭 시 icon 변경 - by jh */
+  const handleScrapClick = () => {
+    setIsModalOpen(true);
+    setScrap(!scrap);
   };
   
 
   return (
     <ContentContainer>
+      <ScrapContainer onClick={handleScrapClick}>
+        <div
+          className={`scrap-icon ${scrap ? 'scrap' : ''}`}
+          style={{
+            color: 'var(--hunt-black)',
+            width: '20px',
+            height: '20px',
+          }}
+        >
+          {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
+        </div>
+      </ScrapContainer>
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
@@ -43,18 +57,9 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
-      <MyLikeContainer onClick={handleLikeClick}>
-        <div
-          className={`heart-icon ${liked ? 'liked' : ''}`}
-          style={{
-            color: 'var(--icon-red)',
-            width: '20px',
-            height: '20px',
-          }}
-        >
-          {liked ? <AiFillHeart /> : <AiOutlineHeart />}
-        </div>
-      </MyLikeContainer>
+      <LikeDislikeContainer>
+        <LikeDisLikeButton />
+      </LikeDislikeContainer>
       </TagContainer>
       <Line />
       <GradeContainer>
@@ -74,6 +79,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
       <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
         <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
+      <ScrapModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </ContentContainer>
   );
 };
@@ -94,11 +100,34 @@ const ContentContainer = styled.div`
       }
 `;
 
+const ScrapContainer = styled.div`
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 2rem 2rem 0 2rem;
+  padding: 1rem;
+  cursor: pointer;
+
+  .scrap-icon {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
+  }
+
+  .scrap {
+    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding-right: 0.5rem;
+  }
+`;
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  margin: 2rem;
+  margin: 0 2rem;
 
   > img {
     width: 50px;
@@ -153,24 +182,10 @@ const TagContainer = styled.div`
     flex-wrap : wrap;
 `;
 
-const MyLikeContainer = styled.div`
+// 좋아요 / 싫어요 버튼 컨테이너
+const LikeDislikeContainer = styled.div`
   margin-left: auto;
   padding: 1rem;
-  cursor: pointer;
-
-  .heart-icon {
-    width: 25px;
-    height: 25px;
-    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
-  }
-
-  .liked {
-    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
-  }
-
-  @media ${props => props.theme.breakpoints.mobileLMax} {
-    padding-right: 0.5rem;
-  }
 `;
 
 const Line = styled.hr`
