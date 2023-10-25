@@ -46,4 +46,5 @@ export interface ReviewResponseType {
   pageNumber: number;
   pageSize: number;
   totalElements: number;
+  totalPages: number;
 }

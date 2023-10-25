@@ -14,11 +14,10 @@ import { BsFillTrash3Fill } from 'react-icons/bs';
 
 interface MyReviewItemProps {
   review: ReviewContent;
-  onDelete: (reviewId: number) => void;
 }
 
 /** 2023/10/21 - 리뷰 아이템 컴포넌트 - by sineTlsl */
-const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, onDelete }): JSX.Element => {
+const MyReviewItem: React.FC<MyReviewItemProps> = ({ review }): JSX.Element => {
   const rating = review.grade;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -27,10 +26,6 @@ const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, onDelete }): JSX.El
     try {
       await deleteMyReview(review.reviewId);
       setIsModalOpen(true);
-
-      setInterval(() => {
-        onDelete(review.reviewId);
-      }, 2000);
     } catch (err) {
       console.error(err);
     }

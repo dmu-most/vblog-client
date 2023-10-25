@@ -10,6 +10,7 @@ import { MyContentListProps, MyContentMode, ReviewContent, ReviewResponseType } 
 // components
 import MyReviewItem from '@components/my-info/MyReviewItem';
 import ReviewPagination from '@components/my-info/ReviewPagination';
+import UndefinedData from '@components/common/UndefinedData';
 
 const ReviewApiMapping: Record<MyContentMode, (page: number) => Promise<ReviewResponseType>> = {
   브이로그: getMyReviewVlog,
@@ -41,21 +42,19 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
     fetchData();
   }, [mode, currentPage]);
 
-  /** 2023/10/23 - 리뷰 삭제 시 리뷰 리스트 데이터 변경 - by sineTlsl */
-  const handlerDeleteReview = (reviewId: number) => {
-    const filterd = reviewsData.filter(review => review.reviewId !== reviewId);
-
-    setReviewsData(filterd);
-  };
-
   return (
     <ReviewListContainer>
-      {reviewsData &&
-        reviewsData.map(review => (
-          <li key={review.reviewId}>
-            <MyReviewItem review={review} onDelete={handlerDeleteReview} />
-          </li>
-        ))}
+      <ReviewListUl>
+        {reviewsData.length > 0 ? (
+          reviewsData.map(review => (
+            <li key={review.reviewId}>
+              <MyReviewItem review={review} />
+            </li>
+          ))
+        ) : (
+          <UndefinedData text={`리뷰가 없습니다. 작성해보러 갈까요? :)`} />
+        )}
+      </ReviewListUl>
       {review && <ReviewPagination data={review} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
     </ReviewListContainer>
   );
@@ -63,12 +62,17 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
 export default MyReviewList;
 
-const ReviewListContainer = styled.ul`
+const ReviewListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 550px;
+`;
+
+const ReviewListUl = styled.ul`
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
   width: 100%;
   gap: 40px;
-  padding: 50px 0 20px 0;
   flex-grow: 1;
-  justify-content: space-between;
 `;

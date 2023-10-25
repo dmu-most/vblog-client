@@ -15,7 +15,7 @@ interface PaginationProps {
 const ReviewPagination: React.FC<PaginationProps> = ({ data, currentPage, setCurrentPage }): JSX.Element => {
   const [startPage, setStartPage] = useState<number>(1);
 
-  const totalPages = data.pageSize;
+  const totalPages = data.totalPages;
 
   /** 2023/10/22 - 페이지 전환 함수 - by sineTlsl */
   const handlerPageChange = (page: number) => {
@@ -24,34 +24,38 @@ const ReviewPagination: React.FC<PaginationProps> = ({ data, currentPage, setCur
   };
   return (
     <PaginationContainer>
-      <button
-        onClick={() => setStartPage(prev => Math.max(prev - 5, 1))}
-        disabled={startPage === 1}
-        className="page_icon">
-        <MdOutlineArrowBackIos
-          size={16}
-          color={startPage + 5 < totalPages ? 'var(--gray-primary)' : 'var(--black-hunt)'}
-        />
-      </button>
-      {Array.from({ length: 5 }, (_, idx) => (
-        <button
-          key={idx}
-          onClick={() => handlerPageChange(startPage + idx)}
-          className={`page_number ${startPage + idx === currentPage ? 'btn_active' : ''} ${
-            startPage + idx > totalPages ? 'hidden' : ''
-          }`}>
-          {startPage + idx}
-        </button>
-      ))}
-      <button
-        onClick={() => setStartPage(prev => (prev + 5 > totalPages ? prev : prev + 5))}
-        disabled={startPage + 5 > totalPages}
-        className="page_icon">
-        <MdOutlineArrowForwardIos
-          size={16}
-          color={startPage + 5 > totalPages ? 'var(--gray-primary)' : 'var(--black-hunt)'}
-        />
-      </button>
+      {totalPages > 0 && (
+        <>
+          <button
+            onClick={() => setStartPage(prev => Math.max(prev - 5, 1))}
+            disabled={startPage === 1}
+            className="page_icon">
+            <MdOutlineArrowBackIos
+              size={16}
+              color={startPage + 5 < totalPages ? 'var(--gray-primary)' : 'var(--black-hunt)'}
+            />
+          </button>
+          {Array.from({ length: 5 }, (_, idx) => (
+            <button
+              key={idx}
+              onClick={() => handlerPageChange(startPage + idx)}
+              className={`page_number ${startPage + idx === currentPage ? 'btn_active' : ''} ${
+                startPage + idx > totalPages ? 'hidden' : ''
+              }`}>
+              {startPage + idx}
+            </button>
+          ))}
+          <button
+            onClick={() => setStartPage(prev => (prev + 5 > totalPages ? prev : prev + 5))}
+            disabled={startPage + 5 > totalPages}
+            className="page_icon">
+            <MdOutlineArrowForwardIos
+              size={16}
+              color={startPage + 5 > totalPages ? 'var(--gray-primary)' : 'var(--black-hunt)'}
+            />
+          </button>
+        </>
+      )}
     </PaginationContainer>
   );
 };
