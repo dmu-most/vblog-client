@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // marerial UI
 import Rating from '@mui/material/Rating';
 
 //type
-import { vblogReviewType } from "types/detail/review";
+import { vblogReviewType } from 'types/detail/review';
+
+// icons
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 interface ReviewFormProps {
   data: vblogReviewType;
@@ -12,21 +15,27 @@ interface ReviewFormProps {
 
 //**2023/08/07 ReviewForm
 const ReviewForm: React.FC<ReviewFormProps> = ({ data }) => {
-    return (
-        <ReviewFormContainer>
-            <ReviewTitleContainer>
-                <div className="Grade"> 
-                  <Rating name="read-only" size="small" readOnly value={data.grade} />
-                </div>
-                <div className="ReviewDate"> {data.reviewDate} </div>
-            </ReviewTitleContainer>
-            <ReviewContentContainer>
-                <div className="ReviewContent"> {data.reviewContent} </div>
-            </ReviewContentContainer>
-            <ReviewWriterContainer>
-                <div className="ReviewWriter"> {data.userName}</div>
-            </ReviewWriterContainer>
-        </ReviewFormContainer>
+  return (
+    <ReviewFormContainer>
+      <ReviewTitleContainer>
+        <div className="Grade">
+          <Rating
+            name="read-only"
+            readOnly
+            icon={<AiFillStar style={{ color: '#699BF7' }} size={18} />}
+            emptyIcon={<AiOutlineStar style={{ color: '#699BF7' }} size={18} />}
+            value={data.grade}
+          />
+        </div>
+        <div className="ReviewDate"> {data.reviewDate} </div>
+      </ReviewTitleContainer>
+      <ReviewContentContainer>
+        <div className="ReviewContent"> {data.reviewContent} </div>
+      </ReviewContentContainer>
+      <ReviewWriterContainer>
+        <div className="ReviewWriter"> {data.userName}</div>
+      </ReviewWriterContainer>
+    </ReviewFormContainer>
   );
 };
 
@@ -39,33 +48,33 @@ const ReviewFormContainer = styled.div`
   margin: 15px;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     width: 90%;
-    }
+  }
 `;
 
 const ReviewTitleContainer = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-height: auto;
-gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
+  gap: 20px;
 
-> .Grade{
+  > .Grade {
     // 수정할 부분
     font-size: 14px;
-    }
+  }
 
-> .ReviewDate{
+  > .ReviewDate {
     font-size: 14px;
     color: var(--gray-primary);
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
       font-size: 10px;
-      }
     }
+  }
 `;
 
 const ReviewContentContainer = styled.div`
@@ -78,7 +87,7 @@ const ReviewContentContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileLMax} {
       font-size: 10px;
-      }
+    }
   }
 `;
 
@@ -93,6 +102,6 @@ const ReviewWriterContainer = styled.div`
 
     @media ${props => props.theme.breakpoints.mobileSMax} {
       font-size: 10px;
-      }
+    }
   }
 `;
