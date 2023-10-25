@@ -1,7 +1,5 @@
 import { styled } from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-// import { vblogDetailData } from '../data/dummyData';
 
 //component
 import ContentComponent from '@components/detail/ContentComonent';
@@ -9,6 +7,7 @@ import ReviewComponent from '@components/detail/ReviewComponent';
 import CommandComponent from '@components/detail/CommandComponent';
 
 // api
+import { getContentCheck } from '@api/detail/vblogContent';
 import { postRecentItem } from '@api/detail';
 
 interface DetailPageProps {
@@ -19,14 +18,9 @@ interface DetailPageProps {
 const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
   const [contentData, setContentData] = useState<any>(null); // State to store fetched data
 
-  const fetchContentData = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/board/${contentId}`);
-      setContentData(response.data);
-      // console.log('Fetched data:', response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  const getAllContentCheck = async () => {
+   const res = await getContentCheck(contentId); 
+   setContentData(res);
   };
 
   /** 2023/10/23 - 최근목록 POST api 요청 - by sineTlsl */
@@ -41,7 +35,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
   };
 
   useEffect(() => {
-    fetchContentData();
+    getAllContentCheck();
     fetchRecentPost();
   }, [contentId]);
 

@@ -12,3 +12,8 @@ export interface vblogType {
   link: string;
   hashtags: string[];
 }
+
+/** 2023/08/28 - detail 안에 좋아요/싫어요 요청 - jh */
+export interface VblogLikeRequest {
+  likeInfo: boolean;
+}

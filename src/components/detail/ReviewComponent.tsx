@@ -6,8 +6,6 @@ import { styled } from "styled-components";
 import { FaUserPen } from "react-icons/fa6";
 
 // marerial UI
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import SentimentVeryDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentVeryDissatisfiedOutlined';
 import Rating from '@mui/material/Rating';
 
 //Component
@@ -30,26 +28,15 @@ interface ReviewComponentProps {
 const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Element => {
   const [reviewData, setReviewData] = useState<vblogReviewType[]>([]);
   const [sortBy, setSortBy] = useState<"new" | "grade">("new");
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
   const [ratingValue, setRatingValue] = useState<number | null>(4.5);
   const [inputValue, setInputValue] = useState(""); // review의 들어오는 input 값 정의
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
 
-  //**2023/10/24 리뷰 작성,좋아요,싫어요 시 리렌더링 함수(alert은 modal로 바꿀 예정) - by jh
+  //**2023/10/24 리뷰 작성 시 리렌더링 함수 - by jh
   const triggerRefresh = () => {
     setRefresh(!refresh);
-  };
-
-  //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
-  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsLikeClicked(true);
-  };
-  //**2023/07/29 싫어요 클릭 시 이벤트 함수- by jh
-  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsDislikeClicked(true);
   };
 
   //**2023/07/29 평점 클릭 시 이벤트 함수- by jh
@@ -57,7 +44,7 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     setRatingValue(value);
   };
 
-  //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수 - by jh
+  //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수(alert은 modal로 바꿀 예정) - by jh
   const handleReviewWriteClick = async () => {
     if (!useMemberStore.getState().member) {
       alert("로그인을 진행해주세요");
@@ -137,16 +124,6 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
           </WriteContainer>
           <ButtonContainer>
             <div className="WriteButton" onClick={handleReviewWriteClick} > 작성 </div>
-        <LikeDislikeContainer>
-            <LikeContainer onClick={handleLikeClick}>
-                <SentimentSatisfiedAltIcon fontSize="medium" color="inherit" />
-                <div className="Label"> Like </div>
-            </LikeContainer>
-            <DislikeContainer onClick={handleDislikeClick}>
-                <SentimentVeryDissatisfiedOutlinedIcon fontSize="medium" color="inherit" />
-                <div className="Label"> DisLike </div>
-            </DislikeContainer>
-        </LikeDislikeContainer>
           </ButtonContainer>
           {/* 리뷰 조회 컨테이너 */}
           <AllReviewContainer>
@@ -196,8 +173,8 @@ const RatingContainer = styled.span`
     font-weight: 500;
     font-size: 15px;
 
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      font-size: 15px;
+    @media ${props => props.theme.breakpoints.mobileLMax} {
+      font-size: 12px;
       }
     }
 `;
@@ -206,6 +183,10 @@ const Ratings = styled.span`
   font-size: 50px;
   padding: 1rem;
   color: var(--black-hunt);
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    font-size: 30px;
+    }
 `;
 
 const StarRatingContainer = styled.div`
@@ -330,49 +311,5 @@ const ReviewFormContainer = styled.div`
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     max-height: 200px;
-  }
-`;
-
-// ============================ 리뷰 좋아요 싫어요 ===============================================
-
-const LikeDislikeContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenter};
-  flex-direction: row;  
-  gap: 1rem;
-`;
-
-const LikeContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenter};
-  flex-direction: column;  
-  cursor: pointer;
-  color: var(--icon-red);
-
-    > .Label {
-    color: var(--black-hunt);
-    font-size: 10px;
-    font-weight: 400;
-    padding: 5px;
-  }
-
-    &:hover {
-    transform: scale(1.2); /* 마우스 오버 시 10% 확대 */
-  }
-`;
-
-const DislikeContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenter};
-  flex-direction: column;  
-  cursor: pointer;
-  color: var(--icon-blue);
-
-    > .Label {
-    color: var(--black-hunt);
-    font-size: 10px;
-    font-weight: 400;
-    padding: 5px;
-  }
-
-    &:hover {
-    transform: scale(1.2); /* 마우스 오버 시 10% 확대 */
   }
 `;
