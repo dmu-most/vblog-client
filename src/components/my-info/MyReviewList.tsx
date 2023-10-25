@@ -22,6 +22,7 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
   const [review, setReview] = useState<ReviewResponseType>();
   const [reviewsData, setReviewsData] = useState<ReviewContent[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +41,7 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
     };
 
     fetchData();
-  }, [mode, currentPage]);
+  }, [mode, currentPage, deleteReviewId]);
 
   return (
     <ReviewListContainer>
@@ -48,7 +49,7 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
         {reviewsData.length > 0 ? (
           reviewsData.map(review => (
             <li key={review.reviewId}>
-              <MyReviewItem review={review} />
+              <MyReviewItem review={review} setDeleteReviewId={setDeleteReviewId} />
             </li>
           ))
         ) : (
