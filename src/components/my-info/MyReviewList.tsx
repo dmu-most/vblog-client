@@ -76,7 +76,7 @@ const ReviewListUl = styled.ul`
   padding: 40px 0;
   width: 100%;
   height: calc(100% - 30px);
-  gap: 40px;
+  gap: 10px;
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
     padding: 20px 0;

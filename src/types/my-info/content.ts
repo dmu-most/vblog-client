@@ -48,3 +48,9 @@ export interface ReviewResponseType {
   totalElements: number;
   totalPages: number;
 }
+
+/** 2023/10/25 - 리뷰 PUT 요청 타입 - sineTlsl */
+export interface ReviewPutRequest {
+  reviewContent: string;
+  grade: number;
+}

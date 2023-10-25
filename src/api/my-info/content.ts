@@ -1,6 +1,12 @@
 import instance from '@api/axiosInstance';
 
-import { CommonResponseType, RecentResponseType, ReviewResponseType, ScrapResponseType } from 'types/index';
+import {
+  CommonResponseType,
+  RecentResponseType,
+  ReviewResponseType,
+  ScrapResponseType,
+  ReviewPutRequest,
+} from 'types/index';
 
 // ============================ 스크랩 ============================
 /** 2023/10/23 - 스크랩 폴더 POST 요청 - by sineTlsl */
@@ -101,6 +107,17 @@ export const getMyReviewBlog = async (page: number) => {
 /** 2023/10/23 - 리뷰 DELETE 요청 - by sineTlsl */
 export const deleteMyReview = async (reviewId: number) => {
   const { data } = await instance.delete<CommonResponseType>(`/review/${reviewId}`, {
+    headers: {
+      'Only-Authorization': true,
+    },
+  });
+
+  return data;
+};
+
+/** 2023/10/25 - 리뷰 PUT 요청 - by sineTlsl */
+export const putMyReview = async (reviewId: number, body: ReviewPutRequest) => {
+  const { data } = await instance.put<CommonResponseType>(`/review/${reviewId}`, body, {
     headers: {
       'Only-Authorization': true,
     },
