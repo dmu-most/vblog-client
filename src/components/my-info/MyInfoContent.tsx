@@ -74,8 +74,8 @@ const MyInfoContentContainer = styled.div`
   padding: 20px;
   flex-grow: 1;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    padding: 5px 20px 20px 20px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding: 3px 20px 20px 20px;
   }
 `;
 

@@ -65,7 +65,8 @@ export default MyReviewList;
 const ReviewListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 550px;
+  justify-content: space-between;
+  height: 100%;
 `;
 
 const ReviewListUl = styled.ul`
@@ -73,6 +74,10 @@ const ReviewListUl = styled.ul`
   flex-direction: column;
   padding: 40px 0;
   width: 100%;
+  height: calc(100% - 30px);
   gap: 40px;
-  flex-grow: 1;
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding: 20px 0;
+  }
 `;
