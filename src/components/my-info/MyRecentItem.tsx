@@ -9,10 +9,16 @@ interface RecentItemProps {
 
 /** 2023/10/22 - 리뷰 최근기록 아이템 컴포넌트 - by sineTlsl */
 const MyRecentItem: React.FC<RecentItemProps> = ({ recent }): JSX.Element => {
+  /** 2023/10/25 - 이미지 에러 시 기본 이미지로 대체 - by sineTlsl */
+  const handlerImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+    target.src = '/assets/images/undefined2.png';
+  };
+
   return (
     <RecentItemContainer>
       <ImageWrap>
-        <img src="/assets/images/vlog_ex.png" alt="Vlog Image" />
+        <img src={recent.thumbnails} onError={handlerImgError} alt="Vlog Image" />
       </ImageWrap>
       <TextWrap>
         <p className="desc">{recent.description}</p>
@@ -33,7 +39,7 @@ const RecentItemContainer = styled.article`
 
 // ===================== 이미지 박스 =====================
 const ImageWrap = styled.div`
-  min-width: 290px;
+  min-width: 280px;
   min-height: 150px;
   height: auto;
   max-width: 100%;

@@ -2,7 +2,7 @@ import instance from '@api/axiosInstance';
 
 import {
   CommonResponseType,
-  RecentResponseType,
+  RecentContent,
   ReviewResponseType,
   ScrapResponseType,
   ReviewPutRequest,
@@ -48,11 +48,8 @@ export const getScrapBlog = async () => {
 
 // ============================ 최근목록 ============================
 /** 2023/10/15 - 최근목록 Vlog GET 요청 - by sineTlsl */
-export const getRecentVlog = async (page: number) => {
-  const { data } = await instance.get<RecentResponseType>('/myinfo/recently/vlog', {
-    params: {
-      page,
-    },
+export const getRecentVlog = async () => {
+  const { data } = await instance.get<RecentContent[]>('/myinfo/recently/vlog', {
     headers: {
       'Only-Authorization': true,
     },
@@ -62,11 +59,8 @@ export const getRecentVlog = async (page: number) => {
 };
 
 /** 2023/10/15 - 최근목록 Blog GET 요청 - by sineTlsl */
-export const getRecentBlog = async (page: number) => {
-  const { data } = await instance.get<RecentResponseType>('/myinfo/recently/blog', {
-    params: {
-      page,
-    },
+export const getRecentBlog = async () => {
+  const { data } = await instance.get<RecentContent[]>('/myinfo/recently/blog', {
     headers: {
       'Only-Authorization': true,
     },

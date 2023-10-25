@@ -15,19 +15,16 @@ export interface ScrapResponseType {
 }
 
 // ============================ 최근목록 ============================
-/** 2023/10/22 - 최근목록 조회 Type - sineTlsl */
+/** 2023/10/25 - 최근목록 조회 Type - sineTlsl */
 export interface RecentContent {
+  id: number;
+  writer: string;
   title: string;
   link: string;
   description: string;
-}
-
-/** 2023/10/15 - 최근목록 응답 Type - sineTlsl */
-export interface RecentResponseType {
-  content: RecentContent[];
-  pageNumber: number;
-  pageSize: number;
-  totalElements: number;
+  thumbnails: string;
+  hashtag: string;
+  createdDate: string;
 }
 
 // ============================ 리뷰 ============================
@@ -38,6 +35,7 @@ export interface ReviewContent {
   grade: number;
   category: string;
   boardId: number;
+  title: string;
 }
 
 /** 2023/10/15 - 리뷰 조회 Type - sineTlsl */
