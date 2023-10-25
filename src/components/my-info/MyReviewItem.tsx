@@ -79,7 +79,7 @@ const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, setDeleteReviewId }
       ) : (
         <>
           <div className="review_board">
-            <h2 className="">타이틀입니다아아앙아아ㅏㅇ아</h2>
+            <h2 className="">{review.title}</h2>
           </div>
           <EditReview
             id={review.reviewId}
@@ -106,7 +106,7 @@ const ReviewContainer = styled.div`
   padding: 16px 16px 30px 16px;
   border-radius: 5px;
 
-  > .review_board {
+  .review_board {
     height: 100%;
     width: 100%;
     border-bottom: 1.5px solid var(--gray-primary);
