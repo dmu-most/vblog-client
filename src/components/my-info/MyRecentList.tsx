@@ -28,7 +28,6 @@ const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
         try {
           const res = await selectedApi();
 
-          console.log(res);
           setRecentData(res);
         } catch (err) {
           console.log(err);

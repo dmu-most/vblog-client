@@ -44,7 +44,7 @@ const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, setDeleteReviewId }
       {!isEditReview ? (
         <>
           <div className="review_board">
-            <h2>board의 타이틀 이름 추가할 예정</h2>
+            <h2>{review.title}</h2>
           </div>
           <div className="title_space">
             <div className="review_rating_date">
@@ -62,10 +62,10 @@ const MyReviewItem: React.FC<MyReviewItemProps> = ({ review, setDeleteReviewId }
             </div>
             <div className="icon_wrap">
               <button onClick={() => setIsEditReview(!isEditReview)}>
-                <AiFillEdit size={16} color="#699BF7" />
+                <AiFillEdit size={18} color="#699BF7" />
               </button>
               <button onClick={handlerDeleteReview}>
-                <BsFillTrash3Fill size={16} color="#699BF7" />
+                <BsFillTrash3Fill size={18} color="#699BF7" />
               </button>
             </div>
           </div>
@@ -117,6 +117,10 @@ const ReviewContainer = styled.div`
     font-size: 15px;
     color: var(--black-hunt);
     font-weight: 600;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   > .title_space {

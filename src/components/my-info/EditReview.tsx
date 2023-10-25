@@ -36,11 +36,10 @@ const EditReview: React.FC<EditReviewProps> = ({
       grade: rating,
     };
 
-    const res = await putMyReview(id, body);
+    await putMyReview(id, body);
 
     try {
       setIsEditReview(false);
-      console.log(res);
     } catch (err) {
       console.error(err);
     }
