@@ -6,21 +6,20 @@ import { Link } from 'react-router-dom';
 import { getRecentVlog, getRecentBlog } from '@api/my-info';
 
 // types
-import { MyContentListProps, MyContentMode, RecentResponseType, RecentContent } from 'types/my-info';
+import { MyContentListProps, MyContentMode, RecentContent } from 'types/my-info';
 
 // components
 import MyRecentItem from '@components/my-info/MyRecentItem';
+import UndefinedData from '@components/common/UndefinedData';
 
-const RecentApiMapping: Record<MyContentMode, (page: number) => Promise<RecentResponseType>> = {
+const RecentApiMapping: Record<MyContentMode, () => Promise<RecentContent[]>> = {
   브이로그: getRecentVlog,
   블로그: getRecentBlog,
 };
 
 /** 2023/10/22 - 리뷰 최근기록 리스트 컴포넌트 - by sineTlsl */
 const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
-  const [recent, setRecent] = useState<RecentResponseType>();
   const [recentData, setRecentData] = useState<RecentContent[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,11 +27,9 @@ const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
       if (selectedApi) {
         try {
-          const res = await selectedApi(currentPage);
+          const res = await selectedApi();
 
-          console.log(res);
-          setRecent(res);
-          setRecentData(res.content);
+          setRecentData(res);
         } catch (err) {
           console.log(err);
         }
@@ -42,30 +39,37 @@ const MyRecentList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
     fetchData();
   }, [mode]);
 
-  console.log(recentData);
-
   return (
     <RecentListContainer>
-      {recentData &&
-        recentData.map((recent, idx) => (
-          <li key={idx}>
-            {/* <Link to={`/board/${recent.contentId}`}> */}
-            <MyRecentItem recent={recent} />
-            {/* </Link> */}
-          </li>
-        ))}
+      {recentData.length > 0 ? (
+        <RecentListUl>
+          {recentData.map((recent, idx) => (
+            <li key={idx}>
+              <Link to={`/board/${recent.id}`}>
+                <MyRecentItem recent={recent} />
+              </Link>
+            </li>
+          ))}
+        </RecentListUl>
+      ) : (
+        <UndefinedData text={`기록이 없습니다. 게시글을 보러 갈까요? :)`} />
+      )}
     </RecentListContainer>
   );
 };
 
 export default MyRecentList;
 
-const RecentListContainer = styled.ul`
+const RecentListContainer = styled.div`
+  height: 100%;
+`;
+
+const RecentListUl = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 100%;
-  gap: 4px;
+  gap: 10px;
   padding: 20px 0;
 
   > li {

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 // apis
 import { postScrapFolder, getScrapBlog, getScrapVlog } from '@api/my-info';
 
 // types
 import { MyContentListProps, ScrapResponseType } from 'types/my-info';
-import { useEffect } from 'react';
 
 /** 2023/10/23 - 스크랩 리스트 컴포넌트 - by sineTlsl */
 const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {

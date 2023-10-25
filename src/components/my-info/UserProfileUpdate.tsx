@@ -73,7 +73,6 @@ const ProfileInfoText = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
-  padding-top: 25px;
 
   > .name {
     color: var(--black-hunt);
