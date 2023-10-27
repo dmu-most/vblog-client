@@ -6,7 +6,16 @@ import { VblogLikeRequest } from 'types/detail/vblog';
 // ============================ 브블로그 좋아요/싫어요  ===============================================
 
 /** 2023/10/13 - 브블로그 좋아요/싫어요 - by jh */
-export const PostLikeInfo = async (contentId: number, body: VblogLikeRequest) => {
+// export const PostLikeInfo = async (contentId: number, body: VblogLikeRequest) => {
+//   return await instance.post(`/like/${contentId}`, body, {
+//     headers: {
+//       'Only-Authorization': true,
+//     },
+//   });
+// };
+
+export const PostLikeInfo = async (contentId: number, likeInfo: boolean) => {
+  const body: VblogLikeRequest = { likeInfo };
   return await instance.post(`/like/${contentId}`, body, {
     headers: {
       'Only-Authorization': true,

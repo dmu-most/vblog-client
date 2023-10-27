@@ -34,6 +34,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
 
   return (
     <ContentContainer>
+      {/* 스크랩 부분 컨테이너 */}
       <ScrapContainer onClick={handleScrapClick}>
         <div
           className={`scrap-icon ${scrap ? 'scrap' : ''}`}
@@ -46,6 +47,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
         </div>
       </ScrapContainer>
+      {/* 해당 컨텐츠의 정보를 보여주는 컨텐이너 */}
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
@@ -53,6 +55,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="title"> {data.contentTitle} </div>
         </TitleContainer>
       </ProfileContainer>
+      {/* 태그를 보여주고 좋아요, 싫어요를 입력하는 컨테이너 */}
       <TagContainer>
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
@@ -62,6 +65,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
       </LikeDislikeContainer>
       </TagContainer>
       <Line />
+      {/* 순위, 평점, 좋아요/싫어요를 보여주는 컨테이너 */}
       <GradeContainer>
         <Grade>
           <div className="value"> {data.rank} </div>

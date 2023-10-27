@@ -4,9 +4,12 @@ import React, { useState } from "react";
 // icon
 import { BsHandThumbsUp, BsHandThumbsUpFill, BsHandThumbsDown, BsHandThumbsDownFill } from "react-icons/bs";
 
+//api
+import { PostLikeInfo } from "@api/detail";
+
 
 //**2023/10/24 좋아요/싫어요 클릭 버튼 - by jh
-const LikeDisLikeButton: React.FC = () => {
+const LikeDisLikeButton: React.FC = (): JSX.Element => {
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
   const [refresh, setRefresh] = useState(false);
