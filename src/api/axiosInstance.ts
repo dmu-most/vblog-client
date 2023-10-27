@@ -19,26 +19,27 @@ instance.interceptors.request.use(
 
     // 특별한 헤더를 삭제
     const noAuth = config.headers['No-Auth'];
-    const onlyAuthorization = config.headers['Only-Authorization'];
     const onlyRefresh = config.headers['Only-Refresh'];
+    const bothTokens = config.headers['Both-Tokens'];
 
     delete config.headers['No-Auth'];
-    delete config.headers['Only-Authorization'];
     delete config.headers['Only-Refresh'];
+    delete config.headers['Both-Tokens'];
 
     // 토큰이 필요없을 때
     if (noAuth) {
       return config;
     }
 
-    if (onlyAuthorization && accessToken) {
-      // 액세스 토큰만 필요할 때
+    if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
-    } else if (onlyRefresh && refreshToken) {
-      // 리프레시 토큰만 필요할 때
+    }
+    // 리프레시 토큰만 요청하고 싶을 때
+    if (onlyRefresh && refreshToken) {
       config.headers['Refresh'] = `Bearer ${refreshToken}`;
-    } else if (refreshToken && accessToken) {
-      // 액세스 & 리프레시 토큰 둘 다 필요할 때
+    }
+    // 액세스 & 리프레시 토큰 둘 다 필요할 때
+    if (bothTokens && refreshToken && accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
       config.headers['Refresh'] = `Bearer ${refreshToken}`;
     }

@@ -1,6 +1,6 @@
 import instance from '@api/axiosInstance';
 
-import { vblogListType } from "types/main/list";
+import { vblogListType } from 'types/main/list';
 
 // ============================ vlog banner 조회 ===============================================
 /** 2023/10/13 - vlog banner 조회 - by jh */
@@ -29,11 +29,7 @@ export const getblogbannerCheck = async () => {
 // ============================ 사용자 알고리즘 조회 ===============================================
 /** 2023/10/13 - 사용자 알고리즘 조회 - by jh */
 export const getUserCardCheck = async () => {
-  const { data } = await instance.get<vblogListType[]>('/vlog/userBase', {
-    headers: {
-      'Only-Authorization': true,
-    },
-  });
+  const { data } = await instance.get<vblogListType[]>('/vlog/userBase');
 
   return data;
 };
