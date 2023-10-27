@@ -41,7 +41,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
 
   return (
     <DetailContainer>
-      {contentData ? <ContentComponent data={contentData} /> : <p>Loading...</p>}
+      {contentData ? <ContentComponent data={contentData} contentId={contentId}/> : <p>Loading...</p>}
       <ReviewComponent contentId={contentId} />
       <CommandComponent />
     </DetailContainer>

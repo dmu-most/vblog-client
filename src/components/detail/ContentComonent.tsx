@@ -13,10 +13,11 @@ import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-ic
 
 interface DetailProps {
   data: vblogType;
+  contentId: number;
 }
 
 //**2023/07/29 CommandComponent- by jh
-const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
   const [scrap, setScrap] = useState(false);
   // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +62,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
       <LikeDislikeContainer>
-        <LikeDisLikeButton />
+        <LikeDisLikeButton contentId={contentId}/>
       </LikeDislikeContainer>
       </TagContainer>
       <Line />

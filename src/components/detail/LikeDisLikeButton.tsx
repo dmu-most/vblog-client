@@ -7,9 +7,12 @@ import { BsHandThumbsUp, BsHandThumbsUpFill, BsHandThumbsDown, BsHandThumbsDownF
 //api
 import { PostLikeInfo } from "@api/detail";
 
+interface LikeDisLikeButtonProps {
+  contentId: number;
+}
 
 //**2023/10/24 좋아요/싫어요 클릭 버튼 - by jh
-const LikeDisLikeButton: React.FC = (): JSX.Element => {
+const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX.Element => {
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -20,15 +23,22 @@ const LikeDisLikeButton: React.FC = (): JSX.Element => {
   };
 
   //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
-  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsLikeClicked(!isLikeClicked); 
-    setIsDislikeClicked(false); // 좋아요 클릭 시 싫어요는 false상태로 돌아감
+  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
+    setIsLikeClicked(!isLikeClicked);
+    // 좋아요 클릭 시 싫어요는 false상태로 돌아감
+    setIsDislikeClicked(false);
+    // 좋아요 api 서버 연결
+    await PostLikeInfo(contentId, true);
   };
 
   //**2023/07/29 싫어요 클릭 시 이벤트 함수- by jh
-  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
+  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
     setIsDislikeClicked(!isDislikeClicked); 
-    setIsLikeClicked(false); // 싫어요 클릭 시 좋아요는 false상태로 돌아감
+    // 싫어요 클릭 시 좋아요는 false상태로 돌아감
+    setIsLikeClicked(false);
+    // 싫어요 api 서버 연결
+    await PostLikeInfo(contentId, false);
+
   };
 
   return (
