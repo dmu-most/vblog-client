@@ -10,7 +10,7 @@ import { useContentModeStore } from '@store/useConentModeStore';
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 
 //api
-import { getUserCardCheck } from '@api/main/vblogList';
+import { getUservlogCardCheck, getUserblogCardCheck } from '@api/main/vblogList';
 
 // Component
 import PostCard from '@components/common/PostCard';
@@ -26,19 +26,44 @@ const UserCardComponent: React.FC = (): JSX.Element => {
   // 데이터 셋업
   const [vblogData, setVblogData] = useState<vblogListType[]>([]);
 
-  const fetchData = async () => {
-  const res = await getUserCardCheck();
-  console.log('value',res);
-  try{
-    setVblogData(res);
-  }catch (error) {
-    console.error("error fetching fetcgdata", error);
+//   const fetchData = async () => {
+//   const res = await getUservlogCardCheck();
+//   console.log('value',res);
+//   try{
+//     setVblogData(res);
+//   }catch (error) {
+//     console.error("error fetching fetcgdata", error);
+//   }
+// }
+
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+
+  //**2023/07/29 배너 api 적용 함수 - by jh
+  const getAllUserCardCheck = async () => {
+  try {
+    let bannerApi;
+    if (mode === 'V') {
+      bannerApi = getUservlogCardCheck; // Use the vlog banner API
+    } else if (mode === 'B') {
+      bannerApi = getUserblogCardCheck; // Use the blog banner API
+    }
+
+    if (bannerApi) {
+      const res = await bannerApi();
+      setVblogData(res);
+    } else {
+      console.error('Invalid mode:', mode);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
-}
+};
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    getAllUserCardCheck();
+  }, [mode]);
 
   //**2023/10/17 반응형의 의해 카드 갯수를 나타내는 함수 - by jh
   const responsive = {

@@ -26,10 +26,18 @@ export const getblogbannerCheck = async () => {
   return data;
 };
 
-// ============================ 사용자 알고리즘 조회 ===============================================
+// ============================ vlog 사용자 알고리즘 조회 ===============================================
 /** 2023/10/13 - 사용자 알고리즘 조회 - by jh */
-export const getUserCardCheck = async () => {
+export const getUservlogCardCheck = async () => {
   const { data } = await instance.get<vblogListType[]>('/vlog/userBase');
+
+  return data;
+};
+
+// ============================ blog 사용자 알고리즘 조회 ===============================================
+/** 2023/10/13 - 사용자 알고리즘 조회 - by jh */
+export const getUserblogCardCheck = async () => {
+  const { data } = await instance.get<vblogListType[]>('/blog/userBase');
 
   return data;
 };
