@@ -19,6 +19,7 @@ const MainPage: React.FC = (): JSX.Element => {
   const { mode } = useContentModeStore();
   const { member } = useMemberStore();
 
+  //**2023/07/29 배너 api 적용 함수 - by jh
   const getAllBannerCheck = async () => {
   try {
     let bannerApi;
@@ -46,12 +47,12 @@ const MainPage: React.FC = (): JSX.Element => {
   return (
     <MainPageContainer>
       {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
-      {/* {member ? (
+      {member ? (
         <>
           <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />
           <UserCardComponent />
         </>
-      ) : null} */}
+      ) : null}
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent endpoint="reviewlist" />
       <IntroComponent intro="브블Pick이 가장 많은 콘텐츠 ❤️" />
