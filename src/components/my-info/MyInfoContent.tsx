@@ -85,6 +85,7 @@ const ContentTabWrap = styled.ul`
   width: 100%;
   border-bottom: 1px solid var(--gray-primary);
   gap: 20px;
+  padding: 0;
 `;
 
 // ===================== 콘텐츠 Vlog or Blog 탭 =====================

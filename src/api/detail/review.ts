@@ -30,9 +30,5 @@ export const getReviewGradeCheck = async (contentId: number) => {
 // ============================ 리뷰작성 ===============================================
 /** 2023/10/13 - review 작성 - by jh */
 export const PostReview = async (contentId: number, body: ReviewFormRequest) => {
-  return await instance.post(`/review/${contentId}`, body, {
-    headers: {
-      'Only-Authorization': true,
-    },
-  });
+  return await instance.post(`/review/${contentId}`, body);
 };

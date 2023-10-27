@@ -73,12 +73,12 @@ const ReviewListContainer = styled.div`
 const ReviewListUl = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: 40px 0;
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
+  padding: 20px 0;
   gap: 10px;
 
-  @media ${props => props.theme.breakpoints.mobileLMax} {
-    padding: 20px 0;
+  > li {
+    width: 100%;
   }
 `;
