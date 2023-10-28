@@ -16,7 +16,13 @@ interface DetailPageProps {
 
 /** 2023/07/29 - deatailpage - by jh*/
 const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
-  const [contentData, setContentData] = useState<any>(null); // State to store fetched data
+  const [contentData, setContentData] = useState<any>(null);
+  const [refresh, setRefresh] = useState(false);
+
+  //**2023/10/24 좋아요/싫어요 클릭 시 리렌더링 함수 - by jh
+  const triggerRefresh = () => {
+    setRefresh(!refresh);
+  };
 
   const getAllContentCheck = async () => {
    const res = await getContentCheck(contentId); 

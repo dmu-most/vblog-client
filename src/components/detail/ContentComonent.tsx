@@ -22,6 +22,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
   // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
     window.open(data.link, "_blank");
@@ -62,7 +63,9 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
       <LikeDislikeContainer>
-        <LikeDisLikeButton contentId={contentId}/>
+        <LikeDisLikeButton
+           contentId={contentId}
+        />
       </LikeDislikeContainer>
       </TagContainer>
       <Line />
