@@ -13,13 +13,15 @@ import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-ic
 
 interface DetailProps {
   data: vblogType;
+  contentId: number;
 }
 
 //**2023/07/29 CommandComponent- by jh
-const ContentComponent: React.FC<DetailProps> = ({ data }) => {
+const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
   const [scrap, setScrap] = useState(false);
   // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
@@ -34,6 +36,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
 
   return (
     <ContentContainer>
+      {/* 스크랩 부분 컨테이너 */}
       <ScrapContainer onClick={handleScrapClick}>
         <div
           className={`scrap-icon ${scrap ? 'scrap' : ''}`}
@@ -46,6 +49,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
         </div>
       </ScrapContainer>
+      {/* 해당 컨텐츠의 정보를 보여주는 컨텐이너 */}
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
@@ -53,15 +57,19 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="title"> {data.contentTitle} </div>
         </TitleContainer>
       </ProfileContainer>
+      {/* 태그를 보여주고 좋아요, 싫어요를 입력하는 컨테이너 */}
       <TagContainer>
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
       <LikeDislikeContainer>
-        <LikeDisLikeButton />
+        <LikeDisLikeButton
+           contentId={contentId}
+        />
       </LikeDislikeContainer>
       </TagContainer>
       <Line />
+      {/* 순위, 평점, 좋아요/싫어요를 보여주는 컨테이너 */}
       <GradeContainer>
         <Grade>
           <div className="value"> {data.rank} </div>
