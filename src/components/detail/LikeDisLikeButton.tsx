@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -12,6 +12,7 @@ import { PostLikeInfo } from "@api/detail";
 
 //store
 import { useMemberStore } from '@store/useMemberStore';
+import { useLikeDislikeStore } from "@store/useLikeDislikeStore";
 
 interface LikeDisLikeButtonProps {
   contentId: number;
@@ -19,27 +20,24 @@ interface LikeDisLikeButtonProps {
 
 //**2023/10/24 좋아요/싫어요 클릭 버튼 - by jh
 const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX.Element => {
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
+  const { isLiked, isDisliked, localSaveLike, localSaveDislike } = useLikeDislikeStore();
   const navigate = useNavigate();
 
   //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
-const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
-  // 로그인이 돼야만 좋아요 클릭 가능
-  if (!useMemberStore.getState().member) {
-    alert('로그인을 진행해주세요');
-    navigate('/login');
-  } else {
-    // 좋아요 -> 좋아요 클릭 상태로 변경
-    setIsLikeClicked(!isLikeClicked);
-    // 싫아요를 클릭하고 좋아요를 클릭하면 싫어요는 false
-    setIsDislikeClicked(false);
-    // 좋아요 api 서버 연결
-    await PostLikeInfo(contentId, true);
-    // 좋아요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
-    window.location.reload();
-  }
-};
+  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
+    // 로그인이 돼야만 좋아요 클릭 가능
+    if (!useMemberStore.getState().member) {
+      alert('로그인을 진행해주세요');
+      navigate('/login');
+    } else {
+      // 로컬 스토리지로 저장 -> 이때 싫어요는 false 상태로 저장
+      localSaveLike();
+      // 좋아요 api 서버 연결
+      await PostLikeInfo(contentId, true);
+      // 좋아요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
+      window.location.reload();
+    }
+  };
 
 
   //**2023/07/29 싫어요 클릭 시 이벤트 함수- by jh
@@ -49,10 +47,8 @@ const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
     alert('로그인을 진행해주세요');
     navigate('/login');
   } else {
-    // 싫어요 -> 싫어요 클릭 상태로 변경
-    setIsDislikeClicked(!isDislikeClicked); 
-    // 좋아요 클릭하고 싫어요를 클릭하면 좋아요는 false
-    setIsLikeClicked(false);
+    // 로컬 스토리지로 저장 -> 이때 좋아요는 false 상태로 저장
+    localSaveDislike();
     // 싫어요 api 서버 연결
     await PostLikeInfo(contentId, false);
     // 싫어요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
@@ -63,12 +59,12 @@ const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
   return (
     <AllLikeContainer>
       <LikeContainer onClick={handleLikeClick}>
-        {isLikeClicked ? <BsHandThumbsUpFill fontSize="medium" color="inherit" /> 
+        {isLiked ? <BsHandThumbsUpFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsUp fontSize="medium" color="inherit" />}
       </LikeContainer>
       <label> ㅣ </label>
       <DislikeContainer onClick={handleDislikeClick}>
-        {isDislikeClicked ? <BsHandThumbsDownFill fontSize="medium" color="inherit" /> 
+        {isDisliked ? <BsHandThumbsDownFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsDown fontSize="medium" color="inherit" />}
       </DislikeContainer>
     </AllLikeContainer>
