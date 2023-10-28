@@ -1,7 +1,5 @@
 import create from 'zustand';
 
-// ... (other imports and interfaces)
-
 interface LikeDislikeStore {
   isLiked: boolean;
   isDisliked: boolean;
@@ -9,6 +7,7 @@ interface LikeDislikeStore {
   localSaveDislike: () => void;
 }
 
+/** 2023/08/18 - 좋아요/싫어요 로컬 저장소(수정 필요) - by jh */
 const useLikeDislikeStore = create<LikeDislikeStore>((set) => {
   const initialIsLiked = localStorage.getItem('isLiked') === 'true';
   const initialIsDisliked = localStorage.getItem('isDisliked') === 'true';
