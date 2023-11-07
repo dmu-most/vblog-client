@@ -81,5 +81,6 @@ const RecentListUl = styled.ul`
   }
   @media ${props => props.theme.breakpoints.mobileLMax} {
     grid-template-columns: repeat(1, 1fr);
+    gap: 0;
   }
 `;

@@ -131,13 +131,14 @@ const VblogChangeBtn = styled.button<{ mode: ContentMode }>`
   letter-spacing: -0.16px;
   font-size: 20px;
   font-weight: 700;
+  padding: 0;
   cursor: pointer;
   ${({ theme }) => theme.common.flexCenterRow};
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 27px;
-    height: 27px;
-    font-size: 15px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 `;
 

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // stores
@@ -29,12 +28,6 @@ const MyInfoDropDown: React.FC<DropDownProps> = ({ isOpen, setIsOpen }): JSX.Ele
       <UlMenu $isOpen={isOpen}>
         <li>
           <Link to="myinfo">마이페이지</Link>
-        </li>
-        <li>
-          <Link to="myinfo">회원정보</Link>
-        </li>
-        <li>
-          <Link to="myinfo">설정</Link>
         </li>
         <li>
           <button onClick={handlerLogout}>로그아웃</button>

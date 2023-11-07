@@ -41,12 +41,23 @@ const RecentItemContainer = styled.article`
 const ImageWrap = styled.div`
   min-width: 280px;
   min-height: 150px;
-  height: auto;
+  height: 150px;
   max-width: 100%;
 
   > img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 950px) {
+    height: 200px;
+  }
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    height: 250px;
+  }
+  @media ${props => props.theme.breakpoints.mobileSMax} {
+    height: 200px;
   }
 `;
 
