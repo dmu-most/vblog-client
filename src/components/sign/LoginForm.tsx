@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import { postLogin } from '@api/auth/login';
 
 // types
@@ -19,6 +20,10 @@ import { isValidId, isValidPassword } from '@utils/formValidation';
 
 // icons
 import { AiOutlineCheckCircle } from 'react-icons/ai';
+
+interface ErrorResponse {
+  message: string;
+}
 
 /** 2023/07/25 - 로그인 폼 컴포넌트 - by sineTlsl */
 const LoginForm: React.FC = (): JSX.Element => {
@@ -71,22 +76,18 @@ const LoginForm: React.FC = (): JSX.Element => {
         clearRememberedId();
       }
       navigate('/');
-    } catch (err: any) {
+    } catch (err) {
+      const axiosError = err as AxiosError<ErrorResponse>;
       // 아이디와 비밀번호가 일치하지 않을 때, 모달창 추가
-      if (err.response) {
+      if (axiosError.response) {
         console.log('로그인 실패');
 
-        const { data } = err.response;
+        const { data } = axiosError.response;
 
         setModalErrorText(data.message.split('. '));
         setIsModalOpen(true);
       }
     }
-  };
-
-  /** 2023/07/25 - submit 이벤트 발생을 막는 함수 - by sineTlsl */
-  const handlerPreventFormSubmit = (e: React.MouseEvent) => {
-    e.preventDefault();
   };
 
   /** 2023/07/25 - 회원가입 페이지 이동 - by sineTlsl */
@@ -117,9 +118,6 @@ const LoginForm: React.FC = (): JSX.Element => {
           <button type="button" className="id_remember" onClick={() => setIsRememberId(!isRemberId)}>
             <AiOutlineCheckCircle size="25" color={!isRemberId ? 'var(--gray-primary)' : 'var(--gray-dark)'} />
             아이디 저장
-          </button>
-          <button type="button" className="find_password" onClick={handlerPreventFormSubmit}>
-            비밀번호 찾기
           </button>
         </LoginMore>
         <ButtonWrap>
