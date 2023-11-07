@@ -24,8 +24,8 @@ const BannerTag : React.FC = (): JSX.Element => {
             <TextTagContainer height="30px" bgcolor="var(--tag-pink)" borderradius="20px">
               <span className="Label"> #세계여행 </span>
             </TextTagContainer>
-            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowLeft width="5px" height= "5px" />
+            <ArrowTagContainer width="30px" height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
+              <AiOutlineArrowLeft width="auto" height= "auto" />
             </ArrowTagContainer>
             <TextTagContainer height="30px" bgcolor="var(--tag-yellow)" borderradius="20px">
               <span className="Label"> #밈고리즘 </span>
