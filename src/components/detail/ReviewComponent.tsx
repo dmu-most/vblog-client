@@ -11,6 +11,7 @@ import Rating from '@mui/material/Rating';
 
 //Component
 import ReviewForm from '@components/common/ReviewForm';
+import AlertModal from '@components/common/AlertModal';
 
 //api
 import { getReviewNewCheck, getReviewGradeCheck, PostReview } from '@api/detail/review';
@@ -33,6 +34,17 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
   const [inputValue, setInputValue] = useState(''); // review의 들어오는 input 값 정의
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
+
+  //**2023/07/29 모달 종료 후 로그인 화면으로 이동- by jh
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    if (modalErrorText.includes('로그인을 진행해주세요.')) {
+      navigate('/login');
+    }
+  };
 
   //**2023/10/24 리뷰 작성 시 리렌더링 함수 - by jh
   const triggerRefresh = () => {
@@ -44,16 +56,18 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
     setRatingValue(value);
   };
 
-  //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수(alert은 modal로 바꿀 예정) - by jh
+  //**2023/10/24 리뷰 작성 클릭 시 이벤트 함수 - by jh
   const handleReviewWriteClick = async () => {
     if (!useMemberStore.getState().member) {
-      alert('로그인을 진행해주세요');
-      navigate('/login');
+      setModalErrorText(['로그인을 진행해주세요.']);
+      setIsModalOpen(true);
     } else if (inputValue.trim() === '') {
-      alert('리뷰를 작성해주세요.');
+      setModalErrorText(['리뷰를 작성해주세요.']);
+      setIsModalOpen(true);
     } else {
       if (ratingValue === null) {
-        alert('평점을 선택해주세요.');
+      setModalErrorText(['평점을 선택해주세요.']);
+      setIsModalOpen(true);
       } else {
         try {
           const reviewForm = {
@@ -69,9 +83,11 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
             triggerRefresh();
             setInputValue('');
             setRatingValue(4.5);
-            alert('작성이 완료되었습니다.');
+            setModalErrorText(['작성이 완료되었습니다.']);
+            setIsModalOpen(true);
           } else {
-            alert('작성 중에 오류가 발생했습니다.');
+              setModalErrorText(['다시 작성해주세요.']);
+              setIsModalOpen(true);
           }
         } catch (error) {
           console.error('Error posting the review:', error);
@@ -157,6 +173,13 @@ const ReviewComponent: React.FC<ReviewComponentProps> = ({ contentId }): JSX.Ele
         <p>no review</p>
       )}
       <ReviewFormContainer></ReviewFormContainer>
+      <div>
+        <AlertModal isOpen={isModalOpen} onClose={handleModalClose}>
+          {modalErrorText.map((text, idx) => (
+            <p key={idx}>{text}</p>
+         ))}
+        </AlertModal>
+      </div>
     </ReviewContainer>
   );
 };

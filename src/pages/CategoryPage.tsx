@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
-import React, { useEffect, useState } from 'react';
-// import { vblogData } from '../data/dummyData';
+import React, { useState } from 'react';
 
 // Component
 import CategoryDropdown from '@components/Category/CategoryDropdown';

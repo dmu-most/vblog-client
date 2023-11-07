@@ -12,6 +12,7 @@ import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
 import CardComponent from '@components/main/CardComponent';
 import UserCardComponent from '@components/main/UserCardComponent';
+import { bannerTags } from 'data/dummyData';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {

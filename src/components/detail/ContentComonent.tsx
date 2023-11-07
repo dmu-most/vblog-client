@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 // Type
 import { vblogType } from "types/detail/vblog";
 
@@ -7,9 +9,13 @@ import { vblogType } from "types/detail/vblog";
 import Hashtag from "@components/common/Hashtag";
 import LikeDisLikeButton from "./LikeDisLikeButton";
 import ScrapModal from "./modal/ScrapModal";
+import AlertModal from '@components/common/AlertModal';
 
 // icon
 import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
+
+//store
+import { useMemberStore } from '@store/useMemberStore';
 
 interface DetailProps {
   data: vblogType;
@@ -20,7 +26,18 @@ interface DetailProps {
 const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
   const [scrap, setScrap] = useState(false);
   // modal
+  const [isScrapModalOpen, setisScrapModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  //**2023/07/29 모달 종료 후 로그인 화면으로 이동- by jh
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    if (modalErrorText.includes('로그인을 진행해주세요.')) {
+      navigate('/login');
+    }
+  };
 
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
@@ -29,8 +46,13 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
   };
   /** 2023/09/06 - 스크랩 클릭 시 icon 변경 - by jh */
   const handleScrapClick = () => {
-    setIsModalOpen(true);
-    setScrap(!scrap);
+    if (!useMemberStore.getState().member) {
+      setModalErrorText(['로그인을 진행해주세요.']);
+      setIsModalOpen(true);
+    }else{
+      setisScrapModalOpen(true);
+      setScrap(!scrap);
+    }
   };
   
 
@@ -49,7 +71,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
           {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
         </div>
       </ScrapContainer>
-      {/* 해당 컨텐츠의 정보를 보여주는 컨텐이너 */}
+      {/* 해당 컨텐츠의 정보를 보여주는 컨테이너 */}
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
@@ -87,7 +109,14 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
       <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
         <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
-      <ScrapModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <div>
+        <AlertModal isOpen={isModalOpen} onClose={handleModalClose}>
+          {modalErrorText.map((text, idx) => (
+            <p key={idx}>{text}</p>
+         ))}
+        </AlertModal>
+      </div>
+      <ScrapModal isOpen={isScrapModalOpen} onClose={() => setisScrapModalOpen(false)} />
     </ContentContainer>
   );
 };
@@ -242,7 +271,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     height: 600px;
     background-image: ${({ imgurl }) =>
       imgurl ? `url(${imgurl})` : `url('/assets/images/noimage.png')`};
-    background-size: cover; // This will ensure the background image covers the entire container
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center center;
     position: relative;

@@ -7,8 +7,12 @@ import { BannerType } from 'types/main/list';
 // component
 import BannerTag from '@components/common/BannerTag';
 
+//data
+import { bannerTags } from '../../data/dummyData';
+
 interface BannerProps {
   data: BannerType;
+
 }
 
 //**2023/07/07 BannerComponent - by jh
@@ -18,6 +22,11 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
   /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
   const handlePostClick = () => {
     navigate(`/board/${data.contentId}`);
+  };
+
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handleIntroNavClick = () => {
+    navigate('/intro');
   };
 
   return (
@@ -34,7 +43,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
               <BannerTag />
             </div>
           </TagBannerForm>
-          <CallBannerForm>
+          <CallBannerForm onClick={handleIntroNavClick}>
             <div className="Label"> 브블이 뭔가요? 🙋‍♀️ </div>
             <ImgContainer>
               <img src="/assets/images/community.png" />
@@ -61,10 +70,6 @@ const BannerContainer = styled.div`
   @media ${props => props.theme.breakpoints.mobileSMax} {
     height: 250px;
   }
-
-  /* @media ${props => props.theme.breakpoints.tablet} {
-      height: 350px;
-      } */
 `;
 
 const RowBannerContainer = styled.div`

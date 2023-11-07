@@ -9,6 +9,7 @@ import LoginPage from '@pages/LoginPage';
 import SignUpPage from '@pages/SignUpPage';
 import OauthCallbackPage from '@pages/OauthCallbackPage';
 import MyPage from '@pages/MyPage';
+import IntroPage from '@pages/IntroPage';
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path="/oauth/callback" element={<OauthCallbackPage />} />
         <Route path="/myinfo" element={<MyPage />} />
         <Route path="/category/:category" element={<CategoryPage />} />
+        <Route path="/intro" element={<IntroPage />} />
       </Routes>
     </Layout>
   );
