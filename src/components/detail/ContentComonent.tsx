@@ -71,7 +71,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
           {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
         </div>
       </ScrapContainer>
-      {/* 해당 컨텐츠의 정보를 보여주는 컨텐이너 */}
+      {/* 해당 컨텐츠의 정보를 보여주는 컨테이너 */}
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>

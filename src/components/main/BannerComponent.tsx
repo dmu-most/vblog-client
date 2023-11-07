@@ -7,8 +7,12 @@ import { BannerType } from 'types/main/list';
 // component
 import BannerTag from '@components/common/BannerTag';
 
+//data
+import { bannerTags } from '../../data/dummyData';
+
 interface BannerProps {
   data: BannerType;
+
 }
 
 //**2023/07/07 BannerComponent - by jh

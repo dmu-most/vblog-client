@@ -4,7 +4,6 @@ import styled, {keyframes} from 'styled-components';
 // icons
 import { AiOutlineArrowDown, AiOutlineArrowLeft, AiOutlineArrowRight,
      AiOutlineArrowUp, AiFillHeart, AiOutlineHeart,  } from "react-icons/ai";
-import { BsArrowUpShort } from "react-icons/bs";
 
 
 interface ButtonProps{
@@ -18,6 +17,10 @@ interface ButtonProps{
 	svgwidth? :string; 
 	svgheight? :string;
 }
+
+// interface BannertagProps {
+//   bannertag: string;
+// }
 
 const BannerTag : React.FC = (): JSX.Element => {   
 	return(
