@@ -4,8 +4,8 @@ import instance from '@api/axiosInstance';
 import { VblogLikeRequest } from 'types/detail/vblog';
 
 // ============================ 브블로그 좋아요/싫어요  ===============================================
+export const PostLikeInfo = async (contentId: number, likeInfo: boolean) => {
+  const body: VblogLikeRequest = { likeInfo };
 
-/** 2023/10/13 - 브블로그 좋아요/싫어요 - by jh */
-export const PostLikeInfo = async (contentId: number, body: VblogLikeRequest) => {
   return await instance.post(`/like/${contentId}`, body);
 };

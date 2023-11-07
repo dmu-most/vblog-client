@@ -1,44 +1,91 @@
 import { styled } from "styled-components";
-import React, { useState } from "react";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// components
+import AlertModal from '@components/common/AlertModal';
 
 // icon
 import { BsHandThumbsUp, BsHandThumbsUpFill, BsHandThumbsDown, BsHandThumbsDownFill } from "react-icons/bs";
 
+//api
+import { PostLikeInfo } from "@api/detail";
+
+//store
+import { useMemberStore } from '@store/useMemberStore';
+import { useLikeDislikeStore } from "@store/useLikeDislikeStore";
+
+interface LikeDisLikeButtonProps {
+  contentId: number;
+}
 
 //**2023/10/24 좋아요/싫어요 클릭 버튼 - by jh
-const LikeDisLikeButton: React.FC = () => {
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX.Element => {
+  const { isLiked, isDisliked, localSaveLike, localSaveDislike } = useLikeDislikeStore();
+  const navigate = useNavigate();
 
-  //**2023/10/24 좋아요/싫어요 클릭 시 리렌더링 함수 - by jh
-  const triggerRefresh = () => {
-    setRefresh(!refresh);
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
+
+  //**2023/07/29 모달 종료 후 로그인 화면으로 이동- by jh
+  const handleToLogin = () => {
+    setIsModalOpen(false);
+    // Navigate to the login page after the modal is closed
+    navigate('/login');
   };
 
   //**2023/07/29 좋아요 클릭 시 이벤트 함수- by jh
-  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsLikeClicked(!isLikeClicked); 
-    setIsDislikeClicked(false); // 좋아요 클릭 시 싫어요는 false상태로 돌아감
+  const handleLikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
+    // 로그인이 돼야만 좋아요 클릭 가능
+    if (!useMemberStore.getState().member) {
+      setModalErrorText(['로그인을 진행해주세요.']);
+      setIsModalOpen(true);
+    } else {
+      // 로컬 스토리지로 저장 -> 이때 싫어요는 false 상태로 저장
+      localSaveLike();
+      // 좋아요 api 서버 연결
+      await PostLikeInfo(contentId, true);
+      // 좋아요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
+      window.location.reload();
+    }
   };
 
+
   //**2023/07/29 싫어요 클릭 시 이벤트 함수- by jh
-  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsDislikeClicked(!isDislikeClicked); 
-    setIsLikeClicked(false); // 싫어요 클릭 시 좋아요는 false상태로 돌아감
+  const handleDislikeClick: React.MouseEventHandler<HTMLDivElement> = async () => {
+  // 로그인이 돼야만 싫어요 클릭 가능
+    if (!useMemberStore.getState().member) {
+      setModalErrorText(['로그인을 진행해주세요.']);
+      setIsModalOpen(true);
+    } else {
+      // 로컬 스토리지로 저장 -> 이때 좋아요는 false 상태로 저장
+      localSaveDislike();
+      // 싫어요 api 서버 연결
+      await PostLikeInfo(contentId, false);
+      // 싫어요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
+      window.location.reload();
+    }
   };
 
   return (
     <AllLikeContainer>
       <LikeContainer onClick={handleLikeClick}>
-        {isLikeClicked ? <BsHandThumbsUpFill fontSize="medium" color="inherit" /> 
+        {isLiked ? <BsHandThumbsUpFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsUp fontSize="medium" color="inherit" />}
       </LikeContainer>
       <label> ㅣ </label>
       <DislikeContainer onClick={handleDislikeClick}>
-        {isDislikeClicked ? <BsHandThumbsDownFill fontSize="medium" color="inherit" /> 
+        {isDisliked ? <BsHandThumbsDownFill fontSize="medium" color="inherit" /> 
           : <BsHandThumbsDown fontSize="medium" color="inherit" />}
       </DislikeContainer>
+      <div>
+        <AlertModal isOpen={isModalOpen} onClose={handleToLogin}>
+          {modalErrorText.map((text, idx) => (
+            <p key={idx}>{text}</p>
+          ))}
+        </AlertModal>
+      </div>
     </AllLikeContainer>
   );
 };
