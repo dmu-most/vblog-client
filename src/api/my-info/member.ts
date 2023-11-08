@@ -1,7 +1,7 @@
 import instance from '@api/axiosInstance';
 
 // type
-import { MyInfoType, MyInfoPatchRequest } from 'types/my-info';
+import { MyInfoType, MyInfoPatchRequest } from 'types/index';
 
 // ============================ 회원정보 ============================
 /** 2023/09/13 - 회원정보 GET 요청 - by sineTlsl */

@@ -147,7 +147,7 @@ const LoginFormContainer = styled.div`
   max-width: 450px;
   width: 100%;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     padding: 0 2rem;
     margin: 0.2rem;
   }
@@ -176,7 +176,7 @@ const FormWrap = styled.form`
     border: 1px solid var(--gray-dark);
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .form_id,
     .form_password {
       font-size: 15px;
@@ -203,7 +203,7 @@ const LoginMore = styled.div`
     font-size: 15px;
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .id_remember,
     > .find_password {
       font-size: 14px;
@@ -249,7 +249,7 @@ const ButtonWrap = styled.div`
     }
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .common_btn {
       font-size: 15px;
     }
