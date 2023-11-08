@@ -40,7 +40,7 @@ const LoginHeaderContainer = styled.div`
     height: auto;
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     padding: 0 2rem;
     border-bottom: none;
 
