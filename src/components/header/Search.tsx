@@ -89,7 +89,7 @@ const Search: React.FC = (): JSX.Element => {
       <SearchButton onClick={handlerSearchClick}>
         <StyledSearch color="var(--gray-dark)" />
       </SearchButton>
-      <FullWidthSearchContainer isOpen={isOpen}>
+      <FullWidthSearchContainer $isOpen={isOpen}>
         <SearchHeader>
           <div className="logo_wrap">
             <button onClick={handlerLogoClick}>
@@ -103,7 +103,9 @@ const Search: React.FC = (): JSX.Element => {
         <SearchContent>
           <div className="desc_wrap">
             <h2>Search For Tag</h2>
-            <p>{`해쉬태그와 관련된 게시물들이 검색됩니다 :(`}</p>
+            <p>
+              {mode === 'V' ? '해쉬태그와 관련된 브이로그가 검색됩니다 :(' : '해쉬태그와 관련된 블로그가 검색됩니다 :('}
+            </p>
           </div>
           <SearchInputWrap>
             <SearchInput type="text" placeholder="# 세계여행" value={keyword} onChange={handlerKeywordChange} />
@@ -154,8 +156,7 @@ const StyledSearch = styled(HiOutlineSearch)`
   }
 `;
 
-const FullWidthSearchContainer = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+const FullWidthSearchContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -164,9 +165,16 @@ const FullWidthSearchContainer = styled.div<{ isOpen: boolean }>`
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(12px);
   z-index: 1000;
+  transform: ${({ $isOpen }) => ($isOpen ? 'translateY(0)' : 'translateY(-100vh)')};
+  transition:
+    transform 0.5s ease-in-out,
+    visibility 0s,
+    opacity 0.3s linear;
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
 
   @media ${props => props.theme.breakpoints.mobileLMax} {
-    margin: 0;
+    background: rgba(255, 255, 255, 0.9);
     padding: 0 0 20px 0;
   }
 `;
