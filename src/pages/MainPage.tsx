@@ -7,6 +7,9 @@ import { getvlogbannerCheck, getblogbannerCheck } from '@api/main/vblogList';
 import { useContentModeStore } from '@store/useConentModeStore';
 import { useMemberStore } from '@store/useMemberStore';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 // component
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
@@ -47,7 +50,7 @@ const MainPage: React.FC = (): JSX.Element => {
 
   return (
     <MainPageContainer>
-      {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
+      {bannerData ? <BannerComponent data={bannerData} /> : <PuffLoader loading={true} size={40} />}
       {member ? (
         <>
           <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />
