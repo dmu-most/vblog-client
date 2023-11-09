@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, {keyframes} from 'styled-components';
 
 // icons
 import { AiOutlineArrowDown, AiOutlineArrowLeft, AiOutlineArrowRight,
      AiOutlineArrowUp, AiFillHeart, AiOutlineHeart,  } from "react-icons/ai";
+
+import { getvlogbannerTagCheck } from '@api/main';
+import { BannerTags } from 'types/main/list';
 
 
 interface ButtonProps{
@@ -18,59 +21,81 @@ interface ButtonProps{
 	svgheight? :string;
 }
 
-// interface BannertagProps {
-//   bannertag: string;
-// }
+const colors = ['var(--tag-pink);', 'var(--tag-pink);', 'var(--tag-pink);', 'var(--tag-pink);'];
+
 
 const BannerTag : React.FC = (): JSX.Element => {   
+  const [bannertagData, setBannertagData] = useState<BannerTags[]>([]);
+
+  const getAllbannerTagCheck = async () => {
+      const res = await getvlogbannerTagCheck();
+      setBannertagData(res);
+  };
+
+  useEffect(() => {
+    getAllbannerTagCheck();
+
+  }, []);
 	return(
-        <BannerTagContainer>
-            <TextTagContainer height="35px" bgcolor="var(--tag-pink)" borderradius="20px">
-              <span className="Label"> #세계여행 </span>
-            </TextTagContainer>
-            <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowUp />
-            </ArrowTagContainer>
-            <TextTagContainer height="35px" bgcolor="var(--tag-yellow)" borderradius="20px">
-              <span className="Label"> #밈고리즘 </span>
-            </TextTagContainer>
-            <TextTagContainer height="35px" bgcolor="var(--white-primary)" bordercolor="var(--tag-peach)" bordersize={2} borderradius="20px">
-              <span className="Label"> #배우는여행중 </span>
-            </TextTagContainer>
-            <TagContainer width="35px" height="35px" bgcolor="var(--tag-beige)" borderradius="50%" />
-            <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowDown />
-            </ArrowTagContainer>
-            <TextTagContainer height="35px" bgcolor="var(--tag-orange)" borderradius="20px">
-              <span className="Label"> #림툰 </span>
-            </TextTagContainer>
-            <TagContainer width="35px" height="35px" bgcolor="var(--tag-blue)" borderradius="50%" />
-            <TextTagContainer height="35px" bgcolor="var(--white-primary)" bordercolor="var(--tag-green)" bordersize={2} borderradius="20px">
-              <span className="Label"> #성수동맛집 </span>
-            </TextTagContainer>
-            <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowRight />
-            </ArrowTagContainer>
-            <TagContainer width="35px" height="35px" bgcolor="var(--tag-purple)" borderradius="50%" />
-            <TextTagContainer height="35px" bgcolor="var(--tag-orange)" borderradius="20px">
-              <span className="Label"> #새로 뜨는 영상 </span>
-            </TextTagContainer>
-            <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowUp width="10px" height= "10px" />
-            </ArrowTagContainer>
-            <BgchangeTagContainer height="35px" bgcolor="var(--tag-pink)" borderradius="20px">
-              <span className="Label"> #최근에 업로드 된 블로그 </span>
-            </BgchangeTagContainer>
-            <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
-              <AiFillHeart color="var(--icon-red)"/>
-            </TagContainer>
-            <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
-              <AiOutlineHeart color="var(--icon-red)"/>
-            </TagContainer>
-            <TagContainer width="5.5rem" height="35px" bgcolor="var(--tag-mint)" borderradius="20px">
-              <AiOutlineArrowLeft color="var(--white-primary)"/>
-            </TagContainer>
-        </BannerTagContainer>
+        // <BannerTagContainer>
+        //     <TextTagContainer height="35px" bgcolor="var(--tag-pink)" borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
+        //       <AiOutlineArrowUp />
+        //     </ArrowTagContainer>
+        //     <TextTagContainer height="35px" bgcolor="var(--tag-yellow)" borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <TextTagContainer height="35px" bgcolor="var(--white-primary)" bordercolor="var(--tag-peach)" bordersize={2} borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <TagContainer width="35px" height="35px" bgcolor="var(--tag-beige)" borderradius="50%" />
+        //     <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
+        //       <AiOutlineArrowDown />
+        //     </ArrowTagContainer>
+        //     <TextTagContainer height="35px" bgcolor="var(--tag-orange)" borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <TagContainer width="35px" height="35px" bgcolor="var(--tag-blue)" borderradius="50%" />
+        //     <TextTagContainer height="35px" bgcolor="var(--white-primary)" bordercolor="var(--tag-green)" bordersize={2} borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
+        //       <AiOutlineArrowRight />
+        //     </ArrowTagContainer>
+        //     <TagContainer width="35px" height="35px" bgcolor="var(--tag-purple)" borderradius="50%" />
+        //     <TextTagContainer height="35px" bgcolor="var(--tag-orange)" borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </TextTagContainer>
+        //     <ArrowTagContainer width="35px" height="35px" bgcolor="var(--white-hunt)" borderradius="50%">
+        //       <AiOutlineArrowUp width="10px" height= "10px" />
+        //     </ArrowTagContainer>
+        //     <BgchangeTagContainer height="35px" bgcolor="var(--tag-pink)" borderradius="20px">
+        //       <span className="Label"> #{bannertag} </span>
+        //     </BgchangeTagContainer>
+        //     <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+        //       <AiFillHeart color="var(--icon-red)"/>
+        //     </TagContainer>
+        //     <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+        //       <AiOutlineHeart color="var(--icon-red)"/>
+        //     </TagContainer>
+        //     <TagContainer width="5.5rem" height="35px" bgcolor="var(--tag-mint)" borderradius="20px">
+        //       <AiOutlineArrowLeft color="var(--white-primary)"/>
+        //     </TagContainer>
+        // </BannerTagContainer>
+  <BannerTagContainer>
+    {bannertagData?.map((tag, index) => (
+      <TextTagContainer
+        key={index}
+        height="35px"
+        bgcolor={`var(--tag-${colors[index % colors.length]})`}
+        borderradius="20px"
+      >
+        <span className="Label"> #{tag.toString()} </span>
+      </TextTagContainer>
+    ))}
+  </BannerTagContainer>
     )
 }
 

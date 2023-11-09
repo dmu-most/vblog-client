@@ -169,8 +169,4 @@ export const vblogReviewData = [
   },
 ];
 
-export const bannerTags = [
-  {
-    bannertag: ['세계여행', '밈고리즘', '배우는여행중', '림툰', '성수동맛집', '새로 뜨는 영상', '최근에 업로드 된 블로그']
-  }
-];
+export const bannerTags = ['세계여행', '밈고리즘', '배우는여행중', '림툰', '성수동맛집', '새로 뜨는 영상', '최근에 업로드 된 블로그'];

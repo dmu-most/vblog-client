@@ -1,6 +1,6 @@
 import instance from '@api/axiosInstance';
 
-import { vblogListType } from 'types/main/list';
+import { vblogListType, BannerTags } from 'types/main/list';
 
 // ============================ vlog banner 조회 ===============================================
 /** 2023/10/13 - vlog banner 조회 - by jh */
@@ -18,6 +18,30 @@ export const getvlogbannerCheck = async () => {
 /** 2023/10/13 - vlog banner 조회 - by jh */
 export const getblogbannerCheck = async () => {
   const { data } = await instance.get<vblogListType[]>('/blog/banner', {
+    headers: {
+      'No-Auth': true,
+    },
+  });
+
+  return data;
+};
+
+// ============================ vlog bannertag 조회 ===============================================
+/** 2023/10/13 - vlog banner 조회 - by jh */
+export const getvlogbannerTagCheck = async () => {
+  const { data } = await instance.get<BannerTags[]>('/vlog/hashtags', {
+    headers: {
+      'No-Auth': true,
+    },
+  });
+
+  return data;
+};
+
+// ============================ blog bannertag 조회 ===============================================
+/** 2023/10/13 - vlog banner 조회 - by jh */
+export const getblogbannerTagCheck = async () => {
+  const { data } = await instance.get<BannerTags[]>('/blog/hashtags', {
     headers: {
       'No-Auth': true,
     },
