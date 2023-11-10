@@ -1,9 +1,16 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // icons
 import { IoMdCloseCircle } from 'react-icons/io';
 import { AiFillFolderAdd, AiOutlinePlus } from 'react-icons/ai';
+
+// store
+import { useContentModeStore } from '@store/useConentModeStore';
+
+// api
+import { getScrapVlog, getScrapBlog } from '@api/my-info';
+
 
 interface ScrapModalProps {
   isOpen: boolean;
@@ -13,11 +20,32 @@ interface ScrapModalProps {
 //**2023/10/24 스크랩 클릭 시 뜨는 모달 - by jh
 const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element | null => {
   const [showNewFolderContainer, setshowNewFolderContainer] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState('');
   const [newFolderName, setNewFolderName] = useState('');
+  const [folderNames, setFolderNames] = useState<string[]>([]);
+  const { mode } = useContentModeStore();
 
-  if (!isOpen) {
-    return null;
-  }
+  useEffect(() => {
+    const getAllScrap = async () => {
+        let AllScrapApi;
+        if (mode === 'V') {
+          AllScrapApi = getScrapVlog; 
+        } else if (mode === 'B') {
+          AllScrapApi = getScrapBlog; 
+        }
+
+        if (AllScrapApi) {
+          const res = await AllScrapApi();
+          if (Array.isArray(res)) {
+            setFolderNames(res.map((board: any) => board.name));
+          } 
+        } 
+    };
+
+    if (isOpen) {
+      getAllScrap();
+    }
+  }, [isOpen]);
 
   //**2023/10/24 새 폴더 만들기 클릭 시 사용되는 함수 - by jh
   const handleNewFolderClick = () => {
@@ -44,41 +72,48 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
   };
 
   return (
-    <ModalContainer onClick={onClose}>
-      <ModalContent onClick={e => e.stopPropagation()}>
-        <CloseBtn onClick={onClose}>
-          <IoMdCloseCircle size="23px" color="var(--black-primary)" />
-        </CloseBtn>
-        <label> 컨텐츠 저장 </label>
-        <ScrapMenu>
-          {/* 브블로그 폴터 리스트 컨테이너 */}
-          <li>
-            <AiOutlinePlus />
-             모든 게시물
-          </li>
-          <li> 파리 </li>
-          <li> 베트남 </li>
+    <div>
+      {isOpen && (
+      <ModalContainer onClick={onClose}>
+        <ModalContent onClick={e => e.stopPropagation()}>
+          <CloseBtn onClick={onClose}>
+            <IoMdCloseCircle size="23px" color="var(--black-primary)" />
+          </CloseBtn>
+          <label> 컨텐츠 저장 </label>
+          <ScrapMenu>
+            {/* 브블로그 폴터 리스트 컨테이너 */}
+            {folderNames.map((folderName, index) => (
+              <li
+                key={index}
+                className={folderName === selectedFolder ? 'selected' : ''}
+                onClick={() => setSelectedFolder(folderName)}
+              >
+                {folderName === selectedFolder && <AiOutlinePlus />} {folderName}
+              </li>
+            ))}
 
-          {/* 새 폴더 만들기 컨테이너 */}
-          <div className="NewFolder" onClick={handleNewFolderClick}>
-            <AiFillFolderAdd />
-            새 폴더 만들기
-          </div>
-          {showNewFolderContainer && (
-            <>
-              <input
-              type="text"
-              value={newFolderName}
-              onChange={handleNewFolderNameChange}
-              placeholder="폴더 이름을 입력하세요."
-              />
-              <button type="submit" onClick={handleNewFolderMakeClick}> 만들기 </button>
-            </>
-          )}
-        </ScrapMenu>
-        <Submitbutton type="submit" onClick={handleSubmitButtonClick}> 저장하기 </Submitbutton>
-      </ModalContent>
-    </ModalContainer>
+            {/* 새 폴더 만들기 컨테이너 */}
+            <div className="NewFolder" onClick={handleNewFolderClick}>
+              <AiFillFolderAdd />
+              새 폴더 만들기
+            </div>
+            {showNewFolderContainer && (
+              <>
+                <input
+                type="text"
+                value={newFolderName}
+                onChange={handleNewFolderNameChange}
+                placeholder="폴더 이름을 입력하세요."
+                />
+                <button type="submit" onClick={handleNewFolderMakeClick}> 만들기 </button>
+              </>
+            )}
+          </ScrapMenu>
+          <Submitbutton type="submit" onClick={handleSubmitButtonClick}> 저장하기 </Submitbutton>
+        </ModalContent>
+      </ModalContainer>
+      )}
+    </div>
   );
 };
 
