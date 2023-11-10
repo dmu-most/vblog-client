@@ -9,7 +9,7 @@ import { AiFillFolderAdd, AiOutlinePlus } from 'react-icons/ai';
 import { useContentModeStore } from '@store/useConentModeStore';
 
 // api
-import { getScrapVlog, getScrapBlog } from '@api/my-info';
+import { getScrapVlog, getScrapBlog, postScrapFolder } from '@api/my-info';
 
 
 interface ScrapModalProps {
@@ -24,16 +24,14 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
   const [newFolderName, setNewFolderName] = useState('');
   const [folderNames, setFolderNames] = useState<string[]>([]);
   const { mode } = useContentModeStore();
+  // allscrapApi 변수 생성
+  const AllScrapApi = mode === 'V' ? getScrapVlog : mode === 'B' ? getScrapBlog : null;
+  // 폴더 생성 시 type 변수 생성
+  const type = mode === 'V' ? 'vlog' : mode === 'B' ? 'blog' : '';
 
+  //**2023/11/11 스크랩 폴더 조회 api 서버 연결 - by jh
   useEffect(() => {
     const getAllScrap = async () => {
-        let AllScrapApi;
-        if (mode === 'V') {
-          AllScrapApi = getScrapVlog; 
-        } else if (mode === 'B') {
-          AllScrapApi = getScrapBlog; 
-        }
-
         if (AllScrapApi) {
           const res = await AllScrapApi();
           if (Array.isArray(res)) {
@@ -41,7 +39,6 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
           } 
         } 
     };
-
     if (isOpen) {
       getAllScrap();
     }
@@ -58,11 +55,14 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
   };
 
   //**2023/10/24 input name 입력 후 만들기 버튼 클릭 시 변하는 input - by jh
-  const handleNewFolderMakeClick = () => {
-  alert('만들기가 완료되었습니다.');
-  setNewFolderName('');
-  setshowNewFolderContainer(false);
-};
+  const handleNewFolderMakeClick = async () => {
+    //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
+    await postScrapFolder(newFolderName, type); 
+    alert('만들기가 완료되었습니다.');
+    setNewFolderName('');
+    setshowNewFolderContainer(false);
+    setFolderNames(prev => [...prev, newFolderName]);
+  };
 
   //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
   const handleSubmitButtonClick = () => {
