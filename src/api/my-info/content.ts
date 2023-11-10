@@ -16,6 +16,13 @@ export const postScrapFolder = async (name: string, type: string) => {
   return data;
 };
 
+/** 2023/10/23 - 북마크 POST 요청 - by jh */
+export const postBookmark = async () => {
+  const { data } = await instance.post<ScrapResponseType>('/bookmark');
+
+  return data;
+};
+
 /** 2023/10/23 - 스크랩 폴더 Vlog GET 요청 - by sineTlsl */
 export const getScrapVlog = async () => {
   const { data } = await instance.get<ScrapResponseType>('/myinfo/folders/vlog');
