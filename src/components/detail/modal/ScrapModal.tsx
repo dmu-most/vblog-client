@@ -9,7 +9,7 @@ import { AiFillFolderAdd, AiOutlinePlus } from 'react-icons/ai';
 import { useContentModeStore } from '@store/useConentModeStore';
 
 // api
-import { getScrapVlog, getScrapBlog, postScrapFolder } from '@api/my-info';
+import { getScrapVlog, getScrapBlog, postScrapFolder, postBookmark } from '@api/my-info';
 
 
 interface ScrapModalProps {
@@ -29,6 +29,35 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
   // 폴더 생성 시 type 변수 생성
   const type = mode === 'V' ? 'vlog' : mode === 'B' ? 'blog' : '';
 
+  //**2023/10/24 새 폴더 만들기 클릭 시 사용되는 함수 - by jh
+  const handleNewFolderClick = () => {
+    setshowNewFolderContainer((prev) => !prev);
+  };
+
+  //**2023/10/24 새 폴더 만들기 클릭 시 변하는 input - by jh
+  const handleNewFolderNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewFolderName(e.target.value);
+  };
+
+  //**2023/10/24 input name 입력 후 만들기 버튼 클릭 시 새 폴더 저장 함수 - by jh
+  const handleNewFolderMakeClick = async () => {
+    //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
+    await postScrapFolder(newFolderName, type); 
+    alert('만들기가 완료되었습니다.');
+    setNewFolderName('');
+    setshowNewFolderContainer(false);
+    setFolderNames(prev => [...prev, newFolderName]);
+  };
+
+  //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
+  const handleSubmitButtonClick = async () => {
+    // const res = await postBookmark();
+    // console.log(res);
+    alert('저장이 완료되었습니다.');
+    // 모달 종료
+    onClose();
+  };
+
   //**2023/11/11 스크랩 폴더 조회 api 서버 연결 - by jh
   useEffect(() => {
     const getAllScrap = async () => {
@@ -43,33 +72,6 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
       getAllScrap();
     }
   }, [isOpen]);
-
-  //**2023/10/24 새 폴더 만들기 클릭 시 사용되는 함수 - by jh
-  const handleNewFolderClick = () => {
-    setshowNewFolderContainer((prev) => !prev);
-  };
-
-  //**2023/10/24 새 폴더 만들기 클릭 시 변하는 input - by jh
-  const handleNewFolderNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFolderName(e.target.value);
-  };
-
-  //**2023/10/24 input name 입력 후 만들기 버튼 클릭 시 변하는 input - by jh
-  const handleNewFolderMakeClick = async () => {
-    //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
-    await postScrapFolder(newFolderName, type); 
-    alert('만들기가 완료되었습니다.');
-    setNewFolderName('');
-    setshowNewFolderContainer(false);
-    setFolderNames(prev => [...prev, newFolderName]);
-  };
-
-  //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
-  const handleSubmitButtonClick = () => {
-    alert('저장이 완료되었습니다.');
-    // 모달 종료
-    onClose();
-  };
 
   return (
     <div>
