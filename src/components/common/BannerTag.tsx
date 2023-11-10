@@ -56,7 +56,7 @@ const BannerTag : React.FC = (): JSX.Element => {
 
   useEffect(() => {
     getAllbannerTagCheck();
-  }, []);
+  }, [mode]);
   
 	return(
     <BannerTagContainer>
