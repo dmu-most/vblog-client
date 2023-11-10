@@ -80,15 +80,15 @@ const BannerTag : React.FC = (): JSX.Element => {
           </BgchangeTagContainer>
         </React.Fragment>
       ))}
-      <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+      <SubTagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
         <AiFillHeart color="var(--icon-red)"/>
-      </TagContainer>
-      <TagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+      </SubTagContainer>
+      <SubTagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
         <AiOutlineHeart color="var(--icon-red)"/>
-      </TagContainer>
-      <TagContainer width="5.6rem" height="35px" bgcolor="var(--tag-mint)" borderradius="20px">
+      </SubTagContainer>
+      <SubTagContainer width="5.6rem" height="35px" bgcolor="var(--tag-mint)" borderradius="20px">
         <AiOutlineArrowLeft color="var(--white-primary)"/>
-      </TagContainer>
+      </SubTagContainer>
     </BannerTagContainer>
       )
   }
@@ -136,6 +136,12 @@ const TextTagContainer = styled(TagContainer)<ButtonProps>`
 `;
 
 const BgchangeTagContainer = styled(TagContainer)<ButtonProps>`
+   @media screen and (max-width: 1400px) {
+    display: none;
+  }
+`;
+
+const SubTagContainer = styled(TagContainer)<ButtonProps>`
    @media screen and (max-width: 1400px) {
     display: none;
   }
