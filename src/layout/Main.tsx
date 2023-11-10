@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
+
+// spinner
+import { PuffLoader } from "react-spinners"
 
 interface MainProps {
   className?: string;
@@ -11,6 +14,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ className, children }) => {
   const { mode } = useContentModeStore();
+  const [isLoading, setIsLoading] = useState(false);  
 
   // Update the --bg-mode variable based on the mode
   useEffect(() => {
@@ -19,7 +23,11 @@ const Main: React.FC<MainProps> = ({ className, children }) => {
 
   return (
     <main className={className}>
-      <MainContainer>{children}</MainContainer>
+      {isLoading ? (
+        <PuffLoader loading={true} size={40} />
+      ) : (
+        <MainContainer>{children}</MainContainer>
+      )}
     </main>
   );
 };

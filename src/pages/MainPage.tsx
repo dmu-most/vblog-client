@@ -7,12 +7,14 @@ import { getvlogbannerCheck, getblogbannerCheck } from '@api/main/vblogList';
 import { useContentModeStore } from '@store/useConentModeStore';
 import { useMemberStore } from '@store/useMemberStore';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 // component
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
 import CardComponent from '@components/main/CardComponent';
 import UserCardComponent from '@components/main/UserCardComponent';
-import { bannerTags } from 'data/dummyData';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
@@ -47,7 +49,7 @@ const MainPage: React.FC = (): JSX.Element => {
 
   return (
     <MainPageContainer>
-      {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
+      {bannerData ? <BannerComponent data={bannerData} /> : <PuffLoader loading={true} size={40} />}
       {member ? (
         <>
           <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />

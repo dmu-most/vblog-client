@@ -44,6 +44,8 @@ const GlobalStyles = createGlobalStyle`
     --tag-yellow: #FFD966;
     --tag-orange: #F4B183;
     --tag-peach: #DFA67B;
+    --tag-gray: #ebebeb;
+    --tag-white: #f8fafc;
     //icon-color
     --icon-red:  #FE0000;
     --icon-navy: #4A55A2;
