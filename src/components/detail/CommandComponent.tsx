@@ -14,6 +14,9 @@ import IntroComponent from "@components/main/IntroComponent";
 // Component
 import PostCard from '@components/common/PostCard';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 //**2023/07/29 CommandComponent- by jh
 const CommandComponent: React.FC = (): JSX.Element => {
   // 스와이프 스크롤 함수
@@ -48,7 +51,7 @@ const CommandComponent: React.FC = (): JSX.Element => {
                   <PostCard key={item.contentId} data={item} />
                 ))
               ) : (
-                <p>Loading...</p>
+                <PuffLoader loading={true} size={40} />
                 )}
                 </CommandCardContainer>
                 </ScrollableCardContainer>

@@ -16,6 +16,9 @@ export interface vblogListType {
 /** 2023/08/28 - banner 안에 들어갈 타입 - jh */
 export interface BannerType {
   contentId: number;
-  // heart: number;
   imgUrl: string;
+}
+
+export interface BannerTags {
+  hashtags: string[];
 }

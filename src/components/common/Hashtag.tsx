@@ -20,7 +20,7 @@ Object.entries(colors).forEach(([colorName, colorValue]) => {
   document.documentElement.style.setProperty(colorName, colorValue);
 });
 
-//**2023/07/19 Hashtag
+//**2023/07/19 Hashtag - by jh
 const Hashtag: React.FC<HashtagProps> = ({ hashtag }) => {
   const getRandomColor = () => {
     const colors = ["--tag-pink", "--tag-blue", "--tag-purple", "--tag-green"];

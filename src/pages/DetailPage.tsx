@@ -10,6 +10,9 @@ import CommandComponent from '@components/detail/CommandComponent';
 import { getContentCheck } from '@api/detail/vblogContent';
 import { postRecentItem } from '@api/detail';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 interface DetailPageProps {
   contentId: number;
 }
@@ -41,7 +44,7 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
 
   return (
     <DetailContainer>
-      {contentData ? <ContentComponent data={contentData} contentId={contentId}/> : <p>Loading...</p>}
+      {contentData ? <ContentComponent data={contentData} contentId={contentId}/> : <PuffLoader loading={true} size={40} />}
       <ReviewComponent contentId={contentId} />
       <CommandComponent />
     </DetailContainer>

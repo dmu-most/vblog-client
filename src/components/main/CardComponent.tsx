@@ -12,6 +12,9 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 //api
 // import { vblogList } from '@api/main/vblogList';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 // Component
 import PostCard from '@components/common/PostCard';
 
@@ -99,7 +102,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
       >
         {vblogData.length > 0
           ? vblogData.map(item => <PostCard key={item.contentId} data={item} />)
-          : <p>Loading...</p>}
+          : <PuffLoader loading={true} size={40} />}
       </Carousel>
     </ScrollableCardContainer>
   );
