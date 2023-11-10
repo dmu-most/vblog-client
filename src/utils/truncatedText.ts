@@ -2,3 +2,8 @@
 export const truncatedText = (text: string, maxLength: number) => {
   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 };
+
+/** 2023/11/09 - 해쉬태그 '#' 문자열 포함 시 제거 - by sineTlsl*/
+export const removeTagText = (tag: string) => {
+  return tag.replace(/#/g, '');
+};
