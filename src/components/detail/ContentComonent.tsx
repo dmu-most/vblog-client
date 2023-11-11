@@ -116,7 +116,7 @@ const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
          ))}
         </AlertModal>
       </div>
-      <ScrapModal isOpen={isScrapModalOpen} onClose={() => setisScrapModalOpen(false)} />
+      <ScrapModal isOpen={isScrapModalOpen} onClose={() => setisScrapModalOpen(false)} contentId={contentId} />
     </ContentContainer>
   );
 };
