@@ -1,43 +1,41 @@
 import create from 'zustand';
 
 interface LikeDislikeStore {
-  isLiked: boolean;
-  isDisliked: boolean;
-  localSaveLike: () => void;
-  localSaveDislike: () => void;
+  likedContentIds: number[];
+  dislikedContentIds: number[];
+  toggleLike: (contentId: number) => void;
+  toggleDislike: (contentId: number) => void;
 }
 
-/** 2023/08/18 - 좋아요/싫어요 로컬 저장소(수정 필요) - by jh */
-const useLikeDislikeStore = create<LikeDislikeStore>((set) => {
-  const initialIsLiked = localStorage.getItem('isLiked') === 'true';
-  const initialIsDisliked = localStorage.getItem('isDisliked') === 'true';
-
-  set({ isLiked: initialIsLiked, isDisliked: initialIsDisliked });
-
-  return {
-    isLiked: initialIsLiked,
-    isDisliked: initialIsDisliked,
-
-    localSaveLike: () => {
-      set((state) => {
-        const newIsLiked = !state.isLiked;
-        const newIsDisliked = false;
-        localStorage.setItem('isLiked', newIsLiked.toString());
-        localStorage.setItem('isDisliked', 'false');
-        return { isLiked: newIsLiked, isDisliked: newIsDisliked };
-      });
-    },
-    localSaveDislike: () => {
-      set((state) => {
-        const newIsDisliked = !state.isDisliked;
-        const newIsLiked = false;
-        localStorage.setItem('isLiked', 'false');
-        localStorage.setItem('isDisliked', newIsDisliked.toString());
-        return { isLiked: newIsLiked, isDisliked: newIsDisliked };
-      });
-    },
-  };
-});
-
-export { useLikeDislikeStore };
-
+export const useLikeDislikeStore = create<LikeDislikeStore>((set) => ({
+  likedContentIds: [],
+  dislikedContentIds: [],
+  toggleLike: (contentId: number) => set((state) => {
+    const isLiked = state.likedContentIds.includes(contentId);
+    if (isLiked) {
+      localStorage.removeItem(`like_${contentId}`);
+      return { likedContentIds: state.likedContentIds.filter((id) => id !== contentId) };
+    } else {
+      localStorage.setItem(`like_${contentId}`, 'true');
+      localStorage.removeItem(`dislike_${contentId}`);
+      return {
+        likedContentIds: [...state.likedContentIds, contentId],
+        dislikedContentIds: state.dislikedContentIds.filter((id) => id !== contentId),
+      };
+    }
+  }),
+  toggleDislike: (contentId: number) => set((state) => {
+    const isDisliked = state.dislikedContentIds.includes(contentId);
+    if (isDisliked) {
+      localStorage.removeItem(`dislike_${contentId}`);
+      return { dislikedContentIds: state.dislikedContentIds.filter((id) => id !== contentId) };
+    } else {
+      localStorage.setItem(`dislike_${contentId}`, 'true');
+      localStorage.removeItem(`like_${contentId}`);
+      return {
+        dislikedContentIds: [...state.dislikedContentIds, contentId],
+        likedContentIds: state.likedContentIds.filter((id) => id !== contentId),
+      };
+    }
+  }),
+}));

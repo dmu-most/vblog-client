@@ -16,9 +16,9 @@ export const postScrapFolder = async (name: string, type: string) => {
   return data;
 };
 
-/** 2023/10/23 - 북마크 POST 요청 - by jh */
-export const postBookmark = async () => {
-  const { data } = await instance.post<ScrapResponseType>('/bookmark');
+/** 2023/10/23 - 스크랩 POST 요청 - by jh */
+export const postScrap = async (name: string, contentId: number) => {
+  const { data } = await instance.post<ScrapResponseType>('/scrap', { name, contentId });
 
   return data;
 };
