@@ -7,7 +7,6 @@ export type MyContentMode = '브이로그' | '블로그';
 // ============================ 스크랩 ============================
 /** 2023/10/23 - 스크랩 응답 Type - sineTlsl */
 export interface ScrapResponseType {
-  contentId: number;
   id: number;
   name: string;
   type: string;

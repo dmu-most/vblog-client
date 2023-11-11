@@ -11,7 +11,6 @@ import { useContentModeStore } from '@store/useConentModeStore';
 // api
 import { getScrapVlog, getScrapBlog, postScrapFolder, postScrap } from '@api/my-info';
 
-
 interface ScrapModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -25,6 +24,7 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose, contentId }): 
   const [newFolderName, setNewFolderName] = useState('');
   const [folderNames, setFolderNames] = useState<string[]>([]);
   const { mode } = useContentModeStore();
+
   // allscrapApi 변수 생성
   const AllScrapApi = mode === 'V' ? getScrapVlog : mode === 'B' ? getScrapBlog : null;
   // 폴더 생성 시 type 변수 생성
@@ -44,7 +44,6 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose, contentId }): 
   const handleNewFolderMakeClick = async () => {
     //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
     await postScrapFolder(newFolderName, type); 
-    alert('만들기가 완료되었습니다.');
     setNewFolderName('');
     setshowNewFolderContainer(false);
     setFolderNames(prev => [...prev, newFolderName]);
@@ -52,36 +51,11 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose, contentId }): 
 
   //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
   const handleSubmitButtonClick = async () => {
-    const scrapResponse = await postScrap(selectedFolder, contentId);
-    console.log(scrapResponse);
-    alert('저장이 완료되었습니다.');
+    await postScrap(selectedFolder, contentId);
+    alert("저장이 완료되었습니다.")
     // 모달 종료
     onClose();
   };
-
-//   const handleSubmitButtonClick = async () => {
-//   try {
-//     const res = await postScrap(selectedFolder, contentId);
-
-//     // Check for errors in the response
-//     if (!res) {
-//       // Handle the error, for example, display an error message
-//       console.error("Error while saving:", res);
-//       alert('저장에 실패했습니다.');
-//     } else {
-//       // If successful, you can access the data
-//       console.log("Scrap response:", res);
-//       alert('저장이 완료되었습니다.');
-//     }
-//   } catch (error) {
-//     // Handle unexpected errors
-//     console.error("Unexpected error while saving:", error);
-//     alert('저장 중에 오류가 발생했습니다.');
-//   }
-
-//   // Close the modal regardless of success or failure
-//   onClose();
-// };
 
   //**2023/11/11 스크랩 폴더 조회 api 서버 연결 - by jh
   useEffect(() => {

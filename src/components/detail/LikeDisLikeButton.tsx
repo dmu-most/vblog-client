@@ -21,7 +21,12 @@ interface LikeDisLikeButtonProps {
 
 //**2023/10/24 좋아요/싫어요 클릭 버튼 - by jh
 const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX.Element => {
-  const { isLiked, isDisliked, localSaveLike, localSaveDislike } = useLikeDislikeStore();
+  // local storage 저장 부분은 상태관리로 바꿀 예정
+  const storedLikedState = localStorage.getItem(`like_${contentId}`);
+  const storedDislikedState = localStorage.getItem(`dislike_${contentId}`);
+
+  const [isLiked, setIsLiked] = useState(storedLikedState === 'true');
+  const [isDisliked, setisDisliked] = useState(storedDislikedState === 'true');
   const navigate = useNavigate();
 
   // modal
@@ -41,8 +46,9 @@ const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX
       setModalErrorText(['로그인을 진행해주세요.']);
       setIsModalOpen(true);
     } else {
-      // 로컬 스토리지로 저장 -> 이때 싫어요는 false 상태로 저장
-      localSaveLike();
+      setIsLiked(true);
+      localStorage.setItem(`like_${contentId}`, 'true');
+      localStorage.removeItem(`dislike_${contentId}`); 
       // 좋아요 api 서버 연결
       await PostLikeInfo(contentId, true);
       // 좋아요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
@@ -58,9 +64,10 @@ const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX
       setModalErrorText(['로그인을 진행해주세요.']);
       setIsModalOpen(true);
     } else {
-      // 로컬 스토리지로 저장 -> 이때 좋아요는 false 상태로 저장
-      localSaveDislike();
+      setisDisliked(true);
       // 싫어요 api 서버 연결
+      localStorage.setItem(`dislike_${contentId}`, 'true');
+      localStorage.removeItem(`like_${contentId}`);
       await PostLikeInfo(contentId, false);
       // 싫어요 클릭 시 리렌더링(불린값 때문에 트리거 함수 안먹어서 어쩔수 없이 reload)
       window.location.reload();
