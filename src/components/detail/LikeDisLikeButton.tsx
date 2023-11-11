@@ -31,7 +31,6 @@ const LikeDisLikeButton: React.FC<LikeDisLikeButtonProps> = ({ contentId }): JSX
   //**2023/07/29 모달 종료 후 로그인 화면으로 이동- by jh
   const handleToLogin = () => {
     setIsModalOpen(false);
-    // Navigate to the login page after the modal is closed
     navigate('/login');
   };
 
