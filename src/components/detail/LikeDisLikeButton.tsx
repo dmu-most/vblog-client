@@ -13,7 +13,7 @@ import { PostLikeInfo } from "@api/detail";
 
 //store
 import { useMemberStore } from '@store/useMemberStore';
-import { useLikeDislikeStore } from "@store/useLikeDislikeStore";
+// import { useLikeDislikeStore } from "@store/useLikeDislikeStore";
 
 interface LikeDisLikeButtonProps {
   contentId: number;
