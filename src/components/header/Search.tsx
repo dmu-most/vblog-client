@@ -85,7 +85,6 @@ const Search: React.FC = (): JSX.Element => {
 
       try {
         setTags(res);
-        console.log(res);
       } catch (err) {
         console.error(err);
       }
@@ -146,8 +145,6 @@ const Search: React.FC = (): JSX.Element => {
       const res = await selectedApi(params);
 
       try {
-        console.log(res);
-
         navigate(`/search?s=${encodeURIComponent(keyword)}`, { state: { searchList: res, searchTag: keyword } });
         setIsOpen(!isOpen);
       } catch (err) {
