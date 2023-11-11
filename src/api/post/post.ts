@@ -17,7 +17,7 @@ export const getTagSearchVlog = async (params: SearchListRequestType) => {
 
 /** 2023/11/09 - 블로그 해쉬태그 GET 요청 - by sineTlsl */
 export const getTagSearchBlog = async (params: SearchListRequestType) => {
-  const { data } = await instance.get<string[]>('/bvlog/search/category', {
+  const { data } = await instance.get<string[]>('/blog/search/category', {
     params,
     headers: {
       'No-Auth': true,
