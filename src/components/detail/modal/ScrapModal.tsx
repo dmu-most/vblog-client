@@ -9,21 +9,22 @@ import { AiFillFolderAdd, AiOutlinePlus } from 'react-icons/ai';
 import { useContentModeStore } from '@store/useConentModeStore';
 
 // api
-import { getScrapVlog, getScrapBlog, postScrapFolder, postBookmark } from '@api/my-info';
-
+import { getScrapVlog, getScrapBlog, postScrapFolder, postScrap } from '@api/my-info';
 
 interface ScrapModalProps {
   isOpen: boolean;
   onClose: () => void;
+  contentId: number;
 }
 
 //**2023/10/24 스크랩 클릭 시 뜨는 모달 - by jh
-const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element | null => {
+const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose, contentId }): JSX.Element | null => {
   const [showNewFolderContainer, setshowNewFolderContainer] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [newFolderName, setNewFolderName] = useState('');
   const [folderNames, setFolderNames] = useState<string[]>([]);
   const { mode } = useContentModeStore();
+
   // allscrapApi 변수 생성
   const AllScrapApi = mode === 'V' ? getScrapVlog : mode === 'B' ? getScrapBlog : null;
   // 폴더 생성 시 type 변수 생성
@@ -43,7 +44,6 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
   const handleNewFolderMakeClick = async () => {
     //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
     await postScrapFolder(newFolderName, type); 
-    alert('만들기가 완료되었습니다.');
     setNewFolderName('');
     setshowNewFolderContainer(false);
     setFolderNames(prev => [...prev, newFolderName]);
@@ -51,9 +51,8 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose }): JSX.Element
 
   //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
   const handleSubmitButtonClick = async () => {
-    // const res = await postBookmark();
-    // console.log(res);
-    alert('저장이 완료되었습니다.');
+    await postScrap(selectedFolder, contentId);
+    alert("저장이 완료되었습니다.")
     // 모달 종료
     onClose();
   };
