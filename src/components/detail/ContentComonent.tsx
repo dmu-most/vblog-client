@@ -1,37 +1,77 @@
 import { styled } from "styled-components";
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 // Type
 import { vblogType } from "types/detail/vblog";
 
 // Component
 import Hashtag from "@components/common/Hashtag";
+import LikeDisLikeButton from "./LikeDisLikeButton";
+import ScrapModal from "./modal/ScrapModal";
+import AlertModal from '@components/common/AlertModal';
 
 // icon
-import { BsBoxArrowUpRight } from 'react-icons/bs';
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { BsBoxArrowUpRight, BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
+//store
+import { useMemberStore } from '@store/useMemberStore';
 
 interface DetailProps {
   data: vblogType;
+  contentId: number;
 }
 
 //**2023/07/29 CommandComponent- by jh
-const ContentComponent: React.FC<DetailProps> = ({ data }) => {
-  const [liked, setliked] = useState(false);
+const ContentComponent: React.FC<DetailProps> = ({ data, contentId }) => {
+  const [scrap, setScrap] = useState(false);
+  // modal
+  const [isScrapModalOpen, setisScrapModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalErrorText, setModalErrorText] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  //**2023/07/29 모달 종료 후 로그인 화면으로 이동- by jh
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    if (modalErrorText.includes('로그인을 진행해주세요.')) {
+      navigate('/login');
+    }
+  };
+
 
   /** 2023/09/06 - 해당 URL 클릭 시 새 브라우저로 넘어가게 하는 함수 - by jh */
   const handleIconClick = () => {
     window.open(data.link, "_blank");
   };
-  /** 2023/09/06 - 찜 UI 클릭 시 icon 변경 - by jh */
-  const handleLikeClick = () => {
-    // "좋아요" 버튼 클릭 시 상태를 토글합니다.
-    setliked(!liked);
+  /** 2023/09/06 - 스크랩 클릭 시 icon 변경 - by jh */
+  const handleScrapClick = () => {
+    if (!useMemberStore.getState().member) {
+      setModalErrorText(['로그인을 진행해주세요.']);
+      setIsModalOpen(true);
+    }else{
+      setisScrapModalOpen(true);
+      setScrap(!scrap);
+    }
   };
   
 
   return (
     <ContentContainer>
+      {/* 스크랩 부분 컨테이너 */}
+      <ScrapContainer onClick={handleScrapClick}>
+        <div
+          className={`scrap-icon ${scrap ? 'scrap' : ''}`}
+          style={{
+            color: 'var(--hunt-black)',
+            width: '20px',
+            height: '20px',
+          }}
+        >
+          {scrap ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
+        </div>
+      </ScrapContainer>
+      {/* 해당 컨텐츠의 정보를 보여주는 컨테이너 */}
       <ProfileContainer>
         <img src={data.imgurl} alt="Profile Image" />
         <TitleContainer>
@@ -39,24 +79,19 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
           <div className="title"> {data.contentTitle} </div>
         </TitleContainer>
       </ProfileContainer>
+      {/* 태그를 보여주고 좋아요, 싫어요를 입력하는 컨테이너 */}
       <TagContainer>
         {data.hashtags && data.hashtags.map((hashtag) => (
           <Hashtag key={hashtag} hashtag={hashtag} />
         ))}
-      <MyLikeContainer onClick={handleLikeClick}>
-        <div
-          className={`heart-icon ${liked ? 'liked' : ''}`}
-          style={{
-            color: 'var(--icon-red)',
-            width: '20px',
-            height: '20px',
-          }}
-        >
-          {liked ? <AiFillHeart /> : <AiOutlineHeart />}
-        </div>
-      </MyLikeContainer>
+      <LikeDislikeContainer>
+        <LikeDisLikeButton
+           contentId={contentId}
+        />
+      </LikeDislikeContainer>
       </TagContainer>
       <Line />
+      {/* 순위, 평점, 좋아요/싫어요를 보여주는 컨테이너 */}
       <GradeContainer>
         <Grade>
           <div className="value"> {data.rank} </div>
@@ -74,6 +109,14 @@ const ContentComponent: React.FC<DetailProps> = ({ data }) => {
       <ThumbnailContainer imgurl={data.imgurl} onClick={handleIconClick}>
         <BsBoxArrowUpRight className="icon" />
       </ThumbnailContainer>
+      <div>
+        <AlertModal isOpen={isModalOpen} onClose={handleModalClose}>
+          {modalErrorText.map((text, idx) => (
+            <p key={idx}>{text}</p>
+         ))}
+        </AlertModal>
+      </div>
+      <ScrapModal isOpen={isScrapModalOpen} onClose={() => setisScrapModalOpen(false)} contentId={contentId} />
     </ContentContainer>
   );
 };
@@ -94,11 +137,34 @@ const ContentContainer = styled.div`
       }
 `;
 
+const ScrapContainer = styled.div`
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 2rem 2rem 0 2rem;
+  padding: 1rem;
+  cursor: pointer;
+
+  .scrap-icon {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
+  }
+
+  .scrap {
+    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    padding-right: 0.5rem;
+  }
+`;
+
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  margin: 2rem;
+  margin: 0 2rem;
 
   > img {
     width: 50px;
@@ -153,24 +219,10 @@ const TagContainer = styled.div`
     flex-wrap : wrap;
 `;
 
-const MyLikeContainer = styled.div`
+// 좋아요 / 싫어요 버튼 컨테이너
+const LikeDislikeContainer = styled.div`
   margin-left: auto;
   padding: 1rem;
-  cursor: pointer;
-
-  .heart-icon {
-    width: 25px;
-    height: 25px;
-    transition: transform 0.5s; /* 변화를 부드럽게 만들기 위한 transition 설정 */
-  }
-
-  .liked {
-    transform: scale(1.2); /* 좋아요 상태일 때 크기를 키웁니다. */
-  }
-
-  @media ${props => props.theme.breakpoints.mobileLMax} {
-    padding-right: 0.5rem;
-  }
 `;
 
 const Line = styled.hr`
@@ -219,7 +271,7 @@ const ThumbnailContainer = styled.div<{ imgurl: string | undefined }>`
     height: 600px;
     background-image: ${({ imgurl }) =>
       imgurl ? `url(${imgurl})` : `url('/assets/images/noimage.png')`};
-    background-size: cover; // This will ensure the background image covers the entire container
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center center;
     position: relative;

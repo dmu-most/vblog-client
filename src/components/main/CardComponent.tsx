@@ -12,8 +12,15 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 //api
 // import { vblogList } from '@api/main/vblogList';
 
+// spinner
+import { PuffLoader } from "react-spinners"
+
 // Component
 import PostCard from '@components/common/PostCard';
+
+// 화살표 + 스크롤 라이브러리
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css'; 
 
 // 각 컴포넌트에 맞게 다른 endpoint 넣기 위해 변수 생성
 interface CardComponentProps {
@@ -22,10 +29,6 @@ interface CardComponentProps {
 
 //**2023/07/07 CardComponent - by jh
 const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponentProps): JSX.Element => {
-  const scrollRef = useRef<HTMLUListElement | null>(null); // Updated type here
-  const scrollAmount = 600; // 한 번에 스크롤할 양
-  const [scrollPosition, setScrollPosition] = useState(0); // 스크롤의 현재 위치
-  const [maxScrollLeft, setMaxScrollLeft] = useState(0); // 가능한 최대 위치
   const { mode } = useContentModeStore();
 
   // 데이터 셋업
@@ -58,126 +61,102 @@ const CardComponent: React.FC<CardComponentProps> = ({ endpoint }: CardComponent
     fetchData();
   }, [mode]);
 
-  /** 2023/08/24 - left 화살표 클릭 시 왼쪽 스크롤 함수 - by sineTlsl */
-  const HandlerScrollLeft = () => {
-    if (scrollRef.current) {
-      const newPosition = scrollRef.current.scrollLeft - scrollAmount;
-      scrollRef.current.scrollTo({
-        left: newPosition,
-        behavior: 'smooth', // 스무스 하게 이동하기 위해 추가 - by jh
-      });
-    }
+  //**2023/10/17 반응형의 의해 카드 갯수를 나타내는 함수 - by jh
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1100 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1200, min: 1020 },
+      items: 3,
+    },
+    mobileL: {
+      breakpoint: { max: 1020, min: 400 },
+      items: 2,
+    },
+    mobileS: {
+      breakpoint: { max: 400, min: 0 },
+      items: 1,
+    },
   };
-
-  /** 2023/08/24 - right 화살표 클릭 시 오른쪽 스크롤 함수 - by sineTlsl */
-  const HandlerScrollRight = () => {
-    if (scrollRef.current) {
-      const newPosition = scrollRef.current.scrollLeft + scrollAmount;
-      console.log('New Position:', newPosition);
-      scrollRef.current.scrollTo({
-        left: newPosition,
-        behavior: 'smooth', // 스무스 하게 이동하기 위해 추가 - by jh
-      });
-    }
-  };
-
-  useEffect(() => {
-    /** 2023/08/24 - 컴포넌트가 마운트 or 언마운트 되었을 때, 스크롤 이벤트 리스너 추가 및 제거하는 함수 - by sineTlsl */
-    const onScroll = () => {
-      if (scrollRef.current) {
-        setScrollPosition(scrollRef.current.scrollLeft);
-      }
-    };
-
-    // 스크롤이 이동할 때마다 현재 스크롤 위치를 계산하고 업데이트
-    if (scrollRef.current) {
-      setMaxScrollLeft(scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
-    }
-
-    scrollRef.current?.addEventListener('scroll', onScroll);
-
-    return () => scrollRef.current?.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
-    <div>
-      <ScrollableCardContainer>
-        <ScrollContainer>
-          {scrollPosition > 0 && (
-            <ScrollBtn onClick={HandlerScrollLeft}>
-              <FaArrowAltCircleLeft className="FaArrowAltCircleLeft" />
-            </ScrollBtn>
-          )}
-          <CardContainer ref={scrollRef}>
-            {vblogData.length > 0 ? (
-              vblogData.map(item => <PostCard key={item.contentId} data={item} />)
-            ) : (
-              <p>Loading...</p>
-            )}
-          </CardContainer>
-          <ScrollBtn onClick={HandlerScrollRight}>
-            {scrollPosition < maxScrollLeft && <FaArrowAltCircleRight className="FaArrowAltCircleRight" />}
-          </ScrollBtn>
-        </ScrollContainer>
-      </ScrollableCardContainer>
-    </div>
+    <ScrollableCardContainer>
+      <Carousel
+        responsive={responsive}
+        swipeable={true}
+        draggable={true}
+        showDots={false}
+        infinite={true}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        containerClass="carousel-container"
+        removeArrowOnDeviceType={['tablet', 'mobile']}
+        deviceType="desktop"
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px"
+      >
+        {vblogData.length > 0
+          ? vblogData.map(item => <PostCard key={item.contentId} data={item} />)
+          : <PuffLoader loading={true} size={40} />}
+      </Carousel>
+    </ScrollableCardContainer>
   );
 };
 
 export default CardComponent;
 
 const ScrollableCardContainer = styled.div`
-  width: 100%;
-
-  // 스크롤바 없애기
-  // chrome and safari
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  // firefox
-  scrollbar-width: none;
+  margin: 2rem 1rem ;
+  overflow-y: auto;
+  z-index: 2;
 `;
 
-const CardContainer = styled.ul`
-  ${({ theme }) => theme.common.flexCenterRow};
-  margin: 1rem 2rem 1rem 2rem;
-  height: 400px;
-  transition: transform 0.3s ease;
-  gap: 20px;
-  overflow: auto; // add
+// const CardContainer = styled.ul`
+//   ${({ theme }) => theme.common.flexCenterRow};
+//   margin: 1rem;
+//   height: 400px;
+//   transition: transform 0.3s ease;
+//   gap: 20px;
+//   overflow: auto; // add
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    margin: 0 2rem 0 2rem;
-    padding: 0 20px 0 20px;
-  }
-`;
+//   @media ${props => props.theme.breakpoints.mobileSMax} {
+//     margin: 0 2rem 0 2rem;
+//     padding: 0 20px 0 20px;
+//   }
+// `;
 
-const ScrollContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// const ScrollContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   z-index: 2;
+// `;
 
-const ScrollBtn = styled.button`
-  border: none;
-  background: transparent;
-  transition: color 0.3s ease;
-  font-size: 2rem;
-  cursor: pointer;
-  width: 55px;
+// const ScrollBtn = styled.button`
+//   border: none;
+//   background: transparent;
+//   transition: color 0.3s ease;
+//   font-size: 1rem;
+//   cursor: pointer;
+//   width: 55px;
 
-  > .FaArrowAltCircleLeft,
-  > .FaArrowAltCircleRight {
-    color: var(--gray-light);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    font-size: 40px;
+//   > .FaArrowAltCircleLeft,
+//   > .FaArrowAltCircleRight {
+//     color: var(--gray-light);
+//     cursor: pointer;
+//     transition: color 0.3s ease;
+//     font-size: 40px;
 
-    &:hover {
-      color: var(--gray-dark);
-    }
-  }
+//     &:hover {
+//       color: var(--gray-dark);
+//     }
+//   }
 
-  @media ${props => props.theme.breakpoints.mobileLMax} {
-    display: none;
-  }
-`;
+//   @media ${props => props.theme.breakpoints.mobileLMax} {
+//     display: none;
+//   }
+// `;

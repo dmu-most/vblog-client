@@ -1,4 +1,3 @@
-
 // ============================ detail ============================
 /** 2023/08/28 - detail 안에 들어갈 타입 - jh */
 export interface vblogType {
@@ -12,4 +11,9 @@ export interface vblogType {
   imgurl: string;
   link: string;
   hashtags: string[];
+}
+
+/** 2023/08/28 - detail 안에 좋아요/싫어요 요청 - jh */
+export interface VblogLikeRequest {
+  likeInfo: boolean;
 }

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 // type
-import { MyInfoType } from 'types/myInfo';
+import { MyInfoType } from 'types/my-info';
 
 // api
-import { getMyInfo } from '@api/myInfo';
+import { getMyInfo } from '@api/my-info';
 
 // components
 import UserProfileUpdate from '@components/my-info/UserProfileUpdate';
@@ -27,9 +27,10 @@ const ProfileDescription: React.FC = (): JSX.Element => {
   };
   useEffect(() => {
     fetchMyInfoData();
-  }, []);
+  }, [isProfileEdit]);
 
-  const handlerProfileEdit = () => {
+  /** 2023/10/15 - 프로필 보기 or 프로피 수정 모드 - by sineTlsl */
+  const handlerProfileEdit = async () => {
     setIsProfileEdit(!isProfileEdit);
   };
 

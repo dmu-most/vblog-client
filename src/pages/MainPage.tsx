@@ -1,52 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import axios from 'axios';
+
+import { getvlogbannerCheck, getblogbannerCheck } from '@api/main/vblogList';
 
 // store
 import { useContentModeStore } from '@store/useConentModeStore';
+import { useMemberStore } from '@store/useMemberStore';
+
+// spinner
+import { PuffLoader } from "react-spinners"
 
 // component
 import BannerComponent from '@components/main/BannerComponent';
 import IntroComponent from '@components/main/IntroComponent';
 import CardComponent from '@components/main/CardComponent';
-import UserCardComponent from '@components/main/CardComponent';
+import UserCardComponent from '@components/main/UserCardComponent';
 
 /** 2023/07/25 - 메인 페이지 */
 const MainPage: React.FC = (): JSX.Element => {
   const [bannerData, setBannerData] = useState<any>(null);
   const { mode } = useContentModeStore();
+  const { member } = useMemberStore();
 
-  let apiUrl: string; // Explicitly declare as string type
-  if (mode === 'V') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/vlog/banner`;
-  } else if (mode === 'B') {
-    apiUrl = `${process.env.REACT_APP_API_URL}/blog/banner`;
-  }
-
-  const fetchBannerData = async () => {
-    try {
-      const response = await axios.get(apiUrl);
-
-      if (mode === 'V') {
-        // console.log('Fetched data for V:', response.data);
-      } else if (mode === 'B') {
-        // console.log('Fetched data for B:', response.data);
-      }
-      setBannerData(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+  //**2023/07/29 배너 api 적용 함수 - by jh
+  const getAllBannerCheck = async () => {
+  try {
+    let bannerApi;
+    if (mode === 'V') {
+      bannerApi = getvlogbannerCheck; // Use the vlog banner API
+    } else if (mode === 'B') {
+      bannerApi = getblogbannerCheck; // Use the blog banner API
     }
-  };
+
+    if (bannerApi) {
+      const res = await bannerApi();
+      setBannerData(res);
+    } else {
+      console.error('Invalid mode:', mode);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
   useEffect(() => {
-    fetchBannerData();
+    getAllBannerCheck();
   }, [mode]);
 
   return (
     <MainPageContainer>
-      {bannerData ? <BannerComponent data={bannerData} /> : <p>Loading...</p>}
-      <IntroComponent intro="싱니님을 위한 브블의 콘텐츠 💬" />
-      <UserCardComponent endpoint="likelist" />
+      {bannerData ? <BannerComponent data={bannerData} /> : <PuffLoader loading={true} size={40} />}
+      {member ? (
+        <>
+          <IntroComponent intro="회원님을 위한 브블의 콘텐츠 💬" />
+          <UserCardComponent />
+        </>
+      ) : null}
       <IntroComponent intro="브블이 선정한 금주의 콘텐츠 🏆" />
       <CardComponent endpoint="reviewlist" />
       <IntroComponent intro="브블Pick이 가장 많은 콘텐츠 ❤️" />

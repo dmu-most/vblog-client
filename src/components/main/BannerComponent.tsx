@@ -20,6 +20,11 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
     navigate(`/board/${data.contentId}`);
   };
 
+  /** 2023/07/29 - 해당 card 클릭 시 해당 board/id로 넘어갈 수 있게하는 함수 - by jh*/
+  const handleIntroNavClick = () => {
+    navigate('/intro');
+  };
+
   return (
     <BannerContainer>
       <RowBannerContainer>
@@ -34,7 +39,7 @@ const BannerComponent: React.FC<BannerProps> = ({ data }) => {
               <BannerTag />
             </div>
           </TagBannerForm>
-          <CallBannerForm>
+          <CallBannerForm onClick={handleIntroNavClick}>
             <div className="Label"> 브블이 뭔가요? 🙋‍♀️ </div>
             <ImgContainer>
               <img src="/assets/images/community.png" />
@@ -61,10 +66,6 @@ const BannerContainer = styled.div`
   @media ${props => props.theme.breakpoints.mobileSMax} {
     height: 250px;
   }
-
-  /* @media ${props => props.theme.breakpoints.tablet} {
-      height: 350px;
-      } */
 `;
 
 const RowBannerContainer = styled.div`

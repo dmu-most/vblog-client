@@ -1,10 +1,16 @@
-import React from 'react';
-import styled, {keyframes} from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 // icons
-import { AiOutlineArrowDown, AiOutlineArrowLeft, AiOutlineArrowRight,
-     AiOutlineArrowUp, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import {  AiOutlineArrowLeft, AiFillHeart, AiOutlineHeart,  } from "react-icons/ai";
+// store
+import { useContentModeStore } from '@store/useConentModeStore';
 
+//api
+import { getvlogbannerTagCheck, getblogbannerTagCheck } from '@api/main';
+
+// type
+import { BannerTags } from 'types/main/list';
 
 interface ButtonProps{
 	width?: string;
@@ -18,61 +24,74 @@ interface ButtonProps{
 	svgheight? :string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface TextButtonProps extends ButtonProps{
-}
+// tag-color 함수
+const colors = ['pink', 'yellow', 'beige', 'orange'];
+const bgcolors = ['gray', 'purple', 'white', 'peach']; 
 
+//**2023/07/19 bannertag - by jh
 const BannerTag : React.FC = (): JSX.Element => {   
+  const [bannertagData, setBannertagData] = useState<BannerTags[]>([]);
+  const { mode } = useContentModeStore();
+
+  //**2023/11/10 bannertag api 적용 함수 - by jh
+  const getAllbannerTagCheck = async () => {
+    try {
+      let bannerApi;
+      if (mode === 'V') {
+       bannerApi = getvlogbannerTagCheck; 
+      } else if (mode === 'B') {
+        bannerApi = getblogbannerTagCheck; 
+    }
+
+    if (bannerApi) {
+      const res = await bannerApi();
+      setBannertagData(res);
+    } else {
+      console.error('Invalid mode:', mode);
+    }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getAllbannerTagCheck();
+  }, [mode]);
+  
 	return(
-        <BannerTagContainer>
-            <TextTagContainer height="30px" bgcolor="var(--tag-pink)" borderradius="20px">
-              <span className="Label"> #세계여행 </span>
-            </TextTagContainer>
-            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowLeft width="5px" height= "5px" />
-            </ArrowTagContainer>
-            <TextTagContainer height="30px" bgcolor="var(--tag-yellow)" borderradius="20px">
-              <span className="Label"> #밈고리즘 </span>
-            </TextTagContainer>
-            <TextTagContainer height="30px" bgcolor="var(--white-primary)" bordercolor="var(--tag-peach)" bordersize={2} borderradius="20px">
-              <span className="Label"> #배우는여행중 </span>
-            </TextTagContainer>
-            <TagContainer width="30px" height="30px" bgcolor="var(--tag-beige)" borderradius="50%" />
-            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowDown width="10px" height= "10px" />
-            </ArrowTagContainer>
-            <TextTagContainer height="30px" bgcolor="var(--tag-orange)" borderradius="20px">
-              <span className="Label"> #림툰 </span>
-            </TextTagContainer>
-            <TagContainer width="30px" height="30px" bgcolor="var(--tag-blue)" borderradius="50%" />
-            <TextTagContainer height="30px" bgcolor="var(--white-primary)" bordercolor="var(--tag-green)" bordersize={2} borderradius="20px">
-              <span className="Label"> #성수동맛집 </span>
-            </TextTagContainer>
-            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowRight width="10px" height= "10px" />
-            </ArrowTagContainer>
-            <TagContainer width="30px" height="30px" bgcolor="var(--tag-purple)" borderradius="50%" />
-            <TextTagContainer height="30px" bgcolor="var(--tag-orange)" borderradius="20px">
-              <span className="Label"> #새로 뜨는 영상 </span>
-            </TextTagContainer>
-            <ArrowTagContainer height="30px" bgcolor="var(--white-hunt)" borderradius="50%">
-              <AiOutlineArrowUp width="10px" height= "10px" />
-            </ArrowTagContainer>
-            <BgchangeTagContainer height="30px" bgcolor="var(--tag-pink)" borderradius="20px">
-              <span className="Label"> #최근에 업로드 된 블로그 </span>
-            </BgchangeTagContainer>
-            <TagContainer height="30px" bgcolor="var(--white-primary)" borderradius="50%">
-              <AiFillHeart color="var(--icon-red)"/>
-            </TagContainer>
-            <TagContainer height="30px" bgcolor="var(--white-primary)" borderradius="50%">
-              <AiOutlineHeart color="var(--icon-red)"/>
-            </TagContainer>
-            <TagContainer width="5.5rem" height="30px" bgcolor="var(--tag-mint)" borderradius="20px">
-              <AiOutlineArrowLeft color="var(--white-primary)"/>
-            </TagContainer>
-        </BannerTagContainer>
-    )
-}
+    <BannerTagContainer>
+      {bannertagData?.map((tag, index) => (
+        <React.Fragment key={index}>
+          <TextTagContainer
+            key={index}
+            height="35px"
+            bgcolor={`var(--tag-${colors[index % colors.length]})`}
+            borderradius="20px"
+          >
+            <span className="Label"> #{tag.toString()} </span>
+          </TextTagContainer>
+
+          <BgchangeTagContainer
+            width="35px"
+            height="35px"
+            bgcolor={`var(--tag-${bgcolors[index % bgcolors.length]})`}
+            borderradius="50%"
+          >
+          </BgchangeTagContainer>
+        </React.Fragment>
+      ))}
+      <SubTagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+        <AiFillHeart color="var(--icon-red)"/>
+      </SubTagContainer>
+      <SubTagContainer height="35px" bgcolor="var(--white-primary)" borderradius="50%">
+        <AiOutlineHeart color="var(--icon-red)"/>
+      </SubTagContainer>
+      <SubTagContainer width="5.6rem" height="35px" bgcolor="var(--tag-mint)" borderradius="20px">
+        <AiOutlineArrowLeft color="var(--white-primary)"/>
+      </SubTagContainer>
+    </BannerTagContainer>
+      )
+  }
 
 export default BannerTag;
 
@@ -80,7 +99,6 @@ const BannerTagContainer = styled.div`
 	position:relative ;
 	display:flex ;  
 	flex-wrap: wrap ;
-    
 `;
 
 const TagContainer = styled.button<ButtonProps>`
@@ -118,44 +136,13 @@ const TextTagContainer = styled(TagContainer)<ButtonProps>`
 `;
 
 const BgchangeTagContainer = styled(TagContainer)<ButtonProps>`
-  animation: colorChangeAnimation 2s infinite;
-
-  @keyframes colorChangeAnimation {
-    from {
-      background-color: var(--white-primary);
-    }
-    to {
-      background-color: ${({ bgcolor }) => (bgcolor ? bgcolor : 'transparent')};
-    }
-  }
-
-  > .Label{
-    line-height: 20px;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--black-hunt);
-    font-family: sans-serif;
-    letter-spacing: 1px;
-    }
-`;
-
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(180deg);
+   @media screen and (max-width: 1400px) {
+    display: none;
   }
 `;
 
-const ArrowTagContainer = styled(TagContainer)<ButtonProps>`
-  animation-name: ${rotateAnimation};
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-delay: 5s;
-
-    @keyframes textColorChange{
-	    from{color:var(--black-hunt);}
-	    to{color:var(--white-primary);}
-        }
+const SubTagContainer = styled(TagContainer)<ButtonProps>`
+   @media screen and (max-width: 1400px) {
+    display: none;
+  }
 `;

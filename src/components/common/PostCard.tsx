@@ -26,7 +26,7 @@ const PostCard: React.FC<PostCardProps> = ({ data }) => {
 
   const handlerImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget;
-      target.src = '/assets/images/noimage.png';
+    target.src = '/assets/images/noimage.png';
   };
 
   return (
@@ -73,6 +73,11 @@ const CardContainer = styled.div`
   /* 확대효과 */
   &:hover {
     transform: scale(1.02); /* 마우스 오버 시 10% 확대 */
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    width: 100%;
+    max-width: calc(100vw - 40px);
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
@@ -127,8 +132,9 @@ const ImgContainer = styled.div`
     height: 100%;
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 300px;
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    max-width: calc(100vw - 40px);
+    width: 100%;
   }
 `;
 
@@ -206,6 +212,6 @@ const TagContainer = styled.div`
   overflow: hidden;
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    height: 20px;
+    height: 30px;
   }
 `;

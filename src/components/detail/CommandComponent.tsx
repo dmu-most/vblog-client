@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
 
@@ -13,6 +13,9 @@ import IntroComponent from "@components/main/IntroComponent";
 
 // Component
 import PostCard from '@components/common/PostCard';
+
+// spinner
+import { PuffLoader } from "react-spinners"
 
 //**2023/07/29 CommandComponent- by jh
 const CommandComponent: React.FC = (): JSX.Element => {
@@ -39,19 +42,19 @@ const CommandComponent: React.FC = (): JSX.Element => {
   }, []);
 
     return (
-        <CommandContainer>
-            <IntroComponent intro="관련 브이로그 추천 👉" />
-                <ScrollableCardContainer>
-                    <CommandCardContainer {...swipeHandlers}>
-                      {vblogData.length > 0 ? (
-                        vblogData.map((item) => (
-                        <PostCard key={item.contentId} data={item} />
-                        ))
-                       ) : (
-                      <p>Loading...</p>
-                      )}
-                    </CommandCardContainer>
-                 </ScrollableCardContainer>
+      <CommandContainer>
+        <IntroComponent intro="관련 브이로그 추천 👉" />
+          <ScrollableCardContainer>
+            <CommandCardContainer {...swipeHandlers}>
+              {vblogData.length > 0 ? (
+                vblogData.map((item) => (
+                  <PostCard key={item.contentId} data={item} />
+                ))
+              ) : (
+                <PuffLoader loading={true} size={40} />
+                )}
+                </CommandCardContainer>
+                </ScrollableCardContainer>
         </CommandContainer>
     )
 }

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import { postLogin } from '@api/auth/login';
 
 // types
@@ -12,6 +13,7 @@ import AlertModal from '@components/common/AlertModal';
 // store
 import { useTokenStore } from '@store/useTokenStore';
 import { useMemberStore } from '@store/useMemberStore';
+import { useRememberIdStore } from '@store/useRememberIdStore';
 
 // util
 import { isValidId, isValidPassword } from '@utils/formValidation';
@@ -19,12 +21,17 @@ import { isValidId, isValidPassword } from '@utils/formValidation';
 // icons
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
+interface ErrorResponse {
+  message: string;
+}
+
 /** 2023/07/25 - 로그인 폼 컴포넌트 - by sineTlsl */
 const LoginForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
-  const [rememberId, setRememberId] = useState<boolean>(false);
+  const [isRemberId, setIsRememberId] = useState<boolean>(false);
   const { setAccessToken, setRefreshToken } = useTokenStore();
   const { setMember } = useMemberStore();
+  const { rememberedId, setRememberedId, clearRememberedId } = useRememberIdStore();
 
   // modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +41,13 @@ const LoginForm: React.FC = (): JSX.Element => {
     loginId: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (rememberedId) {
+      setForm(prevForm => ({ ...prevForm, loginId: rememberedId }));
+      setIsRememberId(true);
+    }
+  }, [rememberedId]);
 
   /** 2023/09/09 - 로그인 버튼 함수 - by sineTlsl */
   const handlerLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,32 +65,29 @@ const LoginForm: React.FC = (): JSX.Element => {
 
       setAccessToken(res.accessToken);
       setRefreshToken(res.refreshToken);
+      setMember({
+        imageUrl: res.data.imageUrl,
+        username: res.data.username,
+      });
 
-      setMember(res.data);
-
+      if (isRemberId) {
+        setRememberedId(form.loginId);
+      } else {
+        clearRememberedId();
+      }
       navigate('/');
-    } catch (err: any) {
+    } catch (err) {
+      const axiosError = err as AxiosError<ErrorResponse>;
       // 아이디와 비밀번호가 일치하지 않을 때, 모달창 추가
-      if (err.response) {
+      if (axiosError.response) {
         console.log('로그인 실패');
 
-        const { data } = err.response;
+        const { data } = axiosError.response;
 
         setModalErrorText(data.message.split('. '));
         setIsModalOpen(true);
       }
     }
-  };
-
-  /** 2023/07/25 - submit 이벤트 발생을 막는 함수 - by sineTlsl */
-  const handlerPreventFormSubmit = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
-
-  /** 2023/07/25 - 아이디 저장 함수 - by sineTlsl */
-  const handlerIdRemember = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setRememberId(!rememberId);
   };
 
   /** 2023/07/25 - 회원가입 페이지 이동 - by sineTlsl */
@@ -91,8 +102,9 @@ const LoginForm: React.FC = (): JSX.Element => {
           className="form_id"
           type="text"
           placeholder="아이디"
+          name="loginId"
           value={form.loginId}
-          onChange={e => setForm({ ...form, loginId: e.target.value })}
+          onChange={e => setForm(prevForm => ({ ...prevForm, loginId: e.target.value }))}
         />
         <input
           className="form_password"
@@ -100,15 +112,12 @@ const LoginForm: React.FC = (): JSX.Element => {
           placeholder="비밀번호"
           autoComplete="off"
           value={form.password}
-          onChange={e => setForm({ ...form, password: e.target.value })}
+          onChange={e => setForm(prevForm => ({ ...prevForm, password: e.target.value }))}
         />
         <LoginMore>
-          <button type="button" className="id_remember" onClick={handlerIdRemember}>
-            <AiOutlineCheckCircle size="25" color={!rememberId ? 'var(--gray-primary)' : 'var(--gray-dark)'} />
+          <button type="button" className="id_remember" onClick={() => setIsRememberId(!isRemberId)}>
+            <AiOutlineCheckCircle size="25" color={!isRemberId ? 'var(--gray-primary)' : 'var(--gray-dark)'} />
             아이디 저장
-          </button>
-          <button type="button" className="find_password" onClick={handlerPreventFormSubmit}>
-            비밀번호 찾기
           </button>
         </LoginMore>
         <ButtonWrap>
@@ -138,7 +147,7 @@ const LoginFormContainer = styled.div`
   max-width: 450px;
   width: 100%;
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     padding: 0 2rem;
     margin: 0.2rem;
   }
@@ -167,7 +176,7 @@ const FormWrap = styled.form`
     border: 1px solid var(--gray-dark);
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .form_id,
     .form_password {
       font-size: 15px;
@@ -194,7 +203,7 @@ const LoginMore = styled.div`
     font-size: 15px;
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .id_remember,
     > .find_password {
       font-size: 14px;
@@ -240,7 +249,7 @@ const ButtonWrap = styled.div`
     }
   }
 
-  @media ${props => props.theme.breakpoints.mobileSMax} {
+  @media ${props => props.theme.breakpoints.mobileLMax} {
     > .common_btn {
       font-size: 15px;
     }

@@ -131,7 +131,7 @@ const CardContainer = styled.div`
     margin-top: 1rem;
     
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media screen and (min-width: 1100px) {

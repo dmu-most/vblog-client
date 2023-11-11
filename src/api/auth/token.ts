@@ -6,11 +6,7 @@ import { CheckAccessTokenResponse } from 'types/auth/token';
 // ============================ TOKEN ============================
 /** 2023/09/13 - 액세스 토큰 검증 GET 요청 - by sineTlsl */
 export const getAccessToken = async () => {
-  const { data } = await instance.get<CheckAccessTokenResponse>('/token/verify-access', {
-    headers: {
-      'Only-Authorization': true,
-    },
-  });
+  const { data } = await instance.get<CheckAccessTokenResponse>('/token/verify-access', {});
 
   return data;
 };
@@ -19,7 +15,7 @@ export const getAccessToken = async () => {
 export const postNewAccessToken = async () => {
   const { headers } = await instance.post('/token/refresh-access', {
     headers: {
-      'Only-Refresh': true,
+      'Both-Tokens': true,
     },
   });
 

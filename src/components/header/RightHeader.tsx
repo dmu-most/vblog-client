@@ -9,15 +9,15 @@ import { useMemberStore } from '@store/useMemberStore';
 // components
 import UserLoginBtn from '@components/header/UserLoginBtn';
 import MyInfoDropDown from '@components/header/MyInfoDropDown';
+import Search from '@components/header/Search';
 
 // icon
-import { HiOutlineSearch } from 'react-icons/hi';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 type ContentMode = 'V' | 'B';
 
 /** 2023/08/18 - 헤더 오른쪽 컴포넌트 (비로그인 or 로그인) - by sineTlsl */
-const RightHeader = () => {
+const RightHeader: React.FC = (): JSX.Element => {
   const { accessToken, refreshToken } = useTokenStore();
   const { mode, setMode } = useContentModeStore();
   const { member } = useMemberStore();
@@ -33,7 +33,6 @@ const RightHeader = () => {
   };
 
   useEffect(() => {
-    //
     const handleClickOutside = (e: MouseEvent) => {
       if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
@@ -54,7 +53,7 @@ const RightHeader = () => {
   return (
     <RightHeaderContainer>
       <div className="btn_wrap">
-        <StyledSearch color="var(--gray-dark)" />
+        <Search />
         <VblogChangeBtn mode={mode} onClick={handleContentMode}>
           {mode}
         </VblogChangeBtn>
@@ -111,15 +110,6 @@ const RightHeaderContainer = styled.div`
   }
 `;
 
-// Search 아이콘
-const StyledSearch = styled(HiOutlineSearch)`
-  font-size: 30px;
-
-  @media ${props => props.theme.breakpoints.mobileSMax} {
-    font-size: 20px;
-  }
-`;
-
 // Vlog or Blog 전환 버튼
 const VblogChangeBtn = styled.button<{ mode: ContentMode }>`
   width: 30px;
@@ -131,13 +121,14 @@ const VblogChangeBtn = styled.button<{ mode: ContentMode }>`
   letter-spacing: -0.16px;
   font-size: 20px;
   font-weight: 700;
+  padding: 0;
   cursor: pointer;
   ${({ theme }) => theme.common.flexCenterRow};
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
-    width: 27px;
-    height: 27px;
-    font-size: 15px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 `;
 

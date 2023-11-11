@@ -1,12 +1,19 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+// store
+import { useMemberStore } from '@store/useMemberStore';
 
 // type
-import { MyInfoType } from 'types/myInfo';
+import { MyInfoType } from 'types/my-info';
+
+// api
+import { patchMyInfoName } from '@api/my-info';
 
 // components
 import ProfileImageEdit from '@components/my-info/ProfileImageEdit';
 import ProfileNameEdit from '@components/my-info/ProfileNameEdit';
+import InterestList from '@components/my-info/InterestList';
 
 interface ProfileProps {
   profile: MyInfoType;
@@ -15,18 +22,31 @@ interface ProfileProps {
 
 /** 2023/09/28 - 프로필 업데이트 컴포넌트 - by sineTlsl */
 const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit }): JSX.Element => {
+  const { setMember } = useMemberStore();
   const [name, setName] = useState<string>(profile.username);
   const [image, setImage] = useState<string | null>(profile.imageUrl);
 
+  /** 2023/10/15 - 프로필 이름 수정 핸들러 - by sineTlsl */
+  const handlerNameUpdate = async () => {
+    const res = await patchMyInfoName({ username: name });
+
+    try {
+      handlerProfileEdit();
+      setMember({ username: res.username, imageUrl: res.imageUrl });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <UserProfileContainer>
       <ProfileEditWrap>
         <ProfileImageEdit image={image} setImage={setImage} />
         <ProfileInfoText>
           <p className="name">Name</p>
-          <div className="profile_name_wrap">
-            <ProfileNameEdit name={name} setName={setName} />
-            <button onClick={handlerProfileEdit}>저장</button>
+          <ProfileNameEdit name={name} setName={setName} />
+          <InterestList />
+          <div className="btn_wrap">
+            <button onClick={handlerNameUpdate}>저장</button>
           </div>
         </ProfileInfoText>
       </ProfileEditWrap>
@@ -53,7 +73,6 @@ const ProfileInfoText = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
-  padding-top: 25px;
 
   > .name {
     color: var(--black-hunt);
@@ -61,44 +80,39 @@ const ProfileInfoText = styled.div`
     font-size: 17px;
   }
 
-  > .profile_name_wrap {
+  > .btn_wrap {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    justify-content: flex-end;
+  }
+  > .btn_wrap > button {
+    width: 70px;
+    height: 35px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--white-primary);
+    background: var(--green-hunt);
+    border-radius: 3px;
+    border: none;
 
-    > button {
-      width: 70px;
-      height: 35px;
-      font-size: 16px;
-      cursor: pointer;
-      padding: 10px;
-      font-weight: 600;
-      font-size: 16px;
-      color: var(--white-primary);
-      background: var(--green-hunt);
-      border-radius: 3px;
-      border: none;
-
-      &:active {
-        background: var(--deep-green);
-      }
-
-      ${({ theme }) => theme.common.flexCenterRow};
-      flex-wrap: nowrap;
+    &:active {
+      background: var(--deep-green);
     }
+
+    ${({ theme }) => theme.common.flexCenterRow};
+    flex-wrap: nowrap;
   }
 
   @media ${props => props.theme.breakpoints.mobileSMax} {
     > .name {
       font-size: 16px;
     }
-    > .profile_name_wrap {
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-    }
-    > .profile_name_wrap > button {
+
+    > .btn_wrap > button {
       font-size: 15px;
+      width: 60px;
     }
   }
 `;
