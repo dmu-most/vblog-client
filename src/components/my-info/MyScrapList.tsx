@@ -15,7 +15,7 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
   // }
 
   useEffect(() => {
-    const fetctScrapData = async () => {
+    const fetchScrapData = async () => {
       const res = await getScrapBlog();
       const res2 = await getScrapVlog();
 
@@ -26,7 +26,7 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
         console.error(err);
       }
     };
-    fetctScrapData();
+    fetchScrapData();
   }, []);
 
   return (

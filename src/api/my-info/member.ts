@@ -35,3 +35,25 @@ export const deleteMyInfoImage = async () => {
 
   return data;
 };
+
+// ============================ 카테고리 ============================
+/** 2023/11/11 - 카테고리 post 요청 - by sineTlsl */
+export const postUserCategory = async (body: string[]) => {
+  const { data } = await instance.post<string[]>('/options', body);
+
+  return data;
+};
+
+/** 2023/11/11 - 카테고리 patch 요청 - by sineTlsl */
+export const patchUserCategory = async (body: string[]) => {
+  const { data } = await instance.patch<string[]>('/myinfo/options', body);
+
+  return data;
+};
+
+/** 2023/11/11 - 카테고리 get 요청 - by sineTlsl */
+export const getUserCategory = async () => {
+  const { data } = await instance.get<string[]>('/options');
+
+  return data;
+};

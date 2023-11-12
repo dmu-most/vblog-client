@@ -1,19 +1,22 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
+interface InterestListProps {
+  setHasCategoryMin: (hasCategories: boolean) => void;
+  interest: string[];
+  setInterest: (interest: string[]) => void;
+}
 const categories = ['여행', '게임', '건강', '맛집', '방송', '뷰티'];
 
 /** 2023/10/24 - 카테고리 수정 컴포넌트 - by sineTlsl */
-const InterestList: React.FC = (): JSX.Element => {
-  const [interest, setInterest] = useState<string[]>([]);
-
+const InterestList: React.FC<InterestListProps> = ({ setHasCategoryMin, interest, setInterest }): JSX.Element => {
   /** 2023/10/24 - 카테고리 선택 함수 - by sineTlsl */
   const handlerInterestClick = (item: string) => {
-    if (interest.includes(item)) {
-      setInterest(prev => prev.filter(selected => selected !== item));
-    } else if (interest.length < 3) {
-      setInterest(prev => [...prev, item]);
-    }
+    const newInterest = interest.includes(item)
+      ? interest.filter(selected => selected !== item)
+      : [...interest, item].slice(0, 3); // 최대 3개를 유지
+
+    setInterest(newInterest);
+    setHasCategoryMin(newInterest.length > 0);
   };
 
   return (
