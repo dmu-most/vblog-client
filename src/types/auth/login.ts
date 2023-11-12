@@ -7,6 +7,10 @@ export interface LoginFormType {
 
 /** 2023/09/13 - 로그인 성공 시 (Response) - by sineTlsl */
 export interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  category: string[];
   imageUrl: string | null;
+  isSelected: boolean;
   username: string | null;
 }

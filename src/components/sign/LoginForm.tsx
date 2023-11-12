@@ -65,9 +65,11 @@ const LoginForm: React.FC = (): JSX.Element => {
 
       setAccessToken(res.accessToken);
       setRefreshToken(res.refreshToken);
+
+      console.log(res);
       setMember({
-        imageUrl: res.data.imageUrl,
-        username: res.data.username,
+        imageUrl: res.imageUrl,
+        username: res.username,
       });
 
       if (isRemberId) {
@@ -75,7 +77,12 @@ const LoginForm: React.FC = (): JSX.Element => {
       } else {
         clearRememberedId();
       }
-      navigate('/');
+
+      if (!res.isSelected) {
+        navigate('/myinfo', { state: { isCategory: true } });
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       const axiosError = err as AxiosError<ErrorResponse>;
       // 아이디와 비밀번호가 일치하지 않을 때, 모달창 추가
