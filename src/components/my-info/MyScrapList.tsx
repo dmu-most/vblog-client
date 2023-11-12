@@ -29,7 +29,6 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
         try {
           const res = await selectedApi();
 
-          console.log(res);
           setScrapData(res);
         } catch (err) {
           console.log(err);
