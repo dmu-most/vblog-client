@@ -25,7 +25,7 @@ export const getTagSearchBlog = async (params: SearchListRequestType) => {
   });
 
   return data;
-};
+};  
 
 /** 2023/11/08 - 브이로그 게시글 GET 요청 - by sineTlsl */
 export const getSearchVlog = async (params: SearchListRequestType) => {

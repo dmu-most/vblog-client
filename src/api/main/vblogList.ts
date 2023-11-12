@@ -1,6 +1,7 @@
 import instance from '@api/axiosInstance';
 
 import { vblogListType, BannerTags } from 'types/main/list';
+import { SearchListRequestType, SearchListType } from 'types/index';
 
 // ============================ vlog banner 조회 ===============================================
 /** 2023/10/13 - vlog banner 조회 - by jh */
@@ -42,6 +43,22 @@ export const getvlogbannerTagCheck = async () => {
 /** 2023/10/13 - vlog banner 조회 - by jh */
 export const getblogbannerTagCheck = async () => {
   const { data } = await instance.get<BannerTags[]>('/blog/hashtags', {
+    headers: {
+      'No-Auth': true,
+    },
+  });
+
+  return data;
+};
+
+// ============================ vlog bannertag 검색 ===============================================
+/** 2023/10/13 - vlog banner 검색 - by jh */
+export const getvlogbannerTagSearch = async (params: SearchListRequestType, tag: string) => {
+  const { data } = await instance.get<SearchListType[]>('vlog/search/category', {
+    params: {
+      ...params,
+      keyword: tag, // Include the tag in the params object
+    },
     headers: {
       'No-Auth': true,
     },
