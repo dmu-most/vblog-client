@@ -107,13 +107,9 @@ const BestBannerContainer = styled.div`
   > img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     overflow: hidden;
     border-radius: 0 0 10px 10px;
-
-    @media ${props => props.theme.breakpoints.mobileSMax} {
-      /* padding: 20px;
-      font-size: 15px; */
-    }
   }
 `;
 
