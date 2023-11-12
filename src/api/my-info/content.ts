@@ -25,14 +25,14 @@ export const postScrap = async (name: string, contentId: number) => {
 
 /** 2023/10/23 - 스크랩 폴더 Vlog GET 요청 - by sineTlsl */
 export const getScrapVlog = async () => {
-  const { data } = await instance.get<ScrapResponseType>('/myinfo/scraps/vlog');
+  const { data } = await instance.get<ScrapResponseType[]>('/myinfo/scraps/vlog');
 
   return data;
 };
 
 /** 2023/10/23 - 스크랩 폴더 Blog GET 요청 - by sineTlsl */
 export const getScrapBlog = async () => {
-  const { data } = await instance.get<ScrapResponseType>('/myinfo/scraps/blog');
+  const { data } = await instance.get<ScrapResponseType[]>('/myinfo/scraps/blog');
 
   return data;
 };
