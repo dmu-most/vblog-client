@@ -45,17 +45,17 @@ const MyReviewList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
   return (
     <ReviewListContainer>
-      <ReviewListUl>
-        {reviewsData.length > 0 ? (
-          reviewsData.map(review => (
+      {reviewsData.length > 0 ? (
+        <ReviewListUl>
+          {reviewsData.map(review => (
             <li key={review.reviewId}>
               <MyReviewItem review={review} setDeleteReviewId={setDeleteReviewId} />
             </li>
-          ))
-        ) : (
-          <UndefinedData text={`리뷰가 없습니다. 작성해보러 갈까요? :)`} />
-        )}
-      </ReviewListUl>
+          ))}
+        </ReviewListUl>
+      ) : (
+        <UndefinedData text={`리뷰가 없습니다. 작성해보러 갈까요? :)`} />
+      )}
       {review && <ReviewPagination data={review} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
     </ReviewListContainer>
   );
