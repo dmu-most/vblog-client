@@ -11,10 +11,14 @@ import { getMyInfo } from '@api/my-info';
 import UserProfileUpdate from '@components/my-info/UserProfileUpdate';
 import SocialIcons from '@components/my-info/SocialIcons';
 
+interface ProfileDescProps {
+  isCategory: boolean;
+}
+
 /** 2023/09/13 - 프로필 소개 컴포넌트 - by sineTlsl */
-const ProfileDescription: React.FC = (): JSX.Element => {
+const ProfileDescription: React.FC<ProfileDescProps> = ({ isCategory }): JSX.Element => {
   const [myInfoData, setMyInfoData] = useState<MyInfoType>();
-  const [isProfileEdit, setIsProfileEdit] = useState<boolean>(false);
+  const [isProfileEdit, setIsProfileEdit] = useState<boolean>(isCategory ?? false);
 
   const fetchMyInfoData = async () => {
     const res = await getMyInfo();
@@ -29,7 +33,7 @@ const ProfileDescription: React.FC = (): JSX.Element => {
     fetchMyInfoData();
   }, [isProfileEdit]);
 
-  /** 2023/10/15 - 프로필 보기 or 프로피 수정 모드 - by sineTlsl */
+  /** 2023/10/15 - 프로필 보기 or 프로필 수정 모드 - by sineTlsl */
   const handlerProfileEdit = async () => {
     setIsProfileEdit(!isProfileEdit);
   };
@@ -51,7 +55,7 @@ const ProfileDescription: React.FC = (): JSX.Element => {
             </ProfileInfoWrap>
           </>
         ) : (
-          <UserProfileUpdate profile={myInfoData} handlerProfileEdit={handlerProfileEdit} />
+          <UserProfileUpdate profile={myInfoData} handlerProfileEdit={handlerProfileEdit} isCategory={isProfileEdit} />
         ))}
     </ProfileDescriptionContainer>
   );

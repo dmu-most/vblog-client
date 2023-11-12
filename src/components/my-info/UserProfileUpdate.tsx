@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // store
 import { useMemberStore } from '@store/useMemberStore';
@@ -8,35 +8,59 @@ import { useMemberStore } from '@store/useMemberStore';
 import { MyInfoType } from 'types/my-info';
 
 // api
-import { patchMyInfoName } from '@api/my-info';
+import { getUserCategory, patchMyInfoName, patchUserCategory } from '@api/my-info';
 
 // components
 import ProfileImageEdit from '@components/my-info/ProfileImageEdit';
 import ProfileNameEdit from '@components/my-info/ProfileNameEdit';
 import InterestList from '@components/my-info/InterestList';
+import AlertModal from '@components/common/AlertModal';
 
 interface ProfileProps {
   profile: MyInfoType;
   handlerProfileEdit: () => void;
+  isCategory: boolean;
 }
 
 /** 2023/09/28 - 프로필 업데이트 컴포넌트 - by sineTlsl */
-const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit }): JSX.Element => {
+const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit, isCategory }): JSX.Element => {
   const { setMember } = useMemberStore();
   const [name, setName] = useState<string>(profile.username);
   const [image, setImage] = useState<string | null>(profile.imageUrl);
+  const [hasCategoriesMin, setHasCategoryMin] = useState<boolean>(!isCategory);
+  const [isAlertModal, setIsAlertModal] = useState<boolean>(false);
+  const [interest, setInterest] = useState<string[]>([]);
 
-  /** 2023/10/15 - 프로필 이름 수정 핸들러 - by sineTlsl */
+  useEffect(() => {
+    const getCategoryFetch = async () => {
+      try {
+        const res = await getUserCategory();
+        setInterest(res);
+        setHasCategoryMin(res.length > 0);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getCategoryFetch();
+  }, []);
+
+  /** 2023/10/15 - 프로필 이름 및 카테고리 수정 핸들러 - by sineTlsl */
   const handlerNameUpdate = async () => {
-    const res = await patchMyInfoName({ username: name });
+    if (hasCategoriesMin) {
+      const resName = await patchMyInfoName({ username: name });
 
-    try {
-      handlerProfileEdit();
-      setMember({ username: res.username, imageUrl: res.imageUrl });
-    } catch (err) {
-      console.log(err);
+      try {
+        handlerProfileEdit();
+        patchUserCategory(interest);
+        setMember({ username: resName.username, imageUrl: resName.imageUrl });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setIsAlertModal(true);
     }
   };
+
   return (
     <UserProfileContainer>
       <ProfileEditWrap>
@@ -44,12 +68,15 @@ const UserProfileUpdate: React.FC<ProfileProps> = ({ profile, handlerProfileEdit
         <ProfileInfoText>
           <p className="name">Name</p>
           <ProfileNameEdit name={name} setName={setName} />
-          <InterestList />
+          <InterestList setHasCategoryMin={setHasCategoryMin} interest={interest} setInterest={setInterest} />
           <div className="btn_wrap">
             <button onClick={handlerNameUpdate}>저장</button>
           </div>
         </ProfileInfoText>
       </ProfileEditWrap>
+      <AlertModal isOpen={isAlertModal} onClose={() => setIsAlertModal(false)}>
+        {'카테고리를 1개 이상 선택해주세요.'}
+      </AlertModal>
     </UserProfileContainer>
   );
 };

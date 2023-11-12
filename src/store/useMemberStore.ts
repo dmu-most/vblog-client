@@ -1,10 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { LoginResponse } from 'types/auth';
+
+interface MemberInfo {
+  imageUrl: string | null;
+  username: string | null;
+}
 
 interface Member {
-  member: LoginResponse | null;
-  setMember: (member: LoginResponse | null) => void;
+  member: MemberInfo | null;
+  setMember: (member: MemberInfo | null) => void;
   clearMember: () => void;
 }
 
