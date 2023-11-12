@@ -43,10 +43,15 @@ const ScrapModal: React.FC<ScrapModalProps> = ({ isOpen, onClose, contentId }): 
   //**2023/10/24 input name 입력 후 만들기 버튼 클릭 시 새 폴더 저장 함수 - by jh
   const handleNewFolderMakeClick = async () => {
     //**2023/11/11 스크랩 새 폴더 만들기 api 서버 연결 - by jh
-    await postScrapFolder(newFolderName, type); 
+    try {
+    const res = await postScrapFolder(newFolderName, type, contentId); 
+    console.log(res);
     setNewFolderName('');
     setshowNewFolderContainer(false);
     setFolderNames(prev => [...prev, newFolderName]);
+    } catch (error) {
+    console.error('Error making a new folder:', error);
+    }
   };
 
   //**2023/10/24 저장하기 버튼 클릭 시 사용되는 함수 - by jh
