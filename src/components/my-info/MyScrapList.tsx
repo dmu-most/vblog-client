@@ -28,7 +28,6 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
       if (selectedApi) {
         try {
           const res = await selectedApi();
-
           setScrapData(res);
         } catch (err) {
           console.log(err);
@@ -36,11 +35,11 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
       }
     };
     fetchScrapData();
-  }, []);
+  }, [mode]);
 
   return (
     <ScrapListContainer>
-      {scrapData.length > 0 ? (
+      {scrapData && scrapData.length >= 1 && scrapData[0].boards.length > 0 ? (
         <ScrapListUl>
           {scrapData.map(post => (
             <li key={post.id}>
