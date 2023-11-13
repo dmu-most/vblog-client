@@ -6,6 +6,7 @@ import { ScrapResponseType } from 'types/my-info';
 
 // components
 import ScrapFolderList from '@components/my-info/ScrapFolderList';
+import UndefinedData from '@components/common/UndefinedData';
 
 interface ScrapItemProps {
   scrap: ScrapResponseType;
@@ -23,24 +24,30 @@ const MyScrapItem: React.FC<ScrapItemProps> = ({ scrap }): JSX.Element => {
       <div className="folder_name">
         <p>{scrap.name}</p>
       </div>
-      {scrap.boards.length >= 4 ? (
-        <FolderUl>
-          {scrap.boards.slice(0, 4).map(item => (
-            <li key={item.id}>
-              <button onClick={handlerScrapOpenClick}>
-                <img src={item.thumbnails} alt="스크랩 폴더 안 포스트 이미지" />
-              </button>
-            </li>
-          ))}
-        </FolderUl>
+      {scrap.boards.length > 0 ? (
+        scrap.boards.length >= 4 ? (
+          <FolderUl>
+            {scrap.boards.slice(0, 4).map(item => (
+              <li key={item.id}>
+                <button onClick={handlerScrapOpenClick}>
+                  <img src={item.thumbnails} alt="스크랩 폴더 안 포스트 이미지" />
+                </button>
+              </li>
+            ))}
+          </FolderUl>
+        ) : (
+          <FolderUl>
+            {scrap.boards.map(item => (
+              <li key={item.id}>
+                <button onClick={handlerScrapOpenClick}>
+                  <img src={item.thumbnails} alt="스크랩 폴더 안 포스트 이미지" />
+                </button>
+              </li>
+            ))}
+          </FolderUl>
+        )
       ) : (
-        <FolderUlLengthOne>
-          <li>
-            <button onClick={handlerScrapOpenClick}>
-              <img src={scrap.boards[0].thumbnails} alt="스크랩 폴더 안 포스트 이미지" />
-            </button>
-          </li>
-        </FolderUlLengthOne>
+        <UndefinedData text="스크랩된 아이템이 없습니다 :(" />
       )}
       {isScrapFolderOpen && (
         <ScrapFolderList isOpen={isScrapFolderOpen} onClose={() => setIsScrapFolderOpen(false)} scrap={scrap} />

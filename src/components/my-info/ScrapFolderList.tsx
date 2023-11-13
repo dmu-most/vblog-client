@@ -64,7 +64,7 @@ const ScrapFolderListUl = styled.ul`
   display: flex;
   flex-direction: column;
   max-height: 80vh;
-  width: 90%;
+  width: 60%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
   > h2 {
@@ -72,6 +72,14 @@ const ScrapFolderListUl = styled.ul`
     font-weight: 600;
     color: var(--black-hunt);
     margin-bottom: 20px;
+  }
+
+  @media ${props => props.theme.breakpoints.desktopSMax} {
+    width: 80%;
+  }
+
+  @media ${props => props.theme.breakpoints.tabletMax} {
+    width: 90%;
   }
 `;
 

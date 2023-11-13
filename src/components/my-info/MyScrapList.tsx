@@ -28,6 +28,7 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
       if (selectedApi) {
         try {
           const res = await selectedApi();
+          console.log(res);
           setScrapData(res);
         } catch (err) {
           console.log(err);
@@ -39,13 +40,14 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 
   return (
     <ScrapListContainer>
-      {scrapData && scrapData.length >= 1 && scrapData[0].boards.length > 0 ? (
+      {scrapData && scrapData.filter(scrap => scrap.boards.length > 0).length > 0 ? (
         <ScrapListUl>
-          {scrapData.map(post => (
-            <li key={post.id}>
-              <MyScrapItem scrap={post} />
-            </li>
-          ))}
+          {scrapData &&
+            scrapData.map(post => (
+              <li key={post.id}>
+                <MyScrapItem scrap={post} />
+              </li>
+            ))}
         </ScrapListUl>
       ) : (
         <UndefinedData text={`저장된 스크랩이 없습니다. 추가하러 가볼까요? :)`} />
