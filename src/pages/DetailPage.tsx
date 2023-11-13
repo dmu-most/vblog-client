@@ -11,7 +11,7 @@ import { getContentCheck } from '@api/detail/vblogContent';
 import { postRecentItem } from '@api/detail';
 
 // spinner
-import { PuffLoader } from "react-spinners"
+import { PuffLoader } from 'react-spinners';
 
 interface DetailPageProps {
   contentId: number;
@@ -22,19 +22,13 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
   const [contentData, setContentData] = useState<any>(null);
 
   const getAllContentCheck = async () => {
-   const res = await getContentCheck(contentId); 
-   setContentData(res);
+    const res = await getContentCheck(contentId);
+    setContentData(res);
   };
 
   /** 2023/10/23 - 최근목록 POST api 요청 - by sineTlsl */
   const fetchRecentPost = async () => {
-    const res = await postRecentItem(contentId);
-
-    try {
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    }
+    await postRecentItem(contentId);
   };
 
   useEffect(() => {
@@ -44,7 +38,11 @@ const DetailPage: React.FC<DetailPageProps> = ({ contentId }): JSX.Element => {
 
   return (
     <DetailContainer>
-      {contentData ? <ContentComponent data={contentData} contentId={contentId}/> : <PuffLoader loading={true} size={40} />}
+      {contentData ? (
+        <ContentComponent data={contentData} contentId={contentId} />
+      ) : (
+        <PuffLoader loading={true} size={40} />
+      )}
       <ReviewComponent contentId={contentId} />
       <CommandComponent />
     </DetailContainer>

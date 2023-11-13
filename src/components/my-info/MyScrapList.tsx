@@ -1,39 +1,57 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // apis
-import { postScrapFolder, getScrapBlog, getScrapVlog } from '@api/my-info';
+import { getScrapBlog, getScrapVlog } from '@api/my-info';
 
 // types
-import { MyContentListProps, ScrapResponseType } from 'types/my-info';
+import { MyContentListProps, ScrapResponseType, MyContentMode } from 'types/my-info';
+
+// components
+import MyScrapItem from '@components/my-info/MyScrapItem';
+import UndefinedData from '@components/common/UndefinedData';
+
+const scrapApiMapping: Record<MyContentMode, () => Promise<ScrapResponseType[]>> = {
+  블로그: getScrapBlog,
+  브이로그: getScrapVlog,
+};
 
 /** 2023/10/23 - 스크랩 리스트 컴포넌트 - by sineTlsl */
 const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
-  /** 2023/10/23 - 스크랩 카테고리 폴더 추가 - by sineTlsl */
-  // const handlerFolderAdd = async () => {
-  //   const res = await postScrapFolder();
-  // }
+  const [scrapData, setScrapData] = useState<ScrapResponseType[]>([]);
 
   useEffect(() => {
+    /** 2023/11/12 - 스크랩 데이터 불러오기 - by sineTlsl */
     const fetchScrapData = async () => {
-      const res = await getScrapBlog();
-      const res2 = await getScrapVlog();
+      const selectedApi = scrapApiMapping[mode as MyContentMode];
 
-      try {
-        console.log('vlog >> ', res2);
-        console.log('blog >> ', res);
-      } catch (err) {
-        console.error(err);
+      if (selectedApi) {
+        try {
+          const res = await selectedApi();
+          console.log(res);
+          setScrapData(res);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
     fetchScrapData();
-  }, []);
+  }, [mode]);
 
   return (
     <ScrapListContainer>
-      <div className="category_add_wrap">
-        <CategoryBtn>카테고리 추가</CategoryBtn>
-      </div>
+      {scrapData && scrapData.filter(scrap => scrap.boards.length > 0).length > 0 ? (
+        <ScrapListUl>
+          {scrapData &&
+            scrapData.map(post => (
+              <li key={post.id}>
+                <MyScrapItem scrap={post} />
+              </li>
+            ))}
+        </ScrapListUl>
+      ) : (
+        <UndefinedData text={`저장된 스크랩이 없습니다. 추가하러 가볼까요? :)`} />
+      )}
     </ScrapListContainer>
   );
 };
@@ -41,26 +59,26 @@ const MyScrapList: React.FC<MyContentListProps> = ({ mode }): JSX.Element => {
 export default MyScrapList;
 
 const ScrapListContainer = styled.div`
-  padding: 20px 0;
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  > .category_add_wrap {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding-bottom: 20px;
-  }
+  height: 100%;
 `;
 
-const CategoryBtn = styled.button`
-  width: 110px;
-  height: 36px;
-  color: #699bf7;
-  border: 2px solid #699bf7;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 700;
-  background: none;
+const ScrapListUl = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  padding: 20px 0;
+
+  > li {
+    width: 100%;
+  }
+
+  @media ${props => props.theme.breakpoints.mobileLMax} {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+  }
 `;

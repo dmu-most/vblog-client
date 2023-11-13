@@ -5,13 +5,25 @@ export interface MyContentListProps {
 export type MyContentMode = '브이로그' | '블로그';
 
 // ============================ 스크랩 ============================
+/** 2023/11/12 - 스크랩 게시글 타입 - by sineTlsl */
+export interface ScrapBoardsType {
+  id: number;
+  writer: string;
+  title: string;
+  link: string;
+  thumbnails: string;
+  description: string;
+  createdDate: string;
+  hashtag: string;
+}
+
 /** 2023/10/23 - 스크랩 응답 Type - sineTlsl */
 export interface ScrapResponseType {
   id: number;
   name: string;
   type: string;
   userId: number;
-  boards: [];
+  boards: ScrapBoardsType[];
 }
 
 // ============================ 최근목록 ============================
